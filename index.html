@@ -568,17 +568,54 @@
                                     <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
                                     <div class="logo-deal"></div>
                                 </div>
-                                <div class="grid-right">SHABBAT SCHEDULE<br>${dateEnglish}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                                <div class="grid-right">WEEKDAY SCHEDULE<br>${dateEnglish}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
                             </div>
                             <div class="time-box">
-                                <div class="section-title">Shabbat Schedule</div>
+                                <div class="section-title">Friday Night</div>
                                 <div class="time-row highlight"><span>CANDLE LIGHTING</span><span>${candleLighting}</span></div>
-                                <div class="time-row"><span>KORBANOT</span><span>7:00AM</span></div>
-                                <div class="time-row"><span>HASHEM MELECH</span><span>7:15AM</span></div>
-                                <div class="row-full" style="color: #631000;">FOLLOWED BY AN EXQU ISITE KIDDUSH AND CLASS<br>WITH RABBI DAVID HABER</div>
-                                <div class="time-row"><span>NEW SHABBAT LEARNING PROGRAM</span><span>10:00AM</span></div>
+                                <div class="time-row"><span>Shir Hashirim</span><span>6:30PM</span></div>
+                                <div class="time-row"><span>Minha</span><span>6:40PM</span></div>
+                            </div>
+                            <div class="time-box">
+                                <div class="section-title">Shabbat Morning</div>
+                                <div class="time-row"><span>KORBANOT</span><span>8:00AM</span></div>
+                                <div class="time-row"><span>HASHEM MELECH</span><span>8:15AM</span></div>
+                                <div class="row-full" style="color: #631000;">FOLLOWED BY AN EXQUISITE KIDDUSH AND CLASS<br>WITH RABBI DAVID HABER</div>
+                                <div class="time-row"><span>Danny J. Betesh Boys Program</span><span>9:15AM - 11:30AM</span></div>
+                                <div class="time-row"><span>Girls Program</span><span>9:15AM - 11:30AM</span></div>
+                                <div class="row-full" style="color: #631000;">Mishna Berura Shiur with Rabbi Ralph Tebele Following the speech</div>
+                            </div>
+                            <div class="time-box">
+                                <div class="section-title">Shabbat Afternoon</div>
+                                <div class="time-row"><span>PRE-MINHA LEARNING PROGRAM</span><span>6:50PM</span></div>
+                                <div class="time-row"><span>MINHA</span><span>6:50PM</span></div>
+                                <div class="row-full" style="color: #631000;">FOLLOWED BY SEUDAT SHELISHEET & SPEECH</div>
                                 <div class="time-row highlight"><span>HAVDALAH</span><span>${havdalahTime}</span></div>
                             </div>
+                            <div class="dedications-box ${scaleClass}" ${totalDedicationsCount === 0 ? 'style="display:none;"' : ''}>
+                                <div class="dedication-title">Shabbat Dedications</div>
+                                <div class="dedications-columns">
+                                    ${flyer1ColumnsHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flyer-wrapper">
+                <div class="print-page">
+                    <div class="schedule-layout">
+                        <div class="bsd">בס"ד</div>
+                        <div class="schedule-content-container">
+                            <div class="header-grid">
+                                <div class="grid-left">פרשת ${parshaHebrew}<br>${hebrewDateHeader}</div>
+                                <div class="grid-center">
+                                    <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
+                                    <div class="logo-deal"></div>
+                                </div>
+                                <div class="grid-right">SHABBAT SCHEDULE<br>${dateEnglish}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                            </div>
+
                             <div class="time-box">
                                 <div class="section-title">Sunday Schedule</div>
                                 <div class="time-row"><span>PRE-SHACHARIT CLASS WITH RABBI TEBELE</span><span>7:20AM</span></div>
