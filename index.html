@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Midrash Elyon Shul Publications - Print & Mobile Perfect</title>
+    
+    <!-- Libraries for JPG and PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600;700&family=David+Libre:wght@400;500;700&display=swap');
+
+        /* Strict Screen Locks */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px 0;
+        }
+
+        /* The Wrapper dynamically sizes itself via JavaScript on mobile */
+        .flyer-wrapper {
+            position: relative;
+            width: 816px;
+            height: 1056px;
+        }
+
+        /* The Flyer itself is rigidly locked to exactly 8.5x11 inches. */
+        .print-page {
+            background-color: #ffffff;
+            width: 816px; 
+            height: 1056px; 
+            box-sizing: border-box;
+            position: relative;
+            color: #631000; 
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ==========================================================================
+           TEMPLATE 1: WEEKLY SCHEDULE FLYER
+           ========================================================================== */
+        .schedule-layout {
+            padding: 0.35in 0.65in;
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            box-sizing: border-box;
+            position: relative;
+            border: 14px solid #631000;
+            outline: 3px double #c5a059;
+            outline-offset: -10px;
+            overflow: hidden; 
+        }
+
+        .schedule-content-container { display: flex; flex-direction: column; justify-content: flex-start; flex: 1; }
+        .bsd { font-family: 'David Libre', serif; font-size: 1.15rem; position: absolute; top: 15px; right: 20px; margin: 0; font-weight: 700; color: #631000; z-index: 10;}
+
+        .header-grid { display: grid; grid-template-columns: 1.2fr 1fr 1.2fr; align-items: center; margin-top: 15px; border-bottom: 2px solid #631000; padding-bottom: 12px; gap: 10px; }
+        .grid-left { font-family: 'David Libre', serif; font-size: 1.35rem; font-weight: 700; text-align: left; line-height: 1.3; color: #631000; white-space: nowrap; }
+        .grid-center { text-align: center; }
+        .grid-right { font-size: 0.95rem; font-weight: 700; text-align: right; letter-spacing: 0.3px; line-height: 1.4; color: #631000; white-space: nowrap; }
+        .entrance-note { font-size: 0.75rem; font-weight: 500; color: #631000; display: block; margin-top: 2px; }
+
+        .logo-img { width: 250px; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0px 2px 4px rgba(11, 35, 71, 0.15)); }
+        .logo-deal { font-family: 'Cinzel Decorative', serif; font-size: 1.25rem; font-weight: 700; letter-spacing: 6px; margin-top: 4px; color: #631000; }
+
+        .section-title { font-size: clamp(1.1rem, 2.5vw, 1.25rem); font-weight: 700; letter-spacing: 2px; color: #c5a059; margin: 10px 0 4px 0; text-transform: uppercase; display: flex; align-items: center; justify-content: center; white-space: nowrap; }
+        .section-title::before, .section-title::after { content: ''; flex: 1; height: 2px; background: linear-gradient(to var(--dir, right), #c5a059, transparent); margin: 0 15px; }
+        .section-title::after { --dir: left; }
+
+        .time-box { padding: 0 10px; margin-bottom: 2px; }
+        .time-row { display: flex; justify-content: space-between; font-size: clamp(1.05rem, 2.2vw, 1.15rem); font-weight: 600; margin: 3px 0; letter-spacing: 0.5px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 2px; white-space: nowrap; }
+        .time-row.highlight { font-weight: 700; border-bottom: 1px dashed rgba(217, 56, 56, 0.3); }
+        .row-full { font-size: clamp(0.9rem, 2vw, 1rem); font-weight: 700; color: #631000; margin-top: 3px; letter-spacing: 0.5px; white-space: nowrap; }
+
+        /* Base Boxed Dedications Container */
+        .dedications-box { 
+            background: linear-gradient(135deg, #fdfbf7 0%, #fcf9f2 100%); 
+            border: 2px solid #eadeca; 
+            border-top: 4px solid #c5a059; 
+            border-radius: 6px; 
+            margin-top: auto; 
+            box-shadow: inset 0 0 10px rgba(197, 160, 89, 0.05); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            max-height: 340px; 
+            overflow: hidden;
+        }
+        
+        .dedications-columns { display: flex; justify-content: space-around; align-items: flex-start; gap: 12px; width: 100%; height: 100%; overflow: hidden;}
+        .dedications-column { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .dedications-column:not(:last-child) { border-right: 1px dashed #eadeca; padding-right: 8px; }
+        .dedication-entry { padding-bottom: 2px; }
+        
+        .dedication-title { font-family: 'Cinzel Decorative', serif; font-weight: 700; color: #631000; display: flex; align-items: center; justify-content: center; gap: 10px; white-space: nowrap; }
+        .dedication-title::before, .dedication-title::after { content: '◆'; font-size: 8px; }
+        
+        .dedication-type { font-weight: 700; color: #c5a059; text-transform: uppercase; white-space: normal; }
+        .dedication-text { font-weight: 600; color: #631000; }
+        .dedication-text strong { font-weight: 700; font-size: inherit; }
+
+        /* ==========================================================================
+           DYNAMIC WHITESPACE FILLER RULES
+           ========================================================================== */
+        .dedications-box.count-1 { padding: 40px 25px; gap: 10px; }
+        .dedications-box.count-1 .dedication-title { font-size: 1.4rem; letter-spacing: 4px; margin-bottom: 15px; }
+        .dedications-box.count-1 .dedication-type { font-size: 1.15rem; letter-spacing: 2px; margin-bottom: 8px; }
+        .dedications-box.count-1 .dedication-text { font-size: 1.45rem; line-height: 1.5; }
+        
+        .dedications-box.count-2 { padding: 25px 20px; gap: 5px; }
+        .dedications-box.count-2 .dedication-title { font-size: 1.2rem; letter-spacing: 3px; margin-bottom: 12px; }
+        .dedications-box.count-2 .dedication-type { font-size: 0.95rem; letter-spacing: 1.5px; margin-bottom: 5px; }
+        .dedications-box.count-2 .dedication-text { font-size: 1.15rem; line-height: 1.4; }
+
+        .dedications-box.count-3-plus { padding: 10px 14px; }
+        .dedications-box.count-3-plus .dedication-title { font-size: clamp(0.95rem, 2vw, 1.05rem); letter-spacing: 3px; margin-bottom: 8px; }
+        .dedications-box.count-3-plus .dedication-type { font-size: clamp(0.75rem, 1.4vw, 0.85rem); letter-spacing: 1.5px; margin-bottom: 2px; }
+        .dedications-box.count-3-plus .dedication-text { font-size: clamp(0.75rem, 1.6vw, 0.9rem); line-height: 1.35; }
+
+        /* ==========================================================================
+           TEMPLATE 2: TABLE DEDICATION FLYER
+           ========================================================================== */
+        .table-layout { padding: 0.6in 0.6in; font-family: 'Cinzel', serif; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; box-sizing: border-box; background-color: #ffffff; position: relative; border: 24px solid #631000; outline: 6px double #c5a059; outline-offset: -18px; }
+        .table-layout .bsd { position: absolute; top: 20px; right: 25px; font-size: 1.3rem; color: #c5a059; }
+        .table-layout .logo-img { width: 380px; margin-bottom: 5px; margin-top: 15px; }
+        .table-parsha { font-family: 'David Libre', serif; font-size: 4rem; font-weight: 700; margin: 5px 0 15px 0; color: #631000; text-shadow: 2px 2px 0px rgba(197, 160, 89, 0.3); }
+        .table-purpose { font-family: 'Cinzel Decorative', serif; font-size: clamp(28px, 4vw, 45px); font-weight: 700; letter-spacing: 4px; margin-bottom: 2px; line-height: 1.2; color: #631000; text-transform: uppercase; }
+        .table-is-dedicated { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 6px; color: #631000; }
+        .diamond-separator { font-size: 1.4rem; color: #c5a059; margin: 5px 0 20px 0; letter-spacing: 12px; }
+        .table-dedications-container { display: flex; flex-direction: column; justify-content: center; gap: 15px; width: 100%; }
+        .table-dedication-block { font-size: 1.6rem; line-height: 1.6; font-weight: 500; color: #631000; width: 100%; }
+        .table-dedication-block span { display: block; }
+        .table-dedication-block .bold-core-dedication { font-size: 2.2rem; font-weight: 700; color: #631000; letter-spacing: 0.5px; line-height: 1.3; margin: 10px 0; text-transform: uppercase; }
+        .table-dedication-block .by-line { font-family: 'Cinzel Decorative', serif; font-weight: 700; margin-top: 15px; font-size: 1.8rem; color: #631000; letter-spacing: 1px; text-transform: uppercase; }
+        .table-text-divider { font-family: 'Cinzel Decorative', serif; font-weight: 700; font-size: 1.4rem; color: #631000; margin: 5px 0; letter-spacing: 2px; }
+
+        /* ==========================================================================
+           UI ELEMENTS
+           ========================================================================== */
+        .loading-text { font-family: 'Cinzel', serif; font-size: 1.8rem; color: #631000; text-align: center; width: 100%; margin-top: 150px; padding: 0 20px; box-sizing: border-box; }
+        
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .action-btn {
+            color: #ffffff;
+            border: 2px solid #c5a059;
+            padding: 15px 30px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .jpg-btn { background-color: #0b2347; }
+        .pdf-btn { background-color: #8c2a2a; }
+
+        .action-btn:hover {
+            background-color: #c5a059;
+            color: #0b2347;
+            border-color: #0b2347;
+        }
+        .action-btn:disabled {
+            background-color: #4b5563;
+            border-color: #4b5563;
+            cursor: not-allowed;
+            color: #d1d5db;
+        }
+
+        /* ==========================================================================
+           PRINT ENGINE
+           ========================================================================== */
+        @media print {
+            @page {
+                size: 8.5in 11in;
+                margin: 0; 
+            }
+            
+            html, body { background-color: #ffffff; padding: 0; margin: 0; width: 100%; display: block; }
+            #wrapper { display: block !important; gap: 0 !important; }
+
+            .flyer-wrapper { 
+                display: block !important; 
+                margin: 0 auto; 
+                padding: 0; 
+                width: 8.5in; 
+                height: 11in; 
+                page-break-after: always; 
+                overflow: hidden;
+            }
+
+            .flyer-wrapper:last-child { page-break-after: auto; }
+
+            .print-page { 
+                border: none; 
+                box-shadow: none; 
+                margin: 0; 
+                transform: none !important; 
+                position: relative !important; 
+                width: 8.5in !important;
+                height: 11in !important;
+                page-break-after: avoid; 
+            }
+
+            #loading-state, .button-container { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-state" class="loading-text">READING DATA FROM LIVE GOOGLE PUBLISHED EXCEL SHEET...</div>
+    <div id="wrapper" style="display: none; flex-direction: column; align-items: center; width: 100%; gap: 20px;"></div>
+
+    <script>
+        /* ==========================================================================
+           BULLETPROOF MOBILE SCALING ENGINE
+           ========================================================================== */
+        function executeMobileScaling() {
+            if (window.matchMedia && window.matchMedia('print').matches) return;
+
+            const wrappers = document.querySelectorAll('.flyer-wrapper');
+            const screenWidth = document.body.clientWidth;
+            const targetWidth = screenWidth - 20; 
+
+            if (targetWidth < 816) {
+                const scaleFactor = targetWidth / 816;
+                
+                wrappers.forEach(wrapper => {
+                    wrapper.style.width = targetWidth + 'px';
+                    wrapper.style.height = (1056 * scaleFactor) + 'px';
+                    
+                    const page = wrapper.querySelector('.print-page');
+                    if (page) {
+                        page.style.position = 'absolute';
+                        page.style.top = '0';
+                        page.style.left = '0';
+                        page.style.transformOrigin = 'top left';
+                        page.style.transform = `scale(${scaleFactor})`;
+                        page.style.boxShadow = 'none';
+                    }
+                });
+            } else {
+                wrappers.forEach(wrapper => {
+                    wrapper.style.width = '816px';
+                    wrapper.style.height = '1056px';
+                    const page = wrapper.querySelector('.print-page');
+                    if (page) {
+                        page.style.position = 'relative';
+                        page.style.transform = 'none';
+                        page.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
+                    }
+                });
+            }
+        }
+        
+        window.addEventListener('resize', executeMobileScaling);
+
+        /* ==========================================================================
+           JPG DOWNLOAD ENGINE
+           ========================================================================== */
+        async function downloadAllJPGs() {
+            const btn = document.getElementById('downloadJpgBtn');
+            const pdfBtn = document.getElementById('downloadPdfBtn');
+            btn.innerText = "GENERATING JPGs...";
+            btn.disabled = true;
+            pdfBtn.disabled = true;
+
+            const pages = document.querySelectorAll('.print-page');
+            
+            for (let i = 0; i < pages.length; i++) {
+                const page = pages[i];
+                
+                const originalTransform = page.style.transform;
+                const originalPosition = page.style.position;
+                
+                page.style.transform = 'none';
+                page.style.position = 'relative';
+
+                const canvas = await html2canvas(page, {
+                    scale: 2, 
+                    useCORS: true, 
+                    backgroundColor: '#ffffff',
+                    width: 816,
+                    height: 1056
+                });
+
+                page.style.transform = originalTransform;
+                page.style.position = originalPosition;
+
+                const link = document.createElement('a');
+                link.download = `Midrash_Elyon_Flyer_${i + 1}.jpg`;
+                link.href = canvas.toDataURL('image/jpeg', 0.95);
+                link.click();
+                
+                await new Promise(r => setTimeout(r, 600));
+            }
+            
+            btn.innerText = "DOWNLOAD ALL PAGES AS JPGs";
+            btn.disabled = false;
+            pdfBtn.disabled = false;
+        }
+
+        /* ==========================================================================
+           PDF DOWNLOAD ENGINE (WITH CUSTOM COPY QUANTITIES)
+           ========================================================================== */
+        async function downloadCustomPDF() {
+            const btn = document.getElementById('downloadPdfBtn');
+            const jpgBtn = document.getElementById('downloadJpgBtn');
+            btn.innerText = "GENERATING PDF...";
+            btn.disabled = true;
+            jpgBtn.disabled = true;
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'in', [8.5, 11]);
+            const pages = document.querySelectorAll('.print-page');
+            
+            let isFirstPageAdded = false;
+
+            for (let i = 0; i < pages.length; i++) {
+                const page = pages[i];
+                
+                // Determine how many copies to print based on the layout type
+                let copies = 1;
+                if (i === 0) {
+                    copies = 2; // Master Schedule flyer gets 2 copies
+                } else {
+                    const purposeEl = page.querySelector('.table-purpose');
+                    if (purposeEl && purposeEl.innerText.toUpperCase().includes('SHABBAT KIDDUSH')) {
+                        copies = 8; // Shabbat Kiddush table flyers get 12 copies
+                    } else {
+                        copies = 6; // All other table flyers get 6 copies
+                    }
+                }
+
+                // Render page to canvas
+                const originalTransform = page.style.transform;
+                const originalPosition = page.style.position;
+                
+                page.style.transform = 'none';
+                page.style.position = 'relative';
+
+                const canvas = await html2canvas(page, {
+                    scale: 2, 
+                    useCORS: true, 
+                    backgroundColor: '#ffffff',
+                    width: 816,
+                    height: 1056
+                });
+
+                page.style.transform = originalTransform;
+                page.style.position = originalPosition;
+
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+
+                // Inject the generated image into the PDF for the requested number of copies
+                for (let c = 0; c < copies; c++) {
+                    if (isFirstPageAdded) {
+                        pdf.addPage();
+                    }
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 8.5, 11);
+                    isFirstPageAdded = true;
+                }
+            }
+            
+            pdf.save('Midrash_Elyon_Publications.pdf');
+            
+            btn.innerText = "DOWNLOAD CUSTOM BATCH PDF";
+            btn.disabled = false;
+            jpgBtn.disabled = false;
+        }
+
+        /* ==========================================================================
+           DATA FETCH ENGINE
+           ========================================================================== */
+        const SIGNATURE_KEY = '2PACX-1vQkcfkH_BAJSdXzKzQguibMZ-I6K7drGRkLwFygZ8iDgeq3OmVTTnSPRpSmGQAp3MfbfDJjXc2XLNe7';
+        const DIRECT_CSV_FEED = `https://docs.google.com/spreadsheets/d/e/${SIGNATURE_KEY}/pub?output=csv&sheet=WebsiteInfo`;
+
+        fetch(DIRECT_CSV_FEED)
+            .then(response => response.text())
+            .then(csvText => {
+                const parsedRows = parseCSVRows(csvText);
+                
+                const englishDateHeader = parsedRows[3]?.[1] || 'June 26 - 27 2026';
+                const hebrewDateHeader = parsedRows[3]?.[0] || 'י״א בְּתַמּוּז תשפ״ו';
+                const hebrewParshaValue = parsedRows[4]?.[1] || 'קרח';
+                const candleLightingTime = parsedRows[2]?.[2] || '8:09 PM';
+                const havdalahTime = parsedRows[2]?.[7] || '9:08 PM';
+                const rawDedicationsText = parsedRows[0]?.[1] || '';
+                const weekdayShacharit = parsedRows[2]?.[8] || '7:15 AM';
+                const weekdayPreShacharitLearning = parsedRows[2]?.[9] || '6:15 AM';
+                const sundayShacharit = parsedRows[2]?.[10] || '8:00 AM';
+                
+                processSpreadsheetPayload(englishDateHeader, hebrewParshaValue, candleLightingTime, rawDedicationsText, hebrewDateHeader, havdalahTime,weekdayShacharit,weekdayPreShacharitLearning,sundayShacharit);
+            })
+            .catch(error => {
+                document.getElementById('loading-state').innerText = "SYNC CRITICAL ERROR: Confirm file has not been unpublished.";
+                console.error(error);
+            });
+
+        function parseCSVRows(text) {
+            let p = '', c = '', r = [];
+            let q = false;
+            let row = [''];
+            for (let i = 0; i < text.length; i++) {
+                c = text[i];
+                let next = text[i+1];
+                if (c === '"') { 
+                    if (q && next === '"') { row[row.length - 1] += '"'; i++; } 
+                    else { q = !q; }
+                } else if (c === ',' && !q) { 
+                    row.push(''); 
+                } else if ((c === '\r' || c === '\n') && !q) {
+                    if (c === '\r' && next === '\n') { i++; }
+                    r.push(row);
+                    row = [''];
+                } else { 
+                    row[row.length - 1] += c; 
+                }
+            }
+            if (row.length > 1 || row[0] !== '') r.push(row);
+            return r;
+        }
+
+        function processSpreadsheetPayload(dateEnglish, parshaHebrew, candleLighting, rawDedicationsText, hebrewDateHeader, havdalahTime,weekdayShacharit,weekdayPreShacharitLearning,sundayShacharit) {
+            const textLines = rawDedicationsText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            
+            const categoryMap = {
+                "SHABBAT KIDDUSH": "Shabbat Kiddush",
+                "SUNDAY BREAKFAST": "Sunday Breakfast",
+                "SEUDAT SHELISHEET": "Seudat Shelisheet",
+                "SEUDAH SHELISHEET": "Seudat Shelisheet",
+                "GAN SHABBAT": "Gan Shabbat",
+                "WEEK OF BREAKFAST": "Week of Breakfast",
+                "MONTH OF LEARNING": "The Albert “Bero” Chehebar Learning Program<br>Month of Learning",
+                "WEEK OF LEARNING": "The Albert “Bero” Chehebar Learning Program<br>Week of Learning",
+                "DAY OF LEARNING": "The Albert “Bero” Chehebar Learning Program<br>Day of Learning"
+            };
+            const allowedCategoryKeys = Object.keys(categoryMap);
+            
+            const knownPrefixes = [
+                "IN HONOR OF", "IN MEMORY OF", "LEILUI NISHMAT", "L'ILUI NISHMAT", 
+                "REFUAH SHELEMAH", "REFUAH SHLEMAH", "DEDICATED TO", 
+                "IN CELEBRATION OF", "FOR THE HATZLACHA OF", "IN MERIT OF", "IN HONOR AND ZECHUT OF"
+            ];
+            
+            let currentCategory = '';
+            const groupedDedications = {};
+            let totalDedicationsCount = 0;
+
+            for (let i = 0; i < textLines.length; i++) {
+                const normalizedLine = textLines[i].toUpperCase();
+                
+                let foundKey = allowedCategoryKeys.find(k => normalizedLine.includes(k));
+                if (foundKey) {
+                    currentCategory = categoryMap[foundKey]; 
+                    if (!groupedDedications[currentCategory]) {
+                        groupedDedications[currentCategory] = [];
+                    }
+                    continue;
+                }
+                
+                if (normalizedLine === "~AND~" || normalizedLine === "~ AND ~") {
+                    continue;
+                }
+
+                if (!normalizedLine.startsWith("BY:") && currentCategory) {
+                    let isKnownPrefix = knownPrefixes.some(p => normalizedLine.startsWith(p));
+                    
+                    let prefixText = isKnownPrefix ? textLines[i] : "";
+                    let honorText = isKnownPrefix ? "" : textLines[i];
+                    let byText = "";
+                    
+                    while (i + 1 < textLines.length && 
+                           !textLines[i + 1].toUpperCase().startsWith("BY:") && 
+                           !allowedCategoryKeys.some(k => textLines[i + 1].toUpperCase().includes(k)) && 
+                           textLines[i + 1].toUpperCase() !== "~AND~" &&
+                           textLines[i + 1].toUpperCase() !== "~ AND ~") {
+                        i++;
+                        honorText += (honorText ? "<br>" : "") + textLines[i];
+                    }
+                    
+                    if (i + 1 < textLines.length && textLines[i + 1].toUpperCase().startsWith("BY:")) {
+                        i++;
+                        byText = textLines[i].replace(/^BY:\s*/i, '');
+                    }
+
+                    groupedDedications[currentCategory].push({ prefix: prefixText, honor: honorText, by: byText });
+                    totalDedicationsCount++;
+                }
+            }
+
+            let scaleClass = 'count-3-plus';
+            if (totalDedicationsCount === 1) scaleClass = 'count-1';
+            else if (totalDedicationsCount === 2) scaleClass = 'count-2';
+
+            let flyer1ColumnsHTML = '';
+            const categoryKeys = Object.keys(groupedDedications);
+            
+            if (categoryKeys.length === 1) {
+                const type = categoryKeys[0];
+                groupedDedications[type].forEach(item => {
+                    flyer1ColumnsHTML += `
+                    <div class="dedications-column">
+                        <div class="dedication-entry">
+                            <div class="dedication-type">${type}</div>
+                            <div class="dedication-text">
+                                ${item.prefix ? `${item.prefix.toUpperCase()}<br>` : ''}
+                                <strong>${item.honor}</strong>
+                                ${item.by ? `<br><span style="font-weight: 700; color: #c5a059;">BY: ${item.by}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            } else {
+                for (const [type, items] of Object.entries(groupedDedications)) {
+                    flyer1ColumnsHTML += `<div class="dedications-column">`;
+                    items.forEach(item => {
+                        flyer1ColumnsHTML += `
+                            <div class="dedication-entry">
+                                <div class="dedication-type">${type}</div>
+                                <div class="dedication-text">
+                                    ${item.prefix ? `${item.prefix.toUpperCase()}<br>` : ''}
+                                    <strong>${item.honor}</strong>
+                                    ${item.by ? `<br><span style="font-weight: 700; color: #c5a059;">BY: ${item.by}</span>` : ''}
+                                </div>
+                            </div>`;
+                    });
+                    flyer1ColumnsHTML += `</div>`;
+                }
+            }
+
+            let finalHTML = `
+            <div class="flyer-wrapper">
+                <div class="print-page">
+                    <div class="schedule-layout">
+                        <div class="bsd">בס"ד</div>
+                        <div class="schedule-content-container">
+                            <div class="header-grid">
+                                <div class="grid-left">פרשת ${parshaHebrew}<br>${hebrewDateHeader}</div>
+                                <div class="grid-center">
+                                    <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
+                                    <div class="logo-deal"></div>
+                                </div>
+                                <div class="grid-right">SHABBAT SCHEDULE<br>${dateEnglish}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                            </div>
+                            <div class="time-box">
+                                <div class="section-title">Shabbat Schedule</div>
+                                <div class="time-row highlight"><span>CANDLE LIGHTING</span><span>${candleLighting}</span></div>
+                                <div class="time-row"><span>KORBANOT</span><span>7:00AM</span></div>
+                                <div class="time-row"><span>HASHEM MELECH</span><span>7:15AM</span></div>
+                                <div class="row-full" style="color: #631000;">FOLLOWED BY AN EXQU ISITE KIDDUSH AND CLASS<br>WITH RABBI DAVID HABER</div>
+                                <div class="time-row"><span>NEW SHABBAT LEARNING PROGRAM</span><span>10:00AM</span></div>
+                                <div class="time-row highlight"><span>HAVDALAH</span><span>${havdalahTime}</span></div>
+                            </div>
+                            <div class="time-box">
+                                <div class="section-title">Sunday Schedule</div>
+                                <div class="time-row"><span>PRE-SHACHARIT CLASS WITH RABBI TEBELE</span><span>7:20AM</span></div>
+                                <div class="time-row" ><span>SHACHARIT</span><span>${sundayShacharit}</span></div>
+                                <div class="row-full" style="color: #631000;">FOLLOWED BY DELUXE BREAKFAST & CLASS WITH RABBI DAVID HABER</div>
+                            </div>
+                            <div class="time-box">
+                                <div class="section-title">Weekday Schedule</div>
+                                <div class="time-row"><span>GEMARA CLASSES</span><span>${weekdayPreShacharitLearning}</span></div>
+                                <div class="time-row"><span>SHACHARIT</span><span>${weekdayShacharit}</span></div>
+                                <div class="row-full" style="color: #631000;">FOLLOWED BY BREAKFAST & LEARNING</div>
+                            </div>
+                            <div class="time-box">
+                                <div class="section-title">Learning Program</div>
+                                <div class="time-row" style="justify-content: center; font-size: 1.05rem; font-weight: 700; margin-bottom: 2px; border: none;">MONDAY - FRIDAY MORNING</div>
+                                <div class="row-full" style="font-weight: 600; margin-bottom: 2px; color: #631000;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
+                                <div class="row-full" style="font-size: 0.95rem; color: #631000;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
+                            </div>
+                        </div>
+                        <div class="dedications-box ${scaleClass}" ${totalDedicationsCount === 0 ? 'style="display:none;"' : ''}>
+                            <div class="dedication-title">Weekly Dedications</div>
+                            <div class="dedications-columns">
+                                ${flyer1ColumnsHTML}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+            for (const [type, items] of Object.entries(groupedDedications)) {
+                let tableBlocksHTML = items.map(item => `
+                    <div class="table-dedication-block">
+                        ${item.prefix ? `<span>${item.prefix.toUpperCase()}</span>` : ''}
+                        <div class="bold-core-dedication">${item.honor}</div>
+                        ${item.by ? `<span class="by-line">BY: ${item.by.toUpperCase()}</span>` : ''}
+                    </div>
+                `).join('<div class="table-text-divider">~ AND ~</div>');
+
+                finalHTML += `
+                <div class="flyer-wrapper">
+                    <div class="print-page">
+                        <div class="table-layout">
+                            <div class="bsd">בס"ד</div>
+                            <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
+                            ${(type === 'Shabbat Kiddush' || type === 'Seudat Shelisheet') ? `<div class="table-parsha">פרשת ${parshaHebrew}</div>` : ''}
+                            <div class="table-purpose">${type}</div>
+                            <div class="table-is-dedicated">is dedicated</div>
+                            <div class="diamond-separator">◆ <span>◆</span> ◆</div>
+                            <div class="table-dedications-container">${tableBlocksHTML}</div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+
+            // Append the Download Buttons
+            finalHTML += `
+            <div class="button-container">
+                <button id="downloadJpgBtn" class="action-btn jpg-btn" onclick="downloadAllJPGs()">Download All Pages as JPGs</button>
+                <button id="downloadPdfBtn" class="action-btn pdf-btn" onclick="downloadCustomPDF()">Download Custom Batch PDF</button>
+            </div>`;
+
+            document.getElementById('loading-state').style.display = 'none';
+            const applicationWrapper = document.getElementById('wrapper');
+            applicationWrapper.innerHTML = finalHTML;
+            applicationWrapper.style.display = 'flex';
+
+            executeMobileScaling();
+        }
+    </script>
+</body>
+</html>
