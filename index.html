@@ -416,8 +416,14 @@
                 const weekdayShacharit = parsedRows[2]?.[8] || '7:15 AM';
                 const weekdayPreShacharitLearning = parsedRows[2]?.[9] || '6:15 AM';
                 const sundayShacharit = parsedRows[2]?.[10] || '8:00 AM';
+                const shirHashirim = parsedRows[2]?.[3] || '6:20 PM';
+                const fridayMinha = parsedRows[2]?.[4] || '6:30 PM';
+                const shabbatMinha = parsedRows[2]?.[6] || '7:30 PM';
+                const preMinhaClass = parsedRows[2]?.[5] || '6:30 PM';
+                const hebrewDateWeek = parsedRows[3]?.[5] || 'י״ב - י״ט בְּאָב תשפ״ו';
+                const dateWeek = parsedRows[3]?.[2] || 'July 26 - August 2 2026';
                 
-                processSpreadsheetPayload(englishDateHeader, hebrewParshaValue, candleLightingTime, rawDedicationsText, hebrewDateHeader, havdalahTime,weekdayShacharit,weekdayPreShacharitLearning,sundayShacharit);
+                processSpreadsheetPayload(englishDateHeader, hebrewParshaValue, candleLightingTime, rawDedicationsText, hebrewDateHeader, havdalahTime,weekdayShacharit,weekdayPreShacharitLearning,sundayShacharit,shirHashirim,fridayMinha,shabbatMinha,preMinhaClass,hebrewDateWeek,dateWeek);
             })
             .catch(error => {
                 document.getElementById('loading-state').innerText = "SYNC CRITICAL ERROR: Confirm file has not been unpublished.";
@@ -448,7 +454,7 @@
             return r;
         }
 
-        function processSpreadsheetPayload(dateEnglish, parshaHebrew, candleLighting, rawDedicationsText, hebrewDateHeader, havdalahTime,weekdayShacharit,weekdayPreShacharitLearning,sundayShacharit) {
+        function processSpreadsheetPayload(dateEnglish, parshaHebrew, candleLighting, rawDedicationsText, hebrewDateHeader, havdalahTime,weekdayShacharit,weekdayPreShacharitLearning,sundayShacharit,shirHashirim,fridayMinha,shabbatMinha,preMinhaClass,hebrewDateWeek,dateWeek) {
             const textLines = rawDedicationsText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
             
             const categoryMap = {
@@ -568,13 +574,13 @@
                                     <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
                                     <div class="logo-deal"></div>
                                 </div>
-                                <div class="grid-right">WEEKDAY SCHEDULE<br>${dateEnglish}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                                <div class="grid-right">SHABBAT SCHEDULE<br>${dateEnglish}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
                             </div>
                             <div class="time-box">
                                 <div class="section-title">Friday Night</div>
                                 <div class="time-row highlight"><span>CANDLE LIGHTING</span><span>${candleLighting}</span></div>
-                                <div class="time-row"><span>Shir Hashirim</span><span>6:30PM</span></div>
-                                <div class="time-row"><span>Minha</span><span>6:40PM</span></div>
+                                <div class="time-row"><span>Shir Hashirim</span><span>${shirHashirim}</span></div>
+                                <div class="time-row"><span>Minha</span><span>${fridayMinha}</span></div>
                             </div>
                             <div class="time-box">
                                 <div class="section-title">Shabbat Morning</div>
@@ -587,8 +593,8 @@
                             </div>
                             <div class="time-box">
                                 <div class="section-title">Shabbat Afternoon</div>
-                                <div class="time-row"><span>PRE-MINHA LEARNING PROGRAM</span><span>6:50PM</span></div>
-                                <div class="time-row"><span>MINHA</span><span>6:50PM</span></div>
+                                <div class="time-row"><span>PRE-MINHA LEARNING PROGRAM</span><span>${preMinhaClass}</span></div>
+                                <div class="time-row"><span>MINHA</span><span>${shabbatMinha}</span></div>
                                 <div class="row-full" style="color: #631000;">FOLLOWED BY SEUDAT SHELISHEET & SPEECH</div>
                                 <div class="time-row highlight"><span>HAVDALAH</span><span>${havdalahTime}</span></div>
                             </div>
@@ -608,12 +614,12 @@
                         <div class="bsd">בס"ד</div>
                         <div class="schedule-content-container">
                             <div class="header-grid">
-                                <div class="grid-left">פרשת ${parshaHebrew}<br>${hebrewDateHeader}</div>
+                                <div class="grid-left">WEEKDAY SCHEDULE<br>${hebrewDateWeek}</div>
                                 <div class="grid-center">
                                     <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
                                     <div class="logo-deal"></div>
                                 </div>
-                                <div class="grid-right">SHABBAT SCHEDULE<br>${dateEnglish}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                                <div class="grid-right">${dateWeek}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
                             </div>
 
                             <div class="time-box">
