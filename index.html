@@ -51,7 +51,7 @@
         }
 
         /* ==========================================================================
-           TEMPLATE 1: WEEKLY SCHEDULE FLYER (Fixed Pixel Sizing)
+           TEMPLATE 1: WEEKLY SCHEDULE FLYER
            ========================================================================== */
         .schedule-layout {
             padding: 24px 48px;
@@ -296,7 +296,7 @@
         .dedications-box.has-dense-stack .dedication-text { font-size: 13px; line-height: 1.25; }
 
         /* ==========================================================================
-           TEMPLATE 2: TABLE DEDICATION FLYER (Adaptive Count Rules)
+           TEMPLATE 2: TABLE DEDICATION FLYER
            ========================================================================== */
         .table-layout { 
             font-family: 'Cinzel', serif; 
@@ -390,43 +390,43 @@
         .table-layout.table-count-1 .table-text-divider { font-size: 20px; margin: 4px 0; letter-spacing: 2px; }
 
         .table-layout.table-count-2 { padding: 34px 44px; }
-        .table-layout.table-count-2 .logo-img { width: 310px; margin-bottom: 4px; margin-top: 5px; }
-        .table-layout.table-count-2 .table-parsha { font-size: 50px; margin: 4px 0 8px 0; }
-        .table-layout.table-count-2 .table-purpose { font-size: 35px; letter-spacing: 3px; margin-bottom: 2px; line-height: 1.2; }
-        .table-layout.table-count-2 .table-is-dedicated { font-size: 21px; margin-bottom: 6px; letter-spacing: 4px; }
+        .table-layout.table-count-2 .logo-img { width: 340px; margin-bottom: 4px; margin-top: 5px; }
+        .table-layout.table-count-2 .table-parsha { font-size: 58px; margin: 4px 0 8px 0; }
+        .table-layout.table-count-2 .table-purpose { font-size: 38px; letter-spacing: 3px; margin-bottom: 2px; line-height: 1.2; }
+        .table-layout.table-count-2 .table-is-dedicated { font-size: 22px; margin-bottom: 6px; letter-spacing: 4px; }
         .table-layout.table-count-2 .diamond-separator { font-size: 18px; margin: 4px 0 12px 0; letter-spacing: 10px; }
         .table-layout.table-count-2 .table-dedications-container { gap: 12px; }
-        .table-layout.table-count-2 .table-dedication-block { font-size: 20px; line-height: 1.4; font-weight: 500; }
-        .table-layout.table-count-2 .table-dedication-block .bold-core-dedication { font-size: 26px; letter-spacing: 0.4px; line-height: 1.25; margin: 6px 0; }
-        .table-layout.table-count-2 .table-dedication-block .by-line { margin-top: 8px; font-size: 22px; letter-spacing: 1px; }
+        .table-layout.table-count-2 .table-dedication-block { font-size: 23px; line-height: 1.4; font-weight: 500; }
+        .table-layout.table-count-2 .table-dedication-block .bold-core-dedication { font-size: 32px; letter-spacing: 0.4px; line-height: 1.25; margin: 6px 0; }
+        .table-layout.table-count-2 .table-dedication-block .by-line { margin-top: 8px; font-size: 23px; letter-spacing: 1px; }
         .table-layout.table-count-2 .table-text-divider { font-size: 18px; margin: 4px 0; letter-spacing: 2px; }
 
         .table-layout.table-count-3-plus { 
             padding: 36px 44px; 
-            justify-content: space-between; 
+            justify-content: space-evenly; 
         }
         .table-layout.table-count-3-plus .logo-img { 
-            width: 290px; 
+            width: 340px; 
             margin-bottom: 0; 
             margin-top: 5px; 
         }
         .table-layout.table-count-3-plus .table-parsha { 
-            font-size: 48px; 
+            font-size: 58px; 
             margin: 4px 0 6px 0; 
         }
         .table-layout.table-count-3-plus .table-purpose { 
-            font-size: 34px; 
+            font-size: 38px; 
             letter-spacing: 3px; 
             margin-bottom: 2px; 
             line-height: 1.15; 
         }
         .table-layout.table-count-3-plus .table-is-dedicated { 
-            font-size: 19px; 
+            font-size: 22px; 
             margin-bottom: 4px; 
             letter-spacing: 4px; 
         }
         .table-layout.table-count-3-plus .diamond-separator { 
-            font-size: 16px; 
+            font-size: 13px; 
             margin: 4px 0 12px 0; 
             letter-spacing: 10px; 
         }
@@ -438,19 +438,19 @@
             justify-content: space-evenly; 
         }
         .table-layout.table-count-3-plus .table-dedication-block { 
-            font-size: 15px; 
+            font-size: 20px; 
             line-height: 1.25; 
             font-weight: 500; 
         }
         .table-layout.table-count-3-plus .table-dedication-block .bold-core-dedication { 
-            font-size: 22px; 
+            font-size: 28px; 
             letter-spacing: 0.4px; 
             line-height: 1.2; 
             margin: 4px 0; 
         }
         .table-layout.table-count-3-plus .table-dedication-block .by-line { 
             margin-top: 4px; 
-            font-size: 17.5px; 
+            font-size: 20px; 
             letter-spacing: 0.5px; 
         }
         .table-layout.table-count-3-plus .table-text-divider { 
@@ -460,7 +460,7 @@
         }
 
         /* ==========================================================================
-           TEMPLATE 3 & 4: 1920x1080 TV DISPLAY BOARDS (#e7e3d7 Background)
+           TEMPLATE 3 & 4: 1920x1080 TV DISPLAY BOARDS (AUTHENTIC TEXTURED BACKGROUND)
            ========================================================================== */
         .tv-wrapper {
             position: relative;
@@ -469,142 +469,171 @@
             flex-shrink: 0;
         }
 
+        /* Full 1080p Canvas with your hosted texture png */
         .tv-page {
             background-color: #e7e3d7;
+            background-image: url("https://i.postimg.cc/j2VNFTKh/Midrash-Elyon-Shabbat-TV.png");
+            background-repeat: center;
+            background-size: cover;
             width: 1920px;
             height: 1080px;
             box-sizing: border-box;
             position: relative;
             color: #631000;
             overflow: hidden;
-            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
-            border: 20px solid #631000;
-            outline: 6px double #c5a059;
-            outline-offset: -13px;
-            padding: 24px 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0);
+            border: 14px solid #631000;
+            outline: 4px solid #c5a059;
+            outline-offset: -10px;
+            padding: 26px 32px;
             display: flex;
             flex-direction: row;
-            gap: 36px;
+            gap: 28px;
             font-family: 'Cinzel', serif;
         }
 
-        .tv-page .bsd {
-            top: 30px;
-            right: 45px;
-            font-size: 24px;
+        /* Inset Dual Ivory/Cream Panels */
+        .tv-inset-panel {
+            background-color: #fcf9f2;
+            border: 6px solid #631000;
+            outline: 2px solid #c5a059;
+            outline-offset: -4px;
+            border-radius: 4px;
+            box-sizing: border-box;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            height: 100%;
+        }
+
+        .tv-inset-panel .bsd {
+            top: 8px;
+            right: 14px;
+            font-size: 20px;
             font-family: 'David Libre', serif;
             font-weight: 700;
             color: #631000;
             position: absolute;
             margin: 0;
             z-index: 20;
-            line-height: 1;
         }
 
-        /* --- TV Left Column: Shared Layout --- */
+        /* --- Left Inset Panel: Schedule --- */
         .tv-col-left {
-            flex: 1.12;
+            flex: 1.08;
+            padding: 18px 24px 22px 24px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            border-right: 3px double #c5a059;
-            padding-right: 36px;
-            height: 100%;
-            box-sizing: border-box;
-            font-family: 'Cinzel', serif;
+            justify-content: space-evenly;
         }
 
         .tv-col-left .header-grid {
             margin-top: 0;
-            padding-bottom: 8px;
-            border-bottom: 2.5px solid #631000;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #631000;
         }
         .tv-col-left .grid-left { 
             font-family: 'David Libre', serif; 
-            font-size: 30px; 
+            font-size: 28px; 
             line-height: 1.2; 
         }
-        .tv-col-left .logo-img { width: 310px; }
+        .tv-col-left .logo-img { width: 280px; }
         .tv-col-left .grid-right { 
             font-family: 'Cinzel', serif;
-            font-size: 19px; 
+            font-size: 17px; 
             line-height: 1.3; 
         }
         .tv-col-left .entrance-note { 
             font-family: 'Cinzel', serif;
-            font-size: 14px; 
+            font-size: 13px; 
         }
 
         .tv-schedule-boxes-container {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: space-evenly;
             flex: 1;
             margin-top: 10px;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .tv-schedule-card {
+        /* Solid Maroon Header Ribbons */
+        .tv-maroon-ribbon {
+            background-color: #631000;
+            color: #ffffff;
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 7px 0;
             
-            border: 2px solid #eadeca;
-            border-top: 4px solid #c5a059;
-            border-radius: 8px;
-            padding: 8px 22px 10px 22px;
-            box-shadow: inset 0 0 10px rgba(197, 160, 89, 0.05);
+            /* Stretch completely edge-to-edge */
+            width: calc(100% + 48px);
+            margin-left: -24px;
+            margin-right: -24px;
+            box-sizing: border-box;
+
+            /* Top and bottom border lines matching the original flyer */
+            border: none;
+            border-top: 2px solid #c5a059;
+            border-bottom: 2px solid #c5a059;
+            
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+            margin-bottom: 8px;
+        }
+        .tv-schedule-section-block {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
         }
 
-        .tv-col-left .section-title {
+        /* Centered Entry Rows */
+        .tv-time-centered-row {
             font-family: 'Cinzel', serif;
             font-size: 26px;
-            margin: 0 0 6px 0;
-            letter-spacing: 3px;
+            font-weight: 600;
+            color: #631000;
+            margin: 2.5px 0;
+            letter-spacing: 0.8px;
+            text-align: center;
+            width: 100%;
         }
-        .tv-col-left .time-row {
-            font-family: 'Cinzel', serif;
-            font-size: 23px;
-            margin: 3.5px 0;
-            padding-bottom: 3.5px;
-            border-bottom: 1.5px dashed #e2e8f0;
-        }
-        .tv-col-left .time-row.highlight {
-            border-bottom: 2px dashed rgba(217, 56, 56, 0.4);
-        }
-        .tv-col-left .row-full {
-            font-family: 'Cinzel', serif;
-            font-size: 18px;
-            margin-top: 4px;
-            margin-bottom: 2px;
-            line-height: 1.25;
+        .tv-time-centered-row.highlight {
+            font-weight: 700;
+            color: #8c1d1d;
         }
 
-        /* --- TV Right Column: Shared Dedications Layout --- */
+        .tv-time-centered-subtext {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #631000;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        /* --- Right Inset Panel: Dedications / Logo --- */
         .tv-col-right {
-            flex: 0.88;
+            flex: 0.92;
+            padding: 24px 32px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 28px;
-            height: 100%;
-            box-sizing: border-box;
             text-align: center;
-            font-family: 'Cinzel', serif;
             overflow: hidden;
-            
-            border: 2px solid #eadeca;
-            border-top: 5px solid #c5a059;
-            border-radius: 10px;
-            box-shadow: inset 0 0 14px rgba(197, 160, 89, 0.08);
         }
 
         .tv-col-right .table-parsha {
             font-family: 'David Libre', serif;
-            font-size: 60px;
+            font-size: 64px;
             font-weight: 700;
-            margin: 0 0 6px 0;
+            margin: 0 0 4px 0;
             color: #631000;
             text-shadow: 2px 2px 0px rgba(197, 160, 89, 0.35);
         }
@@ -636,7 +665,7 @@
 
         .tv-col-right .table-purpose {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 36px;
+            font-size: 40px;
             font-weight: 700;
             letter-spacing: 4px;
             margin-bottom: 2px;
@@ -651,14 +680,14 @@
             letter-spacing: 5px;
             color: #631000;
         }
-        .tv-col-right .diamond-separator {
+        .diamond-separator {
             font-size: 16px;
             margin: 4px 0 10px 0;
             letter-spacing: 12px;
             color: #c5a059;
         }
         .tv-col-right .table-dedications-container {
-            gap: 12px;
+            gap: 10px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -666,7 +695,7 @@
         }
         .tv-col-right .table-dedication-block {
             font-family: 'Cinzel', serif;
-            font-size: 20px;
+            font-size: 19px;
             line-height: 1.35;
             color: #631000;
         }
@@ -675,15 +704,15 @@
             font-size: 28px;
             font-weight: 700;
             line-height: 1.25;
-            margin: 6px 0;
+            margin: 5px 0;
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
         .tv-col-right .table-dedication-block .by-line {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 23px;
+            font-size: 22px;
             font-weight: 700;
-            margin-top: 6px;
+            margin-top: 5px;
             color: #631000;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -692,23 +721,23 @@
             font-family: 'Cinzel Decorative', serif;
             font-size: 18px;
             font-weight: 700;
-            margin: 6px 0;
+            margin: 5px 0;
             color: #631000;
             letter-spacing: 2px;
         }
 
-        .tv-col-right.tv-dense-stack .table-parsha { font-size: 46px; margin: 0 0 4px 0; }
-        .tv-col-right.tv-dense-stack .table-purpose { font-size: 28px; letter-spacing: 3px; }
+        .tv-col-right.tv-dense-stack .table-parsha { font-size: 68px; margin: 0 0 4px 0; }
+        .tv-col-right.tv-dense-stack .table-purpose { font-size: 30px; letter-spacing: 3px; }
         .tv-col-right.tv-dense-stack .table-is-dedicated { font-size: 17px; margin-bottom: 2px; letter-spacing: 4px; }
         .tv-col-right.tv-dense-stack .diamond-separator { font-size: 13px; margin: 3px 0 6px 0; letter-spacing: 9px; }
         .tv-col-right.tv-dense-stack .table-dedications-container { gap: 6px; }
-        .tv-col-right.tv-dense-stack .table-dedication-block { font-size: 16px; line-height: 1.25; }
+        .tv-col-right.tv-dense-stack .table-dedication-block { font-size: 15.5px; line-height: 1.25; }
         .tv-col-right.tv-dense-stack .table-dedication-block .bold-core-dedication { font-size: 21px; line-height: 1.2; margin: 3px 0; }
-        .tv-col-right.tv-dense-stack .table-dedication-block .by-line { font-size: 18px; margin-top: 3px; }
+        .tv-col-right.tv-dense-stack .table-dedication-block .by-line { font-size: 17px; margin-top: 3px; }
         .tv-col-right.tv-dense-stack .table-text-divider { font-size: 15px; margin: 2px 0; }
         .tv-col-right.tv-dense-stack .tv-category-divider { margin: 8px 0; font-size: 14px; }
 
-        /* Fallback Container when No Dedications Exist */
+        /* Centered Logo Fallback */
         .tv-empty-fallback {
             display: flex;
             flex-direction: column;
@@ -716,18 +745,18 @@
             align-items: center;
             height: 100%;
             width: 100%;
-            gap: 24px;
+            gap: 20px;
         }
         .tv-large-logo {
-            width: 520px;
+            width: 480px;
             height: auto;
-            filter: drop-shadow(0px 4px 12px rgba(99, 16, 0, 0.18));
+            filter: drop-shadow(0px 4px 10px rgba(99, 16, 0, 0.18));
         }
         .tv-empty-title {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 700;
-            letter-spacing: 8px;
+            letter-spacing: 6px;
             color: #631000;
             text-transform: uppercase;
         }
@@ -870,7 +899,7 @@
                 });
             }
 
-            // Scale All Landscape TV Displays
+            // Scale Landscape TV Displays
             const tvWrappers = document.querySelectorAll('.tv-wrapper');
             tvWrappers.forEach(tvWrapper => {
                 const maxAvailableWidth = Math.min(screenWidth - 20, 1920);
@@ -1026,7 +1055,7 @@
         }
 
         /* ==========================================================================
-           TARGETED TV DOWNLOAD HELPER (#e7e3d7 Background Canvas Capture)
+           TV IMAGE DOWNLOAD ENGINE (TEXTURE COMPATIBLE)
            ========================================================================== */
         async function downloadSingleTvJPG(elementId, filename, buttonId) {
             const btn = document.getElementById(buttonId);
@@ -1047,7 +1076,8 @@
                 const tvCanvas = await html2canvas(tvPage, {
                     scale: 1.5,
                     useCORS: true,
-                    backgroundColor: '#e7e3d7',
+                    allowTaint: true,
+                    backgroundColor: '#1a1a1a',
                     width: 1920,
                     height: 1080,
                     windowWidth: 1920,
@@ -1184,9 +1214,9 @@
                 "SEUDAH SHELISHEET": "Seudat Shelisheet",
                 "GAN SHABBAT": "Gan Shabbat",
                 "WEEK OF BREAKFAST": "Week of Breakfast",
-                "MONTH OF LEARNING": "The Albert “Bero” Chehebar Learning Program<br>Month of Learning",
-                "WEEK OF LEARNING": "The Albert “Bero” Chehebar Learning Program<br>Week of Learning",
-                "DAY OF LEARNING": "The Albert “Bero” Chehebar Learning Program<br>Day of Learning"
+                "MONTH OF LEARNING": "The Albert “Bero” Chehebar<br>Learning Program<br>Month of Learning",
+                "WEEK OF LEARNING": "The Albert “Bero” Chehebar<br>Learning Program<br>Week of Learning",
+                "DAY OF LEARNING": "The Albert “Bero” Chehebar<br>Learning Program<br>Day of Learning"
             };
             const allowedCategoryKeys = Object.keys(categoryMap);
             
@@ -1327,7 +1357,7 @@
                                 <div class="row-full" style="color: #631000;">FOLLOWED BY BREAKFAST & LEARNING</div>
                             </div>
                             <div class="time-box">
-                                <div class="section-title">Learning Program</div>
+                                <div class="section-title">Albert "Bero" Chehebar A"H<br>Learning Program</div>
                                 <div class="time-row" style="justify-content: center; font-size: 16px; font-weight: 700; margin-bottom: 2px; border: none;">MONDAY - FRIDAY MORNING</div>
                                 <div class="row-full" style="font-weight: 600; margin-bottom: 2px; color: #631000;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
                                 <div class="row-full" style="font-size: 13.5px; color: #631000;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
@@ -1408,10 +1438,10 @@
             finalHTML += `
             <div class="tv-wrapper">
                 <div id="shabbat-tv-page" class="tv-page">
-                    <div class="bsd">בס"ד</div>
                     
-                    <!-- Left Column: Shabbat Schedule -->
-                    <div class="tv-col-left">
+                    <!-- Left Inset Ivory Box: Shabbat Schedule -->
+                    <div class="tv-inset-panel tv-col-left">
+                        <div class="bsd">בס"ד</div>
                         <div class="header-grid">
                             <div class="grid-left">פרשת ${parshaHebrew}<br>${hebrewDateHeader}</div>
                             <div class="grid-center">
@@ -1421,35 +1451,36 @@
                         </div>
 
                         <div class="tv-schedule-boxes-container">
-                            <div class="tv-schedule-card">
-                                <div class="section-title">Friday Night</div>
-                                <div class="time-row highlight"><span>CANDLE LIGHTING</span><span>${candleLighting}</span></div>
-                                <div class="time-row"><span>Shir Hashirim</span><span>${shirHashirim}</span></div>
-                                <div class="time-row"><span>Minha</span><span>${fridayMinha}</span></div>
+                            <div class="tv-schedule-section-block">
+                                <div class="tv-maroon-ribbon">Friday Night</div>
+                                <div class="tv-time-centered-row highlight">CANDLE LIGHTING - ${candleLighting}</div>
+                                <div class="tv-time-centered-row">SHIR HASHIRIM - ${shirHashirim}</div>
+                                <div class="tv-time-centered-row">MINHA - ${fridayMinha}</div>
                             </div>
 
-                            <div class="tv-schedule-card">
-                                <div class="section-title">Shabbat Morning</div>
-                                <div class="time-row"><span>KORBANOT</span><span>${shabbatKorbanot}</span></div>
-                                <div class="time-row"><span>HASHEM MELECH</span><span>${shabbatShacharit}</span></div>
-                                <div class="row-full" style="color: #631000; font-weight: 700;">FOLLOWED BY AN EXQUISITE KIDDUSH AND CLASS WITH RABBI DAVID HABER</div>
-                                <div class="time-row"><span>Danny J. Betesh Boys Program</span><span>9:15AM - 11:30AM</span></div>
-                                <div class="time-row"><span>Girls Program</span><span>9:15AM - 11:30AM</span></div>
-                                <div class="row-full" style="color: #631000; font-weight: 700;">Mishna Berura Shiur with Rabbi Ralph Tebele Following the speech</div>
+                            <div class="tv-schedule-section-block">
+                                <div class="tv-maroon-ribbon">Shabbat Morning</div>
+                                <div class="tv-time-centered-row">KORBANOT - ${shabbatKorbanot}</div>
+                                <div class="tv-time-centered-row">HASHEM MELECH - ${shabbatShacharit}</div>
+                                <div class="tv-time-centered-subtext">FOLLOWED BY AN EXQUISITE KIDDUSH & CLASS WITH RABBI DAVID HABER</div>
+                                <div class="tv-time-centered-row" style="font-size: 20px; margin-top: 4px;">DANNY J. BETESH BOYS PROGRAM: 9:15AM - 11:30AM</div>
+                                <div class="tv-time-centered-row" style="font-size: 20px;">GIRLS PROGRAM: 9:15AM - 11:30AM</div>
+                                <div class="tv-time-centered-subtext">Mishna Berura Shiur with Rabbi Ralph Tebele Following the speech</div>
                             </div>
 
-                            <div class="tv-schedule-card">
-                                <div class="section-title">Shabbat Afternoon</div>
-                                <div class="time-row"><span>PRE-MINHA LEARNING PROGRAM</span><span>${preMinhaClass}</span></div>
-                                <div class="time-row"><span>MINHA</span><span>${shabbatMinha}</span></div>
-                                <div class="row-full" style="color: #631000; font-weight: 700;">FOLLOWED BY SEUDAT SHELISHEET & SPEECH</div>
-                                <div class="time-row highlight"><span>HAVDALAH</span><span>${havdalahTime}</span></div>
+                            <div class="tv-schedule-section-block">
+                                <div class="tv-maroon-ribbon">Shabbat Afternoon</div>
+                                <div class="tv-time-centered-row">PRE-MINHA LEARNING PROGRAM - ${preMinhaClass}</div>
+                                <div class="tv-time-centered-row">MINHA - ${shabbatMinha}</div>
+                                <div class="tv-time-centered-subtext">FOLLOWED BY SEUDAT SHELISHEET & SPEECH</div>
+                                <div class="tv-time-centered-row highlight" style="margin-top: 4px;">HAVDALAH - ${havdalahTime}</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right Column: Grand Shabbat Dedications Card -->
-                    <div class="tv-col-right ${tvShabbatDenseClass}">
+                    <!-- Right Inset Ivory Box: Dedications -->
+                    <div class="tv-inset-panel tv-col-right ${tvShabbatDenseClass}">
+                        <div class="bsd">בס"ד</div>
                         <div class="table-parsha">פרשת ${parshaHebrew}</div>
                         <div class="tv-dedications-scrollable">
                             ${tvAllShabbatHTML || `
@@ -1502,7 +1533,6 @@
 
             const tvWeekdayDenseClass = (activeWeekdayCategories.length > 1 || totalWeekdayEntries >= 3) ? 'tv-dense-stack' : '';
 
-            // If there are no weekday dedications, show large centered logo
             const weekdayRightContentHTML = (activeWeekdayCategories.length > 0) ? `
                 <div class="tv-dedications-scrollable">
                     ${tvAllWeekdayHTML}
@@ -1518,10 +1548,10 @@
             finalHTML += `
             <div class="tv-wrapper">
                 <div id="weekday-tv-page" class="tv-page">
-                    <div class="bsd">בס"ד</div>
                     
-                    <!-- Left Column: Weekday Schedule -->
-                    <div class="tv-col-left">
+                    <!-- Left Inset Ivory Box: Weekday Schedule -->
+                    <div class="tv-inset-panel tv-col-left">
+                        <div class="bsd">בס"ד</div>
                         <div class="header-grid">
                             <div class="grid-left">WEEKDAY SCHEDULE<br>${hebrewDateWeek}</div>
                             <div class="grid-center">
@@ -1531,31 +1561,34 @@
                         </div>
 
                         <div class="tv-schedule-boxes-container">
-                            <div class="tv-schedule-card">
-                                <div class="section-title">Sunday Schedule</div>
-                                <div class="time-row"><span>PRE-SHACHARIT CLASS WITH RABBI TEBELE</span><span>7:20AM</span></div>
-                                <div class="time-row" ><span>SHACHARIT</span><span>${sundayShacharit}</span></div>
-                                <div class="row-full" style="color: #631000; font-weight: 700;">FOLLOWED BY DELUXE BREAKFAST & CLASS WITH RABBI DAVID HABER</div>
+                            <div class="tv-schedule-section-block">
+                                <div class="tv-maroon-ribbon">Sunday Schedule</div>
+                                <div class="tv-time-centered-row">PRE-SHACHARIT CLASS WITH RABBI TEBELE - 7:20AM</div>
+                                <div class="tv-time-centered-row">SHACHARIT - ${sundayShacharit}</div>
+                                <div class="tv-time-centered-subtext">FOLLOWED BY DELUXE BREAKFAST & CLASS WITH RABBI DAVID HABER</div>
                             </div>
 
-                            <div class="tv-schedule-card">
-                                <div class="section-title">Weekday Schedule</div>
-                                <div class="time-row"><span>GEMARA CLASSES</span><span>${weekdayPreShacharitLearning}</span></div>
-                                <div class="time-row"><span>SHACHARIT</span><span>${weekdayShacharit}</span></div>
-                                <div class="row-full" style="color: #631000; font-weight: 700;">FOLLOWED BY BREAKFAST & LEARNING</div>
+                            <div class="tv-schedule-section-block">
+                                <div class="tv-maroon-ribbon">Weekday Schedule</div>
+                                <div class="tv-time-centered-row">GEMARA CLASSES - ${weekdayPreShacharitLearning}</div>
+                                <div class="tv-time-centered-row">SHACHARIT - ${weekdayShacharit}</div>
+                                <div class="tv-time-centered-subtext">FOLLOWED BY BREAKFAST & LEARNING</div>
                             </div>
 
-                            <div class="tv-schedule-card">
-                                <div class="section-title">Learning Program</div>
-                                <div class="time-row" style="justify-content: center; font-size: 20px; font-weight: 700; margin-bottom: 2px; border: none;">MONDAY - FRIDAY MORNING</div>
-                                <div class="row-full" style="font-weight: 600; margin-bottom: 2px; color: #631000; text-align: center;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
-                                <div class="row-full" style="font-size: 16px; color: #631000; text-align: center;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
+                            <div class="tv-schedule-section-block">
+                                <div class="tv-maroon-ribbon">Albert "Bero" Chehebar A"H<br>Learning Program</div>
+                                <div class="tv-time-centered-row" style="font-size: 20px; font-weight: 700; text-decoration: underline; margin-top: 4px;">MONDAY - FRIDAY MORNING</div>
+                                <div class="tv-time-centered-subtext" style="font-weight: 600; margin-top: 2px;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
+                                <div class="tv-time-centered-row" style="font-size: 20px; font-weight: 700; text-decoration: underline; margin-top: 6px;">MONDAY - WEDNESDAY NIGHTS</div>
+                                <div class="tv-time-centered-subtext" style="font-weight: 600; margin-top: 2px;">MULTIPLE LEARNING GROUPS AT 8:00PM & 9:00PM</div>
+                                <div class="tv-time-centered-subtext" style="font-size: 15px; margin-top: 8px;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right Column: Non-Shabbat Dedications OR Centered Logo -->
-                    <div class="tv-col-right ${tvWeekdayDenseClass}">
+                    <!-- Right Inset Ivory Box: Dedications OR Logo -->
+                    <div class="tv-inset-panel tv-col-right ${tvWeekdayDenseClass}">
+                        <div class="bsd">בס"ד</div>
                         ${weekdayRightContentHTML}
                     </div>
                 </div>
