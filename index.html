@@ -201,7 +201,7 @@
             white-space: nowrap; 
         }
 
-        /* Dedications Container: Sits at bottom, shrink-wraps contents, stops 25px under schedule */
+        /* Dedications Container */
         .dedications-box { 
             background: linear-gradient(135deg, #fdfbf7 0%, #fcf9f2 100%); 
             border: 2px solid #eadeca; 
@@ -377,7 +377,6 @@
             color: #631000; 
         }
 
-        /* --- Template 2: Single Dedication --- */
         .table-layout.table-count-1 { padding: 48px; }
         .table-layout.table-count-1 .logo-img { width: 340px; margin-bottom: 5px; margin-top: 10px; }
         .table-layout.table-count-1 .table-parsha { font-size: 58px; margin: 5px 0 10px 0; }
@@ -390,70 +389,68 @@
         .table-layout.table-count-1 .table-dedication-block .by-line { margin-top: 10px; font-size: 26px; letter-spacing: 1px; }
         .table-layout.table-count-1 .table-text-divider { font-size: 20px; margin: 4px 0; letter-spacing: 2px; }
 
-        /* --- Template 2: Two Dedications --- */
         .table-layout.table-count-2 { padding: 34px 44px; }
-        .table-layout.table-count-2 .logo-img { width: 340px; margin-bottom: 3px; margin-top: 5px; }
-        .table-layout.table-count-2 .table-parsha { font-size: 58px; margin: 3px 0 6px 0; }
-        .table-layout.table-count-2 .table-purpose { font-size: 38px; letter-spacing: 2px; margin-bottom: 2px; line-height: 1.15; }
-        .table-layout.table-count-2 .table-is-dedicated { font-size: 22px; margin-bottom: 5px; letter-spacing: 4px; }
-        .table-layout.table-count-2 .diamond-separator { font-size: 16px; margin: 3px 0 10px 0; letter-spacing: 10px; }
-        .table-layout.table-count-2 .table-dedications-container { gap: 8px; }
-        .table-layout.table-count-2 .table-dedication-block { font-size: 23px; line-height: 1.35; font-weight: 500; }
-        .table-layout.table-count-2 .table-dedication-block .bold-core-dedication { font-size: 32px; letter-spacing: 0.4px; line-height: 1.2; margin: 5px 0; }
-        .table-layout.table-count-2 .table-dedication-block .by-line { margin-top: 6px; font-size: 26px; letter-spacing: 1px; }
-        .table-layout.table-count-2 .table-text-divider { font-size: 16px; margin: 2px 0; letter-spacing: 2px; }
+        .table-layout.table-count-2 .logo-img { width: 310px; margin-bottom: 4px; margin-top: 5px; }
+        .table-layout.table-count-2 .table-parsha { font-size: 50px; margin: 4px 0 8px 0; }
+        .table-layout.table-count-2 .table-purpose { font-size: 35px; letter-spacing: 3px; margin-bottom: 2px; line-height: 1.2; }
+        .table-layout.table-count-2 .table-is-dedicated { font-size: 21px; margin-bottom: 6px; letter-spacing: 4px; }
+        .table-layout.table-count-2 .diamond-separator { font-size: 18px; margin: 4px 0 12px 0; letter-spacing: 10px; }
+        .table-layout.table-count-2 .table-dedications-container { gap: 12px; }
+        .table-layout.table-count-2 .table-dedication-block { font-size: 20px; line-height: 1.4; font-weight: 500; }
+        .table-layout.table-count-2 .table-dedication-block .bold-core-dedication { font-size: 26px; letter-spacing: 0.4px; line-height: 1.25; margin: 6px 0; }
+        .table-layout.table-count-2 .table-dedication-block .by-line { margin-top: 8px; font-size: 22px; letter-spacing: 1px; }
+        .table-layout.table-count-2 .table-text-divider { font-size: 18px; margin: 4px 0; letter-spacing: 2px; }
 
-        /* --- Template 2: Three or More Dedications (Optimized Space-Filling) --- */
         .table-layout.table-count-3-plus { 
-            padding: 10px 36px; 
-            justify-content: space-evenly; 
+            padding: 36px 44px; 
+            justify-content: space-between; 
         }
         .table-layout.table-count-3-plus .logo-img { 
-            width: 340; 
+            width: 290px; 
             margin-bottom: 0; 
             margin-top: 5px; 
         }
         .table-layout.table-count-3-plus .table-parsha { 
-            font-size: 58px; 
+            font-size: 48px; 
             margin: 4px 0 6px 0; 
         }
         .table-layout.table-count-3-plus .table-purpose { 
-            font-size: 38px; 
+            font-size: 34px; 
             letter-spacing: 3px; 
             margin-bottom: 2px; 
             line-height: 1.15; 
         }
         .table-layout.table-count-3-plus .table-is-dedicated { 
-            font-size: 22px; 
+            font-size: 19px; 
             margin-bottom: 4px; 
             letter-spacing: 4px; 
         }
         .table-layout.table-count-3-plus .diamond-separator { 
-            font-size: 13px; 
+            font-size: 16px; 
             margin: 4px 0 12px 0; 
             letter-spacing: 10px; 
         }
         .table-layout.table-count-3-plus .table-dedications-container { 
-            gap: 5px; 
-            <!-- flex: 1;
+            gap: 10px; 
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly; -->
+            justify-content: space-evenly; 
         }
         .table-layout.table-count-3-plus .table-dedication-block { 
-            font-size: 20px; 
+            font-size: 15px; 
             line-height: 1.25; 
             font-weight: 500; 
         }
         .table-layout.table-count-3-plus .table-dedication-block .bold-core-dedication { 
-            font-size: 26px; 
+            font-size: 22px; 
             letter-spacing: 0.4px; 
             line-height: 1.2; 
             margin: 4px 0; 
         }
         .table-layout.table-count-3-plus .table-dedication-block .by-line { 
             margin-top: 4px; 
-            font-size: 20px; 
+            font-size: 17.5px; 
             letter-spacing: 0.5px; 
         }
         .table-layout.table-count-3-plus .table-text-divider { 
@@ -463,7 +460,7 @@
         }
 
         /* ==========================================================================
-           TEMPLATE 3: 1920x1080 TV DISPLAY BOARD
+           TEMPLATE 3 & 4: 1920x1080 TV DISPLAY BOARDS (#e7e3d7 Background)
            ========================================================================== */
         .tv-wrapper {
             position: relative;
@@ -473,7 +470,7 @@
         }
 
         .tv-page {
-            background-color: #ffffff;
+            background-color: #e7e3d7;
             width: 1920px;
             height: 1080px;
             box-sizing: border-box;
@@ -492,8 +489,8 @@
         }
 
         .tv-page .bsd {
-            top: 0px;
-            right: 20px;
+            top: 30px;
+            right: 45px;
             font-size: 24px;
             font-family: 'David Libre', serif;
             font-weight: 700;
@@ -504,6 +501,7 @@
             line-height: 1;
         }
 
+        /* --- TV Left Column: Shared Layout --- */
         .tv-col-left {
             flex: 1.12;
             display: flex;
@@ -547,7 +545,7 @@
         }
 
         .tv-schedule-card {
-            background: linear-gradient(135deg, #fdfbf7 0%, #fcf9f2 100%);
+            
             border: 2px solid #eadeca;
             border-top: 4px solid #c5a059;
             border-radius: 8px;
@@ -580,9 +578,9 @@
             margin-top: 4px;
             margin-bottom: 2px;
             line-height: 1.25;
-            text-align: center;
         }
 
+        /* --- TV Right Column: Shared Dedications Layout --- */
         .tv-col-right {
             flex: 0.88;
             display: flex;
@@ -595,7 +593,7 @@
             text-align: center;
             font-family: 'Cinzel', serif;
             overflow: hidden;
-            background: linear-gradient(135deg, #fdfbf7 0%, #fcf9f2 100%);
+            
             border: 2px solid #eadeca;
             border-top: 5px solid #c5a059;
             border-radius: 10px;
@@ -638,7 +636,7 @@
 
         .tv-col-right .table-purpose {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 38px;
+            font-size: 36px;
             font-weight: 700;
             letter-spacing: 4px;
             margin-bottom: 2px;
@@ -710,6 +708,30 @@
         .tv-col-right.tv-dense-stack .table-text-divider { font-size: 15px; margin: 2px 0; }
         .tv-col-right.tv-dense-stack .tv-category-divider { margin: 8px 0; font-size: 14px; }
 
+        /* Fallback Container when No Dedications Exist */
+        .tv-empty-fallback {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            gap: 24px;
+        }
+        .tv-large-logo {
+            width: 520px;
+            height: auto;
+            filter: drop-shadow(0px 4px 12px rgba(99, 16, 0, 0.18));
+        }
+        .tv-empty-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: #631000;
+            text-transform: uppercase;
+        }
+
         /* UI Controls */
         .loading-text { 
             font-family: 'Cinzel', serif; 
@@ -734,9 +756,9 @@
         .action-btn {
             color: #ffffff;
             border: 2px solid #c5a059;
-            padding: 15px 30px;
+            padding: 15px 28px;
             font-family: 'Cinzel', serif;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             border-radius: 6px;
@@ -848,9 +870,9 @@
                 });
             }
 
-            // Scale Landscape TV Display
-            const tvWrapper = document.querySelector('.tv-wrapper');
-            if (tvWrapper) {
+            // Scale All Landscape TV Displays
+            const tvWrappers = document.querySelectorAll('.tv-wrapper');
+            tvWrappers.forEach(tvWrapper => {
                 const maxAvailableWidth = Math.min(screenWidth - 20, 1920);
                 if (maxAvailableWidth < 1920) {
                     const tvScale = maxAvailableWidth / 1920;
@@ -875,23 +897,23 @@
                         tvPage.style.boxShadow = '0 6px 30px rgba(0, 0, 0, 0.2)';
                     }
                 }
-            }
+            });
         }
         
         window.addEventListener('resize', executeMobileScaling);
 
         /* ==========================================================================
-           JPG DOWNLOAD ENGINE (EXCLUDES TV DISPLAY)
+           JPG DOWNLOAD ENGINE (PORTRAIT FLYERS ONLY)
            ========================================================================== */
         async function downloadAllJPGs() {
             const btn = document.getElementById('downloadJpgBtn');
             const pdfBtn = document.getElementById('downloadPdfBtn');
-            const tvBtn = document.getElementById('downloadTvBtn');
+            const tvBtns = document.querySelectorAll('.tv-btn');
             
             btn.innerText = "GENERATING JPGS...";
             btn.disabled = true;
             pdfBtn.disabled = true;
-            if (tvBtn) tvBtn.disabled = true;
+            tvBtns.forEach(b => b.disabled = true);
 
             await document.fonts.ready;
             
@@ -928,21 +950,21 @@
             btn.innerText = "DOWNLOAD ALL PAGES AS JPGS";
             btn.disabled = false;
             pdfBtn.disabled = false;
-            if (tvBtn) tvBtn.disabled = false;
+            tvBtns.forEach(b => b.disabled = false);
         }
 
         /* ==========================================================================
-           PDF DOWNLOAD ENGINE (EXCLUDES TV DISPLAY)
+           PDF DOWNLOAD ENGINE (PORTRAIT FLYERS ONLY)
            ========================================================================== */
         async function downloadCustomPDF() {
             const btn = document.getElementById('downloadPdfBtn');
             const jpgBtn = document.getElementById('downloadJpgBtn');
-            const tvBtn = document.getElementById('downloadTvBtn');
+            const tvBtns = document.querySelectorAll('.tv-btn');
             
             btn.innerText = "GENERATING PDF...";
             btn.disabled = true;
             jpgBtn.disabled = true;
-            if (tvBtn) tvBtn.disabled = true;
+            tvBtns.forEach(b => b.disabled = true);
 
             await document.fonts.ready;
             const { jsPDF } = window.jspdf;
@@ -1000,25 +1022,21 @@
             btn.innerText = "DOWNLOAD CUSTOM BATCH PDF";
             btn.disabled = false;
             jpgBtn.disabled = false;
-            if (tvBtn) tvBtn.disabled = false;
+            tvBtns.forEach(b => b.disabled = false);
         }
 
         /* ==========================================================================
-           TV IMAGE DOWNLOAD ENGINE (ONLY EXPORTS TV DISPLAY)
+           TARGETED TV DOWNLOAD HELPER (#e7e3d7 Background Canvas Capture)
            ========================================================================== */
-        async function downloadTvJPG() {
-            const btn = document.getElementById('downloadTvBtn');
-            const jpgBtn = document.getElementById('downloadJpgBtn');
-            const pdfBtn = document.getElementById('downloadPdfBtn');
-            
-            btn.innerText = "GENERATING TV IMAGE...";
+        async function downloadSingleTvJPG(elementId, filename, buttonId) {
+            const btn = document.getElementById(buttonId);
+            const origText = btn.innerText;
+            btn.innerText = "EXPORTING...";
             btn.disabled = true;
-            jpgBtn.disabled = true;
-            pdfBtn.disabled = true;
 
             await document.fonts.ready;
             
-            const tvPage = document.querySelector('.tv-page');
+            const tvPage = document.getElementById(elementId);
             if (tvPage) {
                 const origTvTransform = tvPage.style.transform;
                 const origTvPosition = tvPage.style.position;
@@ -1029,7 +1047,7 @@
                 const tvCanvas = await html2canvas(tvPage, {
                     scale: 1.5,
                     useCORS: true,
-                    backgroundColor: '#ffffff',
+                    backgroundColor: '#e7e3d7',
                     width: 1920,
                     height: 1080,
                     windowWidth: 1920,
@@ -1040,15 +1058,13 @@
                 tvPage.style.position = origTvPosition;
 
                 const link = document.createElement('a');
-                link.download = `Midrash_Elyon_TV_Display_1080p.jpg`;
+                link.download = filename;
                 link.href = tvCanvas.toDataURL('image/jpeg', 0.95);
                 link.click();
             }
             
-            btn.innerText = "TV IMAGE";
+            btn.innerText = origText;
             btn.disabled = false;
-            jpgBtn.disabled = false;
-            pdfBtn.disabled = false;
         }
 
         /* ==========================================================================
@@ -1224,6 +1240,7 @@
                 }
             }
 
+            // Split into Shabbat vs. Non-Shabbat Buckets
             const shabbatCategories = ["Shabbat Kiddush", "Seudat Shelisheet", "Gan Shabbat"];
             const shabbatDedications = {};
             const weekdayDedications = {};
@@ -1352,7 +1369,7 @@
             }
 
             // ==========================================================================
-            // PAGE: 1920x1080 TV DISPLAY BOARD
+            // PAGE 1 (TV): 1920x1080 SHABBAT DISPLAY BOARD
             // ==========================================================================
             const activeShabbatCategories = Object.keys(shabbatDedications);
             let tvAllShabbatHTML = '';
@@ -1386,11 +1403,11 @@
                 }
             });
 
-            const tvDenseClass = (activeShabbatCategories.length > 1 || totalShabbatEntries >= 3) ? 'tv-dense-stack' : '';
+            const tvShabbatDenseClass = (activeShabbatCategories.length > 1 || totalShabbatEntries >= 3) ? 'tv-dense-stack' : '';
 
             finalHTML += `
             <div class="tv-wrapper">
-                <div class="tv-page">
+                <div id="shabbat-tv-page" class="tv-page">
                     <div class="bsd">בס"ד</div>
                     
                     <!-- Left Column: Shabbat Schedule -->
@@ -1431,8 +1448,8 @@
                         </div>
                     </div>
 
-                    <!-- Right Column: Grand Dedications Card -->
-                    <div class="tv-col-right ${tvDenseClass}">
+                    <!-- Right Column: Grand Shabbat Dedications Card -->
+                    <div class="tv-col-right ${tvShabbatDenseClass}">
                         <div class="table-parsha">פרשת ${parshaHebrew}</div>
                         <div class="tv-dedications-scrollable">
                             ${tvAllShabbatHTML || `
@@ -1448,11 +1465,108 @@
                 </div>
             </div>`;
 
+            // ==========================================================================
+            // PAGE 2 (TV): 1920x1080 WEEKDAY DISPLAY BOARD
+            // ==========================================================================
+            const activeWeekdayCategories = Object.keys(weekdayDedications);
+            let tvAllWeekdayHTML = '';
+            let totalWeekdayEntries = 0;
+
+            activeWeekdayCategories.forEach(cat => {
+                totalWeekdayEntries += weekdayDedications[cat].length;
+            });
+
+            activeWeekdayCategories.forEach((cat, index) => {
+                const items = weekdayDedications[cat];
+                let blocksHTML = items.map(item => `
+                    <div class="table-dedication-block">
+                        ${item.prefix ? `<span>${item.prefix.toUpperCase()}</span>` : ''}
+                        <div class="bold-core-dedication">${item.honor}</div>
+                        ${item.by ? `<span class="by-line">BY: ${item.by.toUpperCase()}</span>` : ''}
+                    </div>
+                `).join('<div class="table-text-divider">~ AND ~</div>');
+
+                tvAllWeekdayHTML += `
+                    <div class="tv-category-group">
+                        <div class="table-purpose">${cat}</div>
+                        <div class="table-is-dedicated">is dedicated</div>
+                        <div class="diamond-separator">◆ <span>◆</span> ◆</div>
+                        <div class="table-dedications-container">${blocksHTML}</div>
+                    </div>
+                `;
+
+                if (index < activeWeekdayCategories.length - 1) {
+                    tvAllWeekdayHTML += `<div class="tv-category-divider">◆ ◆ ◆</div>`;
+                }
+            });
+
+            const tvWeekdayDenseClass = (activeWeekdayCategories.length > 1 || totalWeekdayEntries >= 3) ? 'tv-dense-stack' : '';
+
+            // If there are no weekday dedications, show large centered logo
+            const weekdayRightContentHTML = (activeWeekdayCategories.length > 0) ? `
+                <div class="tv-dedications-scrollable">
+                    ${tvAllWeekdayHTML}
+                </div>
+            ` : `
+                <div class="tv-empty-fallback">
+                    <img class="tv-large-logo" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
+                    <div class="diamond-separator" style="font-size: 20px; letter-spacing: 16px;">◆ ◆ ◆</div>
+                    <div class="tv-empty-title">Congregation Midrash Elyon</div>
+                </div>
+            `;
+
+            finalHTML += `
+            <div class="tv-wrapper">
+                <div id="weekday-tv-page" class="tv-page">
+                    <div class="bsd">בס"ד</div>
+                    
+                    <!-- Left Column: Weekday Schedule -->
+                    <div class="tv-col-left">
+                        <div class="header-grid">
+                            <div class="grid-left">WEEKDAY SCHEDULE<br>${hebrewDateWeek}</div>
+                            <div class="grid-center">
+                                <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
+                            </div>
+                            <div class="grid-right">${dateWeek}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                        </div>
+
+                        <div class="tv-schedule-boxes-container">
+                            <div class="tv-schedule-card">
+                                <div class="section-title">Sunday Schedule</div>
+                                <div class="time-row"><span>PRE-SHACHARIT CLASS WITH RABBI TEBELE</span><span>7:20AM</span></div>
+                                <div class="time-row" ><span>SHACHARIT</span><span>${sundayShacharit}</span></div>
+                                <div class="row-full" style="color: #631000; font-weight: 700;">FOLLOWED BY DELUXE BREAKFAST & CLASS WITH RABBI DAVID HABER</div>
+                            </div>
+
+                            <div class="tv-schedule-card">
+                                <div class="section-title">Weekday Schedule</div>
+                                <div class="time-row"><span>GEMARA CLASSES</span><span>${weekdayPreShacharitLearning}</span></div>
+                                <div class="time-row"><span>SHACHARIT</span><span>${weekdayShacharit}</span></div>
+                                <div class="row-full" style="color: #631000; font-weight: 700;">FOLLOWED BY BREAKFAST & LEARNING</div>
+                            </div>
+
+                            <div class="tv-schedule-card">
+                                <div class="section-title">Learning Program</div>
+                                <div class="time-row" style="justify-content: center; font-size: 20px; font-weight: 700; margin-bottom: 2px; border: none;">MONDAY - FRIDAY MORNING</div>
+                                <div class="row-full" style="font-weight: 600; margin-bottom: 2px; color: #631000; text-align: center;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
+                                <div class="row-full" style="font-size: 16px; color: #631000; text-align: center;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Non-Shabbat Dedications OR Centered Logo -->
+                    <div class="tv-col-right ${tvWeekdayDenseClass}">
+                        ${weekdayRightContentHTML}
+                    </div>
+                </div>
+            </div>`;
+
             finalHTML += `
             <div class="button-container">
                 <button id="downloadJpgBtn" class="action-btn jpg-btn" onclick="downloadAllJPGs()">Download All Pages as JPGs</button>
                 <button id="downloadPdfBtn" class="action-btn pdf-btn" onclick="downloadCustomPDF()">Download Custom Batch PDF</button>
-                <button id="downloadTvBtn" class="action-btn tv-btn" onclick="downloadTvJPG()">TV Image</button>
+                <button id="downloadShabbatTvBtn" class="action-btn tv-btn" onclick="downloadSingleTvJPG('shabbat-tv-page', 'Midrash_Elyon_Shabbat_TV.jpg', 'downloadShabbatTvBtn')">Shabbat TV Image</button>
+                <button id="downloadWeekdayTvBtn" class="action-btn tv-btn" onclick="downloadSingleTvJPG('weekday-tv-page', 'Midrash_Elyon_Weekday_TV.jpg', 'downloadWeekdayTvBtn')">Weekday TV Image</button>
             </div>`;
 
             document.getElementById('loading-state').style.display = 'none';
