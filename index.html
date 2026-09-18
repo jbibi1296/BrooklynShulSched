@@ -51,62 +51,69 @@
         }
 
         /* ==========================================================================
-           TEMPLATE 1: WEEKLY SCHEDULE FLYER
+           TEMPLATE 1: TEXTURED SCHEDULE FLYERS (PAGES 1 & 2)
            ========================================================================== */
-        .schedule-layout {
-            padding: 24px 48px;
-            font-family: 'Cinzel', serif;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            height: 100%;
+        .schedule-page-bg {
+            background-color: #e7e3d7;
+            background-image: url("https://i.postimg.cc/j2VNFTKh/Midrash-Elyon-Shabbat-TV.png");
+            background-repeat: repeat;
+            background-size: auto;
+            width: 816px;
+            height: 1056px;
             box-sizing: border-box;
             position: relative;
-            border: 14px solid #631000;
-            outline: 3px double #c5a059;
-            outline-offset: -10px;
-            overflow: hidden; 
+            color: #631000;
+            overflow: hidden;
+            border: 12px solid #631000;
+            outline: 3px solid #c5a059;
+            outline-offset: -8px;
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Cinzel', serif;
         }
 
-        .schedule-content-container { 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: flex-start; 
-            flex: 1; 
-            height: 100%;
+        .schedule-inset-panel {
+            background-color: #fcf9f2;
+            border: 5px solid #631000;
+            outline: 2px solid #c5a059;
+            outline-offset: -3px;
+            border-radius: 4px;
             box-sizing: border-box;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding: 14px 24px 30px 24px;
         }
 
-        .schedule-content-container > .time-box:last-of-type {
-            margin-bottom: 25px;
-        }
-
-        .bsd { 
+        .schedule-inset-panel .bsd { 
             font-family: 'David Libre', serif; 
-            font-size: 18px; 
+            font-size: 17px; 
             position: absolute; 
-            top: 15px; 
-            right: 20px; 
+            top: 10px; 
+            right: 14px; 
             margin: 0; 
             font-weight: 700; 
             color: #631000; 
             z-index: 10;
         }
 
-        .header-grid { 
+        .schedule-inset-panel .header-grid { 
             display: grid; 
             grid-template-columns: 1.2fr 1fr 1.2fr; 
             align-items: center; 
-            margin-top: 5px; 
+            margin-top: 2px; 
             border-bottom: 2px solid #631000; 
-            padding-bottom: 8px; 
-            gap: 10px; 
+            padding-bottom: 6px; 
+            gap: 8px; 
         }
 
-        .grid-left { 
+        .schedule-inset-panel .grid-left { 
             font-family: 'David Libre', serif; 
-            font-size: 21px; 
+            font-size: 20px; 
             font-weight: 700; 
             text-align: left; 
             line-height: 1.2; 
@@ -114,10 +121,10 @@
             white-space: nowrap; 
         }
 
-        .grid-center { text-align: center; }
+        .schedule-inset-panel .grid-center { text-align: center; }
 
-        .grid-right { 
-            font-size: 13.5px; 
+        .schedule-inset-panel .grid-right { 
+            font-size: 13px; 
             font-weight: 700; 
             text-align: right; 
             letter-spacing: 0.3px; 
@@ -126,103 +133,116 @@
             white-space: nowrap; 
         }
 
-        .entrance-note { 
-            font-size: 11px; 
+        .schedule-inset-panel .entrance-note { 
+            font-size: 10.5px; 
             font-weight: 500; 
             color: #631000; 
             display: block; 
-            margin-top: 2px; 
+            margin-top: 1px; 
         }
 
-        .logo-img { 
-            width: 220px; 
+        .schedule-inset-panel .logo-img { 
+            width: 210px; 
             height: auto; 
             display: block; 
             margin: 0 auto; 
             filter: drop-shadow(0px 2px 4px rgba(11, 35, 71, 0.15)); 
         }
 
-        .logo-deal { 
-            font-family: 'Cinzel Decorative', serif; 
-            font-size: 18px; 
-            font-weight: 700; 
-            letter-spacing: 6px; 
-            margin-top: 4px; 
-            color: #631000; 
+        .flyer-schedule-blocks-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            flex: 1;
+            margin-top: 0px;
+            margin-bottom: 10px;
+            gap: 8px;
         }
 
-        .section-title { 
-            font-size: 17px; 
-            font-weight: 700; 
-            letter-spacing: 2px; 
-            color: #c5a059; 
-            margin: 6px 0 2px 0; 
-            text-transform: uppercase; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            white-space: nowrap; 
+        /* Edge-to-Edge Solid Maroon Ribbon */
+        .flyer-maroon-ribbon {
+            background-color: #631000;
+            color: #ffffff;
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 4px 0;
+            width: calc(100% + 48px);
+            margin-left: -24px;
+            margin-right: -24px;
+            box-sizing: border-box;
+            border-top: 1.5px solid #c5a059;
+            border-bottom: 1.5px solid #c5a059;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            margin-bottom: 4px;
         }
 
-        .section-title::before, .section-title::after { 
-            content: ''; 
-            flex: 1; 
-            height: 2px; 
-            background: linear-gradient(to var(--dir, right), #c5a059, transparent); 
-            margin: 0 15px; 
+        .flyer-time-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
         }
-        .section-title::after { --dir: left; }
 
-        .time-box { padding: 0 10px; margin-bottom: 2px; }
-        
-        .time-row { 
+        .flyer-time-box .time-row { 
             display: flex; 
             justify-content: space-between; 
-            font-size: 16px; 
-            font-weight: 600; 
-            margin: 1.5px 0; 
+            font-size: 15.5px; 
+            font-weight: 700; 
+            margin: 1px 0; 
             letter-spacing: 0.5px; 
             border-bottom: 1px dashed #e2e8f0; 
-            padding-bottom: 1.5px; 
+            padding-bottom: 1px; 
             white-space: nowrap; 
+            width: 100%;
         }
 
-        .time-row.highlight { 
+        .flyer-time-box .time-row.highlight { 
             font-weight: 700; 
-            border-bottom: 1px dashed rgba(217, 56, 56, 0.3); 
+            color: #8c1d1d;
+            border-bottom: 1px dashed rgba(217, 56, 56, 0.35); 
         }
 
-        .row-full { 
-            font-size: 13.5px; 
+        .flyer-time-box .row-full { 
+            font-size: 13px; 
             font-weight: 700; 
             color: #631000; 
             margin-top: 2px; 
+            margin-bottom: 1px;
             letter-spacing: 0.5px; 
             white-space: nowrap; 
+            text-align: center;
         }
 
-        /* Dedications Container */
+        /* Bottom Dedications Container inside Inset Panel */
         .dedications-box { 
             background: linear-gradient(135deg, #fdfbf7 0%, #fcf9f2 100%); 
             border: 2px solid #eadeca; 
-            border-top: 4px solid #c5a059; 
-            border-radius: 6px; 
+            border-top: 3.5px solid #c5a059; 
+            border-radius: 4px; 
             margin-top: auto; 
             flex: 0 0 auto;
             height: fit-content;
-            box-shadow: inset 0 0 10px rgba(197, 160, 89, 0.05); 
+            box-shadow: inset 0 0 8px rgba(197, 160, 89, 0.05); 
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
             box-sizing: border-box;
             overflow: hidden;
+            width: 100%;
+            text-align: center;
         }
         
         .dedications-columns { 
             display: flex; 
             justify-content: space-around; 
             align-items: flex-start; 
-            gap: 16px; 
+            gap: 14px; 
             width: 100%; 
             box-sizing: border-box;
         }
@@ -231,12 +251,12 @@
             flex: 1; 
             display: flex; 
             flex-direction: column; 
-            gap: 10px; 
+            gap: 8px; 
         }
 
         .dedications-column:not(:last-child) { 
             border-right: 1px dashed #eadeca; 
-            padding-right: 12px; 
+            padding-right: 10px; 
         }
 
         .dedication-entry { padding-bottom: 2px; }
@@ -248,13 +268,13 @@
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            gap: 10px; 
+            gap: 8px; 
             white-space: nowrap; 
         }
 
         .dedication-title::before, .dedication-title::after { 
             content: '◆'; 
-            font-size: 8px; 
+            font-size: 7px; 
         }
         
         .dedication-type { 
@@ -274,26 +294,26 @@
             font-size: inherit; 
         }
 
-        .dedications-box.count-1 { padding: 25px 25px; }
-        .dedications-box.count-1 .dedication-title { font-size: 20px; letter-spacing: 4px; margin-bottom: 12px; }
-        .dedications-box.count-1 .dedication-type { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; }
-        .dedications-box.count-1 .dedication-text { font-size: 16px; line-height: 1.45; }
+        .dedications-box.count-1 { padding: 20px 20px; }
+        .dedications-box.count-1 .dedication-title { font-size: 19px; letter-spacing: 4px; margin-bottom: 10px; }
+        .dedications-box.count-1 .dedication-type { font-size: 15.5px; letter-spacing: 2px; margin-bottom: 5px; }
+        .dedications-box.count-1 .dedication-text { font-size: 15.5px; line-height: 1.4; }
         
-        .dedications-box.count-2 { padding: 20px 20px; }
-        .dedications-box.count-2 .dedication-title { font-size: 18px; letter-spacing: 3px; margin-bottom: 10px; }
-        .dedications-box.count-2 .dedication-type { font-size: 15px; letter-spacing: 1.5px; margin-bottom: 5px; }
-        .dedications-box.count-2 .dedication-text { font-size: 16px; line-height: 1.4; }
+        .dedications-box.count-2 { padding: 16px 18px; }
+        .dedications-box.count-2 .dedication-title { font-size: 17px; letter-spacing: 3px; margin-bottom: 8px; }
+        .dedications-box.count-2 .dedication-type { font-size: 14.5px; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .dedications-box.count-2 .dedication-text { font-size: 15px; line-height: 1.35; }
 
-        .dedications-box.count-3-plus { padding: 14px 16px; }
-        .dedications-box.count-3-plus .dedication-title { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; }
-        .dedications-box.count-3-plus .dedication-type { font-size: 14px; letter-spacing: 1.2px; margin-bottom: 4px; }
-        .dedications-box.count-3-plus .dedication-text { font-size: 14.5px; line-height: 1.35; }
+        .dedications-box.count-3-plus { padding: 12px 14px; }
+        .dedications-box.count-3-plus .dedication-title { font-size: 15px; letter-spacing: 2px; margin-bottom: 4px; }
+        .dedications-box.count-3-plus .dedication-type { font-size: 13.5px; letter-spacing: 1.2px; margin-bottom: 3px; }
+        .dedications-box.count-3-plus .dedication-text { font-size: 14px; line-height: 1.3; }
 
-        .dedications-box.has-dense-stack { padding: 12px 14px; }
-        .dedications-box.has-dense-stack .dedications-column { gap: 8px; }
-        .dedications-box.has-dense-stack .dedication-title { font-size: 15px; letter-spacing: 2px; margin-bottom: 4px; }
-        .dedications-box.has-dense-stack .dedication-type { font-size: 12.5px; letter-spacing: 1px; margin-bottom: 2px; }
-        .dedications-box.has-dense-stack .dedication-text { font-size: 13px; line-height: 1.25; }
+        .dedications-box.has-dense-stack { padding: 10px 12px; }
+        .dedications-box.has-dense-stack .dedications-column { gap: 6px; }
+        .dedications-box.has-dense-stack .dedication-title { font-size: 14px; letter-spacing: 2px; margin-bottom: 3px; }
+        .dedications-box.has-dense-stack .dedication-type { font-size: 12px; letter-spacing: 1px; margin-bottom: 2px; }
+        .dedications-box.has-dense-stack .dedication-text { font-size: 12.5px; line-height: 1.25; }
 
         /* ==========================================================================
            TEMPLATE 2: TABLE DEDICATION FLYER
@@ -469,19 +489,18 @@
             flex-shrink: 0;
         }
 
-        /* Full 1080p Canvas with your hosted texture png */
         .tv-page {
             background-color: #e7e3d7;
             background-image: url("https://i.postimg.cc/j2VNFTKh/Midrash-Elyon-Shabbat-TV.png");
-            background-repeat: center;
-            background-size: cover;
+            background-repeat: repeat;
+            background-size: auto;
             width: 1920px;
             height: 1080px;
             box-sizing: border-box;
             position: relative;
             color: #631000;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
             border: 14px solid #631000;
             outline: 4px solid #c5a059;
             outline-offset: -10px;
@@ -492,7 +511,6 @@
             font-family: 'Cinzel', serif;
         }
 
-        /* Inset Dual Ivory/Cream Panels */
         .tv-inset-panel {
             background-color: #fcf9f2;
             border: 6px solid #631000;
@@ -517,7 +535,6 @@
             z-index: 20;
         }
 
-        /* --- Left Inset Panel: Schedule --- */
         .tv-col-left {
             flex: 1.08;
             padding: 18px 24px 22px 24px;
@@ -550,13 +567,12 @@
         .tv-schedule-boxes-container {
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
+            justify-content: space-between;
             flex: 1;
             margin-top: 10px;
             gap: 12px;
         }
 
-        /* Solid Maroon Header Ribbons */
         .tv-maroon-ribbon {
             background-color: #631000;
             color: #ffffff;
@@ -567,21 +583,17 @@
             text-transform: uppercase;
             text-align: center;
             padding: 7px 0;
-            
-            /* Stretch completely edge-to-edge */
             width: calc(100% + 48px);
             margin-left: -24px;
             margin-right: -24px;
             box-sizing: border-box;
-
-            /* Top and bottom border lines matching the original flyer */
             border: none;
             border-top: 2px solid #c5a059;
             border-bottom: 2px solid #c5a059;
-            
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
             margin-bottom: 8px;
         }
+
         .tv-schedule-section-block {
             display: flex;
             flex-direction: column;
@@ -591,7 +603,6 @@
             width: 100%;
         }
 
-        /* Centered Entry Rows */
         .tv-time-centered-row {
             font-family: 'Cinzel', serif;
             font-size: 26px;
@@ -617,7 +628,6 @@
             text-align: center;
         }
 
-        /* --- Right Inset Panel: Dedications / Logo --- */
         .tv-col-right {
             flex: 0.92;
             padding: 24px 32px;
@@ -737,7 +747,6 @@
         .tv-col-right.tv-dense-stack .table-text-divider { font-size: 15px; margin: 2px 0; }
         .tv-col-right.tv-dense-stack .tv-category-divider { margin: 8px 0; font-size: 14px; }
 
-        /* Centered Logo Fallback */
         .tv-empty-fallback {
             display: flex;
             flex-direction: column;
@@ -958,6 +967,7 @@
                 const canvas = await html2canvas(page, {
                     scale: 2, 
                     useCORS: true, 
+                    allowTaint: true,
                     backgroundColor: '#ffffff',
                     width: 816,
                     height: 1056,
@@ -1026,6 +1036,7 @@
                 const canvas = await html2canvas(page, {
                     scale: 2, 
                     useCORS: true, 
+                    allowTaint: true,
                     backgroundColor: '#ffffff',
                     width: 816,
                     height: 1056,
@@ -1287,83 +1298,90 @@
             const flyer2BoxHTML = buildDedicationsHTML(weekdayDedications);
 
             let finalHTML = `
-            <!-- PAGE 1: SHABBAT SCHEDULE FLYER -->
+            <!-- PAGE 1: SHABBAT SCHEDULE FLYER (TEXTURED INSET STYLE) -->
             <div class="flyer-wrapper">
-                <div class="print-page">
-                    <div class="schedule-layout">
+                <div class="print-page schedule-page-bg">
+                    <div class="schedule-inset-panel">
                         <div class="bsd">בס"ד</div>
-                        <div class="schedule-content-container">
-                            <div class="header-grid">
-                                <div class="grid-left">פרשת ${parshaHebrew}<br>${hebrewDateHeader}</div>
-                                <div class="grid-center">
-                                    <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
-                                    <div class="logo-deal"></div>
-                                </div>
-                                <div class="grid-right">SHABBAT SCHEDULE<br>${dateEnglish}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                        
+                        <div class="header-grid">
+                            <div class="grid-left">פרשת ${parshaHebrew}<br>${hebrewDateHeader}</div>
+                            <div class="grid-center">
+                                <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
                             </div>
-                            <div class="time-box">
-                                <div class="section-title">Friday Night</div>
+                            <div class="grid-right">SHABBAT SCHEDULE<br>${dateEnglish}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                        </div>
+
+                        <div class="flyer-schedule-blocks-container">
+                            <div class="flyer-time-box">
+                                <div class="flyer-maroon-ribbon">Friday Night</div>
                                 <div class="time-row highlight"><span>CANDLE LIGHTING</span><span>${candleLighting}</span></div>
                                 <div class="time-row"><span>Shir Hashirim</span><span>${shirHashirim}</span></div>
                                 <div class="time-row"><span>Minha</span><span>${fridayMinha}</span></div>
                             </div>
-                            <div class="time-box">
-                                <div class="section-title">Shabbat Morning</div>
+
+                            <div class="flyer-time-box">
+                                <div class="flyer-maroon-ribbon">Shabbat Morning</div>
                                 <div class="time-row"><span>KORBANOT</span><span>${shabbatKorbanot}</span></div>
                                 <div class="time-row"><span>HASHEM MELECH</span><span>${shabbatShacharit}</span></div>
-                                <div class="row-full" style="color: #631000;">FOLLOWED BY AN EXQUISITE KIDDUSH AND CLASS<br>WITH RABBI DAVID HABER</div>
+                                <div class="row-full">FOLLOWED BY AN EXQUISITE KIDDUSH AND CLASS<br>WITH RABBI DAVID HABER</div>
                                 <div class="time-row"><span>Danny J. Betesh Boys Program</span><span>9:15AM - 11:30AM</span></div>
                                 <div class="time-row"><span>Girls Program</span><span>9:15AM - 11:30AM</span></div>
-                                <div class="row-full" style="color: #631000;">Mishna Berura Shiur with Rabbi Ralph Tebele Following the speech</div>
+                                <div class="row-full">Mishna Berura Shiur with Rabbi Ralph Tebele Following the speech</div>
                             </div>
-                            <div class="time-box">
-                                <div class="section-title">Shabbat Afternoon</div>
+
+                            <div class="flyer-time-box">
+                                <div class="flyer-maroon-ribbon">Shabbat Afternoon</div>
                                 <div class="time-row"><span>PRE-MINHA LEARNING PROGRAM</span><span>${preMinhaClass}</span></div>
                                 <div class="time-row"><span>MINHA</span><span>${shabbatMinha}</span></div>
-                                <div class="row-full" style="color: #631000;">FOLLOWED BY SEUDAT SHELISHEET & SPEECH</div>
+                                <div class="row-full">FOLLOWED BY SEUDAT SHELISHEET & SPEECH</div>
                                 <div class="time-row highlight"><span>HAVDALAH</span><span>${havdalahTime}</span></div>
                             </div>
-                            ${flyer1BoxHTML}
                         </div>
+
+                        ${flyer1BoxHTML}
                     </div>
                 </div>
             </div>
 
-            <!-- PAGE 2: WEEKDAY SCHEDULE FLYER -->
+            <!-- PAGE 2: WEEKDAY SCHEDULE FLYER (TEXTURED INSET STYLE) -->
             <div class="flyer-wrapper">
-                <div class="print-page">
-                    <div class="schedule-layout">
+                <div class="print-page schedule-page-bg">
+                    <div class="schedule-inset-panel">
                         <div class="bsd">בס"ד</div>
-                        <div class="schedule-content-container">
-                            <div class="header-grid">
-                                <div class="grid-left">WEEKDAY SCHEDULE<br>${hebrewDateWeek}</div>
-                                <div class="grid-center">
-                                    <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
-                                    <div class="logo-deal"></div>
-                                </div>
-                                <div class="grid-right">${dateWeek}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                        
+                        <div class="header-grid">
+                            <div class="grid-left">WEEKDAY SCHEDULE<br>${hebrewDateWeek}</div>
+                            <div class="grid-center">
+                                <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
+                            </div>
+                            <div class="grid-right">${dateWeek}<br>520 kings highway<br><span class="entrance-note">East 3rd st entrance</span></div>
+                        </div>
+
+                        <div class="flyer-schedule-blocks-container">
+                            <div class="flyer-time-box">
+                                <div class="flyer-maroon-ribbon">Sunday Schedule</div>
+                                <div class="time-row"><span>PRE-SHACHARIT CLASS WITH RABBI TEBELE</span><span>7:20AM</span></div>
+                                <div class="time-row"><span>SHACHARIT</span><span>${sundayShacharit}</span></div>
+                                <div class="row-full">FOLLOWED BY DELUXE BREAKFAST & CLASS WITH RABBI DAVID HABER</div>
                             </div>
 
-                            <div class="time-box">
-                                <div class="section-title">Sunday Schedule</div>
-                                <div class="time-row"><span>PRE-SHACHARIT CLASS WITH RABBI TEBELE</span><span>7:20AM</span></div>
-                                <div class="time-row" ><span>SHACHARIT</span><span>${sundayShacharit}</span></div>
-                                <div class="row-full" style="color: #631000;">FOLLOWED BY DELUXE BREAKFAST & CLASS WITH RABBI DAVID HABER</div>
-                            </div>
-                            <div class="time-box">
-                                <div class="section-title">Weekday Schedule</div>
+                            <div class="flyer-time-box">
+                                <div class="flyer-maroon-ribbon">Weekday Schedule</div>
                                 <div class="time-row"><span>GEMARA CLASSES</span><span>${weekdayPreShacharitLearning}</span></div>
                                 <div class="time-row"><span>SHACHARIT</span><span>${weekdayShacharit}</span></div>
-                                <div class="row-full" style="color: #631000;">FOLLOWED BY BREAKFAST & LEARNING</div>
+                                <div class="row-full">FOLLOWED BY BREAKFAST & LEARNING</div>
                             </div>
-                            <div class="time-box">
-                                <div class="section-title">Albert "Bero" Chehebar A"H<br>Learning Program</div>
-                                <div class="time-row" style="justify-content: center; font-size: 16px; font-weight: 700; margin-bottom: 2px; border: none;">MONDAY - FRIDAY MORNING</div>
-                                <div class="row-full" style="font-weight: 600; margin-bottom: 2px; color: #631000;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
-                                <div class="row-full" style="font-size: 13.5px; color: #631000;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
+
+                            <div class="flyer-time-box">
+                                <div class="flyer-maroon-ribbon">Albert "Bero" Chehebar A"H<br>Learning Program</div>
+                                <div class="time-row" style="justify-content: center; font-size: 15px; font-weight: 700; border: none; margin-bottom: 2px;">MONDAY - FRIDAY MORNING</div>
+                                <div class="row-full" style="font-weight: 600;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
+                                <div class="row-full" style="font-size: 12.5px;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
                             </div>
-                            ${flyer2BoxHTML}
                         </div>
+
+                        ${flyer2BoxHTML}
                     </div>
                 </div>
             </div>`;
