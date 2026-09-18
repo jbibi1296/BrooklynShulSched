@@ -492,8 +492,8 @@
         .tv-page {
             background-color: #e7e3d7;
             background-image: url("https://i.postimg.cc/j2VNFTKh/Midrash-Elyon-Shabbat-TV.png");
-            background-repeat: repeat;
-            background-size: auto;
+            background-repeat: center;
+            background-size: cover;
             width: 1920px;
             height: 1080px;
             box-sizing: border-box;
@@ -509,6 +509,7 @@
             flex-direction: row;
             gap: 28px;
             font-family: 'Cinzel', serif;
+            
         }
 
         .tv-inset-panel {
@@ -544,9 +545,15 @@
         }
 
         .tv-col-left .header-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1.2fr;
+            align-items: center;
+            width: 100%;
             margin-top: 0;
-            padding-bottom: 6px;
+            padding-bottom: 8px;
             border-bottom: 2px solid #631000;
+            gap: 10px;
+            justify-content: space-between;
         }
         .tv-col-left .grid-left { 
             font-family: 'David Libre', serif; 
@@ -558,6 +565,7 @@
             font-family: 'Cinzel', serif;
             font-size: 17px; 
             line-height: 1.3; 
+            text-align: right;;
         }
         .tv-col-left .entrance-note { 
             font-family: 'Cinzel', serif;
@@ -577,7 +585,7 @@
             background-color: #631000;
             color: #ffffff;
             font-family: 'Cinzel', serif;
-            font-size: 26px;
+            font-size: 36px;
             font-weight: 700;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -823,6 +831,12 @@
             color: #d1d5db;
         }
 
+        /* Forces a clean white background during PDF export */
+        .pdf-export-mode {
+            background-color: #ffffff !important;
+            background-image: none !important;
+        }
+
         /* Print Override */
         @media print {
             @page {
@@ -1033,6 +1047,9 @@
                 page.style.transform = 'none';
                 page.style.position = 'relative';
 
+                // Force white background for PDF
+                page.classList.add('pdf-export-mode');
+
                 const canvas = await html2canvas(page, {
                     scale: 2, 
                     useCORS: true, 
@@ -1043,6 +1060,9 @@
                     windowWidth: 816,
                     windowHeight: 1056
                 });
+
+                // Restore original background for the screen
+                page.classList.remove('pdf-export-mode');
 
                 page.style.transform = originalTransform;
                 page.style.position = originalPosition;
