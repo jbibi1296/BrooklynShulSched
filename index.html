@@ -190,31 +190,30 @@
         }
 
         .flyer-time-box .time-row { 
-            display: flex; 
-            justify-content: space-between; 
-            font-size: 22px; 
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: #631000;
+            margin: 0px 0;
+            letter-spacing: 0px;
+            text-align: center;
+            width: 100%;
             font-weight: 400; 
-            margin: 0px 0; 
-            letter-spacing: 0.5px; 
-            border-bottom: 1px dashed #e2e8f0; 
             padding-bottom: 0px; 
             white-space: nowrap; 
-            width: 100%;
         }
 
         .flyer-time-box .time-row.highlight { 
-            font-weight: 600; 
+            font-weight: 500; 
             color: #8c1d1d;
-            border-bottom: 1px dashed rgba(217, 56, 56, 0.35); 
         }
 
         .flyer-time-box .row-full { 
             font-size: 15px; 
             font-weight: 700; 
             color: #631000; 
-            margin-top: 2px; 
-            margin-bottom: 1px;
-            letter-spacing: 0.5px; 
+            margin-top: 0px; 
+            margin-bottom: 0px;
+            letter-spacing: .5px; 
             white-space: nowrap; 
             text-align: center;
         }
@@ -353,7 +352,7 @@
             font-family: 'Cinzel Decorative', serif; 
             font-weight: 700; 
             color: #631000; 
-            text-transform: uppercase; 
+            text-transform: capitalize; 
         }
 
         .table-is-dedicated { 
@@ -385,10 +384,10 @@
         }
 
         .table-dedication-block .by-line { 
-            font-family: 'Cinzel Decorative', serif; 
+            font-family: 'Cinzel', serif; 
             font-weight: 700; 
             color: #631000; 
-            text-transform: uppercase; 
+            text-transform: capitalize; 
         }
 
         .table-text-divider { 
@@ -775,7 +774,7 @@
             font-weight: 700;
             letter-spacing: 6px;
             color: #631000;
-            text-transform: uppercase;
+            text-transform: capitalize;
         }
 
         /* UI Controls */
@@ -1335,26 +1334,26 @@
                         <div class="flyer-schedule-blocks-container">
                             <div class="flyer-time-box">
                                 <div class="flyer-maroon-ribbon">Friday Night</div>
-                                <div class="time-row highlight"><span>CANDLE LIGHTING</span><span>${candleLighting}</span></div>
-                                <div class="time-row"><span>Shir Hashirim</span><span>${shirHashirim}</span></div>
-                                <div class="time-row"><span>Minha</span><span>${fridayMinha}</span></div>
+                                <div class="time-row highlight"><span>CANDLE LIGHTING - </span><span>${candleLighting}</span></div>
+                                <div class="time-row"><span>Shir Hashirim - </span><span>${shirHashirim}</span></div>
+                                <div class="time-row"><span>Minha - </span><span>${fridayMinha}</span></div>
                             </div>
 
                             <div class="flyer-time-box">
                                 <div class="flyer-maroon-ribbon">Shabbat Morning</div>
-                                <div class="time-row"><span>SHACHARIT</span><span>${shabbatShacharit}</span></div>
+                                <div class="time-row"><span>SHACHARIT - </span><span>${shabbatShacharit}</span></div>
                                 <div class="row-full">FOLLOWED BY AN EXQUISITE KIDDUSH AND CLASS<br>WITH RABBI DAVID HABER</div>
-                                <div class="time-row"><span>Danny J. Betesh Boys Program</span><span>9:15AM - 11:30AM</span></div>
-                                <div class="time-row"><span>Girls Program</span><span>9:15AM - 11:30AM</span></div>
+                                <div class="time-row"><span>Danny J. Betesh Boys Program: </span><span>9:15AM - 11:30AM</span></div>
+                                <div class="time-row"><span>Girls Program: </span><span>9:15AM - 11:30AM</span></div>
                                 <div class="row-full">Mishna Berura Shiur with Rabbi Ralph Tebele Following the speech</div>
                             </div>
 
                             <div class="flyer-time-box">
                                 <div class="flyer-maroon-ribbon">Shabbat Afternoon</div>
-                                <div class="time-row"><span>PRE-MINHA LEARNING PROGRAM</span><span>${preMinhaClass}</span></div>
-                                <div class="time-row"><span>MINHA</span><span>${shabbatMinha}</span></div>
+                                <div class="time-row"><span>PRE-MINHA LEARNING PROGRAM - </span><span>${preMinhaClass}</span></div>
+                                <div class="time-row"><span>MINHA - </span><span>${shabbatMinha}</span></div>
                                 <div class="row-full">FOLLOWED BY SEUDAT SHELISHEET & SPEECH</div>
-                                <div class="time-row highlight"><span>HAVDALAH</span><span>${havdalahTime}</span></div>
+                                <div class="time-row highlight"><span>HAVDALAH - </span><span>${havdalahTime}</span></div>
                             </div>
                         </div>
 
@@ -1380,23 +1379,26 @@
                         <div class="flyer-schedule-blocks-container">
                             <div class="flyer-time-box">
                                 <div class="flyer-maroon-ribbon">Sunday Schedule</div>
-                                <div class="time-row"><span>PRE-SHACHARIT CLASS WITH RABBI TEBELE</span><span>7:20AM</span></div>
-                                <div class="time-row"><span>SHACHARIT</span><span>${sundayShacharit}</span></div>
+                                <div class="time-row"><span>PRE-SHACHARIT CLASS WITH RABBI TEBELE - </span><span>7:20AM</span></div>
+                                <div class="time-row"><span>SHACHARIT - </span><span>${sundayShacharit}</span></div>
                                 <div class="row-full">FOLLOWED BY DELUXE BREAKFAST & CLASS WITH RABBI DAVID HABER</div>
                             </div>
 
                             <div class="flyer-time-box">
                                 <div class="flyer-maroon-ribbon">Weekday Schedule</div>
-                                <div class="time-row"><span>GEMARA CLASSES</span><span>${weekdayPreShacharitLearning}</span></div>
-                                <div class="time-row"><span>SHACHARIT</span><span>${weekdayShacharit}</span></div>
+                                <div class="time-row"><span>GEMARA CLASSES - </span><span>${weekdayPreShacharitLearning}</span></div>
+                                <div class="time-row"><span>SHACHARIT - </span><span>${weekdayShacharit}</span></div>
                                 <div class="row-full">FOLLOWED BY BREAKFAST & LEARNING</div>
                             </div>
 
                             <div class="flyer-time-box">
                                 <div class="flyer-maroon-ribbon">Albert "Bero" Chehebar A"H<br>Learning Program</div>
-                                <div class="time-row" style="justify-content: center; font-size: 15px; font-weight: 700; border: none; margin-bottom: 2px;">MONDAY - FRIDAY MORNING</div>
-                                <div class="row-full" style="font-weight: 600;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
-                                <div class="row-full" style="font-size: 12.5px;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
+                                <div class="tv-time-centered-row" style="justify-content: center; font-size: 20px; font-weight: 700; margin-bottom: 2px; text-decoration: underline">MONDAY - FRIDAY MORNING</div>
+                                <div class="tv-time-centered-row" style="font-size: 20px; font-weight: 600;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
+                                <div class="tv-time-centered-row" style="justify-content: center; font-size: 20px; font-weight: 700; margin-bottom: 2px; text-decoration: underline">MONDAY - WEDNESDAY NIGHTS</div>
+                                <div class="tv-time-centered-row" style="font-size: 20px; font-weight: 600;">MULTIPLE LEARNING GROUPS AT 8:00PM & 9:00PM</div>
+                                <div class="tv-time-centered-row" style="font-size: 16px;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
+                                
                             </div>
                         </div>
 
@@ -1615,7 +1617,7 @@
                                 <div class="tv-maroon-ribbon">Albert "Bero" Chehebar A"H<br>Learning Program</div>
                                 <div class="tv-time-centered-row" style="font-size: 20px; font-weight: 700; text-decoration: underline; margin-top: 4px;">MONDAY - FRIDAY MORNING</div>
                                 <div class="tv-time-centered-subtext" style="font-weight: 600; margin-top: 2px;">MULTIPLE LEARNING GROUPS AT 6:30AM & 8:00AM</div>
-                                <div class="tv-time-centered-row" style="font-size: 20px; font-weight: 700; text-decoration: underline; margin-top: 6px;">MONDAY - WEDNESDAY NIGHTS</div>
+                                <div class="tv-time-centered-row" style="font-size: 20px; font-weight: 700; ;text-decoration: underline; margin-top: 6px;">MONDAY - WEDNESDAY NIGHTS</div>
                                 <div class="tv-time-centered-subtext" style="font-weight: 600; margin-top: 2px;">MULTIPLE LEARNING GROUPS AT 8:00PM & 9:00PM</div>
                                 <div class="tv-time-centered-subtext" style="font-size: 15px; margin-top: 8px;">TO JOIN A CLASS, PLEASE REACH OUT TO RABBI DAVID HABER</div>
                             </div>
