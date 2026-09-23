@@ -152,19 +152,19 @@
         .flyer-schedule-blocks-container {
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
+            justify-content: space-between;
             flex: 1;
             margin-top: 0px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             gap: 8px;
         }
 
         /* Edge-to-Edge Solid Maroon Ribbon */
         .flyer-maroon-ribbon {
             background-color: #631000;
-            color: #ffffff;
+            color: #e7e3d7;
             font-family: 'Cinzel', serif;
-            font-size: 26px;
+            font-size: 30px;
             font-weight: 700;
             letter-spacing: 2.5px;
             text-transform: uppercase;
@@ -177,7 +177,7 @@
             border-top: 1.5px solid #c5a059;
             border-bottom: 1.5px solid #c5a059;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .flyer-time-box {
@@ -192,24 +192,24 @@
         .flyer-time-box .time-row { 
             display: flex; 
             justify-content: space-between; 
-            font-size: 15.5px; 
-            font-weight: 700; 
-            margin: 1px 0; 
+            font-size: 22px; 
+            font-weight: 400; 
+            margin: 0px 0; 
             letter-spacing: 0.5px; 
             border-bottom: 1px dashed #e2e8f0; 
-            padding-bottom: 1px; 
+            padding-bottom: 0px; 
             white-space: nowrap; 
             width: 100%;
         }
 
         .flyer-time-box .time-row.highlight { 
-            font-weight: 700; 
+            font-weight: 600; 
             color: #8c1d1d;
             border-bottom: 1px dashed rgba(217, 56, 56, 0.35); 
         }
 
         .flyer-time-box .row-full { 
-            font-size: 13px; 
+            font-size: 15px; 
             font-weight: 700; 
             color: #631000; 
             margin-top: 2px; 
@@ -1254,7 +1254,7 @@
             const knownPrefixes = [
                 "IN HONOR OF", "IN MEMORY OF", "LEILUI NISHMAT", "L'ILUI NISHMAT", 
                 "REFUAH SHELEMAH", "REFUAH SHLEMAH", "DEDICATED TO", 
-                "IN CELEBRATION OF", "FOR THE HATZLACHA OF", "IN MERIT OF", "IN HONOR AND ZECHUT OF"
+                "IN CELEBRATION OF", "FOR THE HATZLACHA OF", "IN MERIT OF", "IN HONOR AND ZECHUT OF", "IN LOVING MEMORY OF"
             ];
             
             let currentCategory = '';
@@ -1342,8 +1342,7 @@
 
                             <div class="flyer-time-box">
                                 <div class="flyer-maroon-ribbon">Shabbat Morning</div>
-                                <div class="time-row"><span>KORBANOT</span><span>${shabbatKorbanot}</span></div>
-                                <div class="time-row"><span>HASHEM MELECH</span><span>${shabbatShacharit}</span></div>
+                                <div class="time-row"><span>SHACHARIT</span><span>${shabbatShacharit}</span></div>
                                 <div class="row-full">FOLLOWED BY AN EXQUISITE KIDDUSH AND CLASS<br>WITH RABBI DAVID HABER</div>
                                 <div class="time-row"><span>Danny J. Betesh Boys Program</span><span>9:15AM - 11:30AM</span></div>
                                 <div class="time-row"><span>Girls Program</span><span>9:15AM - 11:30AM</span></div>
@@ -1498,8 +1497,7 @@
 
                             <div class="tv-schedule-section-block">
                                 <div class="tv-maroon-ribbon">Shabbat Morning</div>
-                                <div class="tv-time-centered-row">KORBANOT - ${shabbatKorbanot}</div>
-                                <div class="tv-time-centered-row">HASHEM MELECH - ${shabbatShacharit}</div>
+                                <div class="tv-time-centered-row">SHACHARIT - ${shabbatShacharit}</div>
                                 <div class="tv-time-centered-subtext">FOLLOWED BY AN EXQUISITE KIDDUSH & CLASS WITH RABBI DAVID HABER</div>
                                 <div class="tv-time-centered-row" style="font-size: 20px; margin-top: 4px;">DANNY J. BETESH BOYS PROGRAM: 9:15AM - 11:30AM</div>
                                 <div class="tv-time-centered-row" style="font-size: 20px;">GIRLS PROGRAM: 9:15AM - 11:30AM</div>
