@@ -1141,7 +1141,7 @@
                 
                 const englishDateHeader = parsedRows[3]?.[1] || 'June 26 - 27 2026';
                 const hebrewDateHeader = parsedRows[3]?.[0] || 'י״א בְּתַמּוּז תשפ״ו';
-                const hebrewParshaValue = parsedRows[4]?.[1] || 'קרח';
+                const hebrewParshaValue = parsedRows[4]?.[2] || 'קרח';
                 const candleLightingTime = parsedRows[2]?.[2] || '8:09 PM';
                 const havdalahTime = parsedRows[2]?.[7] || '9:08 PM';
                 const rawDedicationsText = parsedRows[0]?.[1] || '';
@@ -1325,7 +1325,7 @@
                         <div class="bsd">בס"ד</div>
                         
                         <div class="header-grid">
-                            <div class="grid-left">פרשת ${parshaHebrew}<br>${hebrewDateHeader}</div>
+                            <div class="grid-left">${parshaHebrew}<br>${hebrewDateHeader}</div>
                             <div class="grid-center">
                                 <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
                             </div>
@@ -1426,7 +1426,7 @@
                         <div class="table-layout ${countClass}">
                             <div class="bsd">בס"ד</div>
                             <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
-                            ${(type === 'Shabbat Kiddush' || type === 'Seudat Shelisheet') ? `<div class="table-parsha">פרשת ${parshaHebrew}</div>` : ''}
+                            ${(type === 'Shabbat Kiddush' || type === 'Seudat Shelisheet') ? `<div class="table-parsha">${parshaHebrew}</div>` : ''}
                             <div class="table-purpose">${type}</div>
                             <div class="table-is-dedicated">is dedicated</div>
                             <div class="diamond-separator">◆ <span>◆</span> ◆</div>
@@ -1481,7 +1481,7 @@
                     <div class="tv-inset-panel tv-col-left">
                         <div class="bsd">בס"ד</div>
                         <div class="header-grid">
-                            <div class="grid-left">פרשת ${parshaHebrew}<br>${hebrewDateHeader}</div>
+                            <div class="grid-left">${parshaHebrew}<br>${hebrewDateHeader}</div>
                             <div class="grid-center">
                                 <img class="logo-img" src="https://i.postimg.cc/SRBL0ngY/Midrash-Elyon-Newsletter-(8).png" alt="Midrash Elyon Logo">
                             </div>
@@ -1519,7 +1519,7 @@
                     <!-- Right Inset Ivory Box: Dedications -->
                     <div class="tv-inset-panel tv-col-right ${tvShabbatDenseClass}">
                         <div class="bsd">בס"ד</div>
-                        <div class="table-parsha">פרשת ${parshaHebrew}</div>
+                        <div class="table-parsha">${parshaHebrew}</div>
                         <div class="tv-dedications-scrollable">
                             ${tvAllShabbatHTML || `
                                 <div class="tv-category-group">
