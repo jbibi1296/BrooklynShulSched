@@ -65,7 +65,24 @@
         }
         .studio-btn:hover { background: #e7e3d7; }
         .studio-btn:disabled { opacity: .5; cursor: not-allowed; }
+        .studio-btn.gold { background: #c5a059; }
         #sheet-status { font-size: 12.5px; margin-top: 8px; min-height: 18px; }
+
+        /* Page layout editor */
+        .page-group { border: 1px solid #e0d5bd; border-radius: 6px; padding: 10px 12px; margin: 10px 0; background: #fff; }
+        .page-group > b { font-family: 'Cinzel', serif; font-size: 13px; color: #631000; letter-spacing: 0.5px; }
+        .sec-chip { display: flex; align-items: center; gap: 6px; padding: 5px 8px; margin: 5px 0;
+            background: #fdfbf7; border: 1px solid #eadeca; border-radius: 4px; }
+        .sec-chip .chip-title { flex: 1; font-size: 13px; font-weight: 600; color: #631000; overflow: hidden;
+            text-overflow: ellipsis; white-space: nowrap; }
+        .sec-chip .mini-btn { padding: 3px 8px; font-size: 12px; }
+        .page-addrow { display: flex; gap: 8px; margin-top: 8px; align-items: center; flex-wrap: wrap; }
+        .page-addrow select { padding: 6px; border: 1px solid #c5a059; border-radius: 4px; font-size: 12.5px; max-width: 260px; }
+        .sec-usage { font-size: 11.5px; color: #8a7a5c; margin-left: 8px; }
+
+        /* "~ AND ~" divider between dedications of one category (portrait box) */
+        .dedication-and { font-family: 'Cinzel Decorative', serif; font-weight: 700; color: #c5a059;
+            letter-spacing: 2px; margin: 5px 0 3px 0; }
 
         #flyer-form fieldset {
             border: 2px solid #c5a059; border-radius: 8px;
@@ -916,6 +933,7 @@
         <div class="sheet-row">
             <input type="text" id="sheet-key" placeholder="Google Sheet publish key">
             <button class="studio-btn" id="reload-sheet-btn">↻ Load from Sheet</button>
+            <button class="studio-btn gold" id="refresh-format-btn" title="Re-run auto-fit: shrink text and scale blocks so everything fits on every page">✦ Refresh Formatting</button>
         </div>
         <div id="sheet-status">Loading data from the Google Sheet…</div>
     </div>
@@ -951,8 +969,14 @@
         </fieldset>
 
         <fieldset>
+            <legend>Page Layout — sections per page</legend>
+            <p style="font-size:12.5px;margin:4px 0 10px 0;">Reorder sections on each page with ↑ ↓, remove one with ✕, or add a new/existing section. Section <i>content</i> is still edited once below — it updates on every page that uses it. Loading from the sheet resets this layout.</p>
+            <div id="pagelayout-editor"></div>
+        </fieldset>
+
+        <fieldset>
             <legend>Schedule Sections</legend>
-            <p style="font-size:12.5px;margin:4px 0 10px 0;">Use <b>|</b> in a section title for a line break. Lines marked <i>uses time</i> pull their time from the Times section above — edit the time there, every page updates.</p>
+            <p style="font-size:12.5px;margin:4px 0 10px 0;">Use <b>|</b> in a section title for a line break. Each section takes three kinds of lines: <b>+ line</b> (plain text), <b>+ time</b> (linked to a calculated time from the sheet — pick the field from the dropdown; edit the time once in Times and every page updates), <b>+ note</b> (centered sub-text).</p>
             <div id="sections-editor"></div>
         </fieldset>
 
@@ -1032,6 +1056,22 @@ function defaultSections() {
     };
 }
 
+function defaultPageSections() {
+    return {
+        portrait1: ['fridayNight', 'shabbatMorning', 'shabbatAfternoon'],
+        portrait2: ['sundaySched', 'weekdaySched', 'learningProgram'],
+        tvShabbat: ['fridayNight', 'shabbatMorning', 'shabbatAfternoon'],
+        tvWeekday: ['sundaySched', 'weekdaySched', 'learningProgram']
+    };
+}
+
+const PAGE_LABELS = {
+    portrait1: 'Portrait page 1 (Shabbat schedule)',
+    portrait2: 'Portrait page 2 (Weekday schedule)',
+    tvShabbat: 'TV board 1 (Shabbat)',
+    tvWeekday: 'TV board 2 (Weekday)'
+};
+
 function defaultState() {
     return {
         parshaHebrew: 'קרח',
@@ -1055,6 +1095,8 @@ function defaultState() {
         weekdayPreShacharitLearning: '6:15 AM',
         weekdayShacharit: '7:15 AM',
         sections: defaultSections(),
+        pageSections: defaultPageSections(),
+        secCounter: 1,
         dedications: []
     };
 }
@@ -1192,6 +1234,8 @@ function loadFromSheet() {
         .then(csv => {
             applySheetRows(parseCSVRows(csv));
             syncSimpleInputs();
+            S.pageSections = defaultPageSections();
+            renderPageLayoutEditor();
             renderSectionsEditor();
             renderDedEditor();
             renderAll();
@@ -1218,14 +1262,94 @@ function bindSimpleInputs() {
     });
 }
 
+/* Which pages use a section (for editor hints) */
+function sectionUsage(id) {
+    const short = { portrait1: 'Portrait 1', portrait2: 'Portrait 2', tvShabbat: 'TV 1', tvWeekday: 'TV 2' };
+    const pages = Object.keys(S.pageSections).filter(p => (S.pageSections[p] || []).indexOf(id) !== -1);
+    return pages.map(p => short[p]).join(' · ') || 'not on any page';
+}
+
+/* Remove sections that are no longer on any page */
+function gcOrphanSections() {
+    const used = {};
+    Object.keys(S.pageSections).forEach(p => (S.pageSections[p] || []).forEach(id => { used[id] = true; }));
+    Object.keys(S.sections).forEach(id => { if (!used[id]) delete S.sections[id]; });
+}
+
+/* ---------------- page layout editor (order / add / remove sections per page) ---------------- */
+function renderPageLayoutEditor() {
+    const host = document.getElementById('pagelayout-editor');
+    host.innerHTML = '';
+    Object.keys(PAGE_LABELS).forEach(pageId => {
+        const ids = S.pageSections[pageId] || (S.pageSections[pageId] = []);
+        const group = document.createElement('div');
+        group.className = 'page-group';
+        let html = '<b>' + esc(PAGE_LABELS[pageId]) + '</b>';
+        ids.forEach((id, idx) => {
+            const sec = S.sections[id];
+            const title = sec ? String(sec.title).replace(/\|/g, ' / ') : '(deleted section)';
+            html += '<div class="sec-chip"><span class="chip-title">' + esc(title) + '</span>' +
+                '<button type="button" class="mini-btn" data-pmove="' + pageId + ':' + idx + ':-1" title="Move up"' + (idx === 0 ? ' disabled' : '') + '>↑</button>' +
+                '<button type="button" class="mini-btn" data-pmove="' + pageId + ':' + idx + ':1" title="Move down"' + (idx === ids.length - 1 ? ' disabled' : '') + '>↓</button>' +
+                '<button type="button" class="mini-btn" data-prem="' + pageId + ':' + idx + '" title="Remove from this page">✕</button></div>';
+        });
+        const avail = Object.keys(S.sections).filter(id => ids.indexOf(id) === -1);
+        html += '<div class="page-addrow">' +
+            '<button type="button" class="mini-btn gold" data-pnew="' + pageId + '">+ New section</button>';
+        if (avail.length) {
+            html += '<select data-paddsel="' + pageId + '">' +
+                avail.map(id => '<option value="' + esc(id) + '">' + esc(String(S.sections[id].title).replace(/\|/g, ' / ')) + '</option>').join('') +
+                '</select><button type="button" class="mini-btn gold" data-padd="' + pageId + '">Add existing</button>';
+        }
+        html += '</div>';
+        group.innerHTML = html;
+        host.appendChild(group);
+    });
+
+    host.querySelectorAll('[data-pmove]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const [pageId, idx, dir] = btn.getAttribute('data-pmove').split(':');
+            const ids = S.pageSections[pageId], i = parseInt(idx, 10), j = i + parseInt(dir, 10);
+            if (i < 0 || j < 0 || i >= ids.length || j >= ids.length) return;
+            const t = ids[i]; ids[i] = ids[j]; ids[j] = t;
+            renderPageLayoutEditor(); renderAll();
+        });
+    });
+    host.querySelectorAll('[data-prem]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const [pageId, idx] = btn.getAttribute('data-prem').split(':');
+            S.pageSections[pageId].splice(parseInt(idx, 10), 1);
+            gcOrphanSections();
+            renderPageLayoutEditor(); renderSectionsEditor(); renderAll();
+        });
+    });
+    host.querySelectorAll('[data-pnew]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const pageId = btn.getAttribute('data-pnew');
+            const id = 'custom' + (S.secCounter++);
+            S.sections[id] = { title: 'New Section', lines: [] };
+            S.pageSections[pageId].push(id);
+            renderPageLayoutEditor(); renderSectionsEditor(); renderAll();
+        });
+    });
+    host.querySelectorAll('[data-padd]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const pageId = btn.getAttribute('data-padd');
+            const sel = host.querySelector('[data-paddsel="' + pageId + '"]');
+            if (sel && sel.value) S.pageSections[pageId].push(sel.value);
+            renderPageLayoutEditor(); renderAll();
+        });
+    });
+}
+
 /* ---------------- sections editor ---------------- */
 const SECTION_LABELS = {
-    fridayNight: 'Friday Night (print p1 · TV 1)',
-    shabbatMorning: 'Shabbat Morning (print p1 · TV 1)',
-    shabbatAfternoon: 'Shabbat Afternoon (print p1 · TV 1)',
-    sundaySched: 'Sunday (print p2 · TV 2)',
-    weekdaySched: 'Weekday (print p2 · TV 2)',
-    learningProgram: 'Learning Program (print p2 · TV 2)'
+    fridayNight: 'Friday Night',
+    shabbatMorning: 'Shabbat Morning',
+    shabbatAfternoon: 'Shabbat Afternoon',
+    sundaySched: 'Sunday',
+    weekdaySched: 'Weekday',
+    learningProgram: 'Learning Program'
 };
 
 function renderSectionsEditor() {
@@ -1235,7 +1359,8 @@ function renderSectionsEditor() {
         const sec = S.sections[secKey];
         const block = document.createElement('div');
         block.className = 'sec-block';
-        let html = '<div class="sec-title-row"><b style="font-size:13px;min-width:220px;">' + esc(SECTION_LABELS[secKey] || secKey) + '</b>' +
+        let html = '<div class="sec-title-row"><b style="font-size:13px;min-width:220px;">' + esc(SECTION_LABELS[secKey] || String(sec.title).replace(/\|/g, ' / ')) + '</b>' +
+            '<span class="sec-usage">' + esc(sectionUsage(secKey)) + '</span>' +
             '<input type="text" data-sec="' + secKey + '" data-prop="title" value="' + esc(sec.title) + '" title="Section title — use | for a line break"></div>' +
             '<div class="sec-lines">';
         sec.lines.forEach((ln, li) => {
@@ -1246,7 +1371,9 @@ function renderSectionsEditor() {
                 html += '<select data-sec="' + secKey + '" data-li="' + li + '" data-prop="style">' +
                     ['normal','underline','small'].map(o => '<option value="' + o + '"' + ((ln.style || 'normal') === o ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
             } else if (ln.timeKey) {
-                html += '<div class="ln-timebadge">uses time: <b>' + esc(TIME_LABELS[ln.timeKey] || ln.timeKey) + '</b></div>';
+                const timeOpts = Object.keys(TIME_LABELS).map(k => '<option value="' + k + '"' + (ln.timeKey === k ? ' selected' : '') + '>' + esc(TIME_LABELS[k]) + '</option>').join('') +
+                    (TIME_LABELS[ln.timeKey] ? '' : '<option value="' + esc(ln.timeKey) + '" selected>' + esc(ln.timeKey) + '</option>');
+                html += '<select data-sec="' + secKey + '" data-li="' + li + '" data-prop="timeKey" title="Calculated field from the sheet — edit the time once in Times, every page updates">' + timeOpts + '</select>';
                 html += '<label style="font-size:11.5px;display:flex;gap:4px;align-items:center;"><input type="checkbox" data-sec="' + secKey + '" data-li="' + li + '" data-prop="hl"' + (ln.hl ? ' checked' : '') + '> highlight</label>';
             } else {
                 html += '<input type="text" class="ln-text" data-sec="' + secKey + '" data-li="' + li + '" data-prop="text" value="' + esc(ln.text || '') + '" placeholder="Text">';
@@ -1254,8 +1381,9 @@ function renderSectionsEditor() {
             html += '<button type="button" class="mini-btn" data-delline="' + secKey + ':' + li + '">✕</button>';
             html += '</div>';
         });
-        html += '</div><div style="margin-top:6px;display:flex;gap:8px;">' +
+        html += '</div><div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">' +
             '<button type="button" class="mini-btn gold" data-addline="' + secKey + '">+ line</button>' +
+            '<button type="button" class="mini-btn gold" data-addtime="' + secKey + '" title="Add a line linked to a calculated time field from the sheet">+ time</button>' +
             '<button type="button" class="mini-btn gold" data-addsub="' + secKey + '">+ note</button></div>';
         block.innerHTML = html;
         host.appendChild(block);
@@ -1271,6 +1399,8 @@ function renderSectionsEditor() {
         const li = parseInt(el.getAttribute('data-li'), 10);
         if (prop === 'hl') {
             el.addEventListener('change', () => { S.sections[secKey].lines[li].hl = el.checked; scheduleRender(); });
+        } else if (el.tagName === 'SELECT') {
+            el.addEventListener('change', () => { S.sections[secKey].lines[li][prop] = el.value; scheduleRender(); });
         } else {
             el.addEventListener('input', () => { S.sections[secKey].lines[li][prop] = el.value; scheduleRender(); });
         }
@@ -1285,6 +1415,12 @@ function renderSectionsEditor() {
     host.querySelectorAll('[data-addline]').forEach(btn => {
         btn.addEventListener('click', () => {
             S.sections[btn.getAttribute('data-addline')].lines.push({ label: 'NEW -', text: '' });
+            renderSectionsEditor(); renderAll();
+        });
+    });
+    host.querySelectorAll('[data-addtime]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            S.sections[btn.getAttribute('data-addtime')].lines.push({ label: 'NEW -', timeKey: 'candleLighting' });
             renderSectionsEditor(); renderAll();
         });
     });
@@ -1406,6 +1542,11 @@ function tvSectionHTML(sec) {
         sec.lines.map(tvLineHTML).join('') + '</div>';
 }
 
+/* Resolve a page's ordered section ids to section objects (skips deleted ones) */
+function pageSectionsList(pageId) {
+    return (S.pageSections[pageId] || []).map(id => S.sections[id]).filter(Boolean);
+}
+
 /* ---------------- render: portrait schedule page ---------------- */
 function printSchedulePage(o) {
     return '<div class="flyer-wrapper"><div class="print-page schedule-page-bg"><div class="schedule-inset-panel">' +
@@ -1417,7 +1558,7 @@ function printSchedulePage(o) {
         '</div>' +
         '<div class="fit-region fill"><div class="fit-region-inner">' +
         '<div class="flyer-schedule-blocks-container">' +
-            o.secKeys.map(k => printSectionHTML(S.sections[k])).join('') +
+            pageSectionsList(o.pageId).map(printSectionHTML).join('') +
         '</div>' +
         dedBoxHTML(o.dedTitle, o.cats) +
         '</div></div>' +
@@ -1431,10 +1572,13 @@ function dedBoxHTML(title, cats) {
     if (!count) return '';
     let cls = count === 1 ? 'count-1' : count === 2 ? 'count-2' : 'count-3-plus';
     if (maxInCol >= 3) cls += ' has-dense-stack';
+    // One header per category; "~ AND ~" between that category's dedications.
     const cols = cats.map(c =>
-        '<div class="dedications-column">' + c.items.map(it =>
+        '<div class="dedications-column">' +
+        '<div class="dedication-type fit" data-fit-max="15">' + esc(c.name.toUpperCase()) + '</div>' +
+        c.items.map((it, ii) =>
+            (ii > 0 ? '<div class="dedication-and fit" data-fit-max="12">~ AND ~</div>' : '') +
             '<div class="dedication-entry">' +
-                '<div class="dedication-type fit" data-fit-max="15">' + esc(c.name.toUpperCase()) + '</div>' +
                 '<div class="dedication-text">' +
                     (it.prefix ? '<div class="fit" data-fit-max="15">' + esc(it.prefix.toUpperCase()) + '</div>' : '') +
                     honorLinesHTML(it.honor, 15, '', 'font-weight:700;') +
@@ -1511,7 +1655,7 @@ function tvPageHTML(o) {
             '</div>' +
             '<div class="fit-region fill"><div class="fit-region-inner">' +
             '<div class="tv-schedule-boxes-container">' +
-                o.secKeys.map(k => tvSectionHTML(S.sections[k])).join('') +
+                pageSectionsList(o.secPage).map(tvSectionHTML).join('') +
             '</div>' +
             '</div></div>' +
         '</div>' +
@@ -1533,30 +1677,28 @@ function renderFlyers() {
     const page2Cats = S.dedications.filter(c => c.print === 'page2');
     let html = '';
     html += printSchedulePage({
+        pageId: 'portrait1',
         leftLines: [S.parshaHebrew, S.hebrewDateHeader],
         rightLines: [S.schedTitle1, S.englishDateHeader, '520 kings highway'],
-        secKeys: ['fridayNight', 'shabbatMorning', 'shabbatAfternoon'],
         dedTitle: S.dedBoxTitle1, cats: page1Cats
     });
     html += printSchedulePage({
+        pageId: 'portrait2',
         leftLines: [S.schedTitle2, S.hebrewDateWeek],
         rightLines: [S.dateWeek, '520 kings highway'],
-        secKeys: ['sundaySched', 'weekdaySched', 'learningProgram'],
         dedTitle: S.dedBoxTitle2, cats: page2Cats
     });
     S.dedications.forEach(cat => { html += tablePageHTML(cat); });
     html += tvPageHTML({
-        pageId: 'shabbat-tv-page', showParsha: true,
+        pageId: 'shabbat-tv-page', secPage: 'tvShabbat', showParsha: true,
         leftLines: [S.parshaHebrew, S.hebrewDateHeader],
         rightLines: [S.schedTitle1, S.englishDateHeader, '520 kings highway'],
-        secKeys: ['fridayNight', 'shabbatMorning', 'shabbatAfternoon'],
         cats: shabCats
     });
     html += tvPageHTML({
-        pageId: 'weekday-tv-page', showParsha: false,
+        pageId: 'weekday-tv-page', secPage: 'tvWeekday', showParsha: false,
         leftLines: [S.schedTitle2, S.hebrewDateWeek],
         rightLines: [S.dateWeek, '520 kings highway'],
-        secKeys: ['sundaySched', 'weekdaySched', 'learningProgram'],
         cats: weekCats
     });
     document.getElementById('wrapper').innerHTML = html;
@@ -1565,6 +1707,8 @@ function renderFlyers() {
 /* ==========================================================================
    AUTO-FIT: shrink each .fit line until it fits its slot — never wraps
    ========================================================================== */
+/* Shrinks one .fit element's font until it fits its slot width.
+   Returns true when the element had to shrink below its max size. */
 function fitEl(el) {
     let max = parseFloat(el.getAttribute('data-fit-max'));
     if (!max || isNaN(max)) max = parseFloat(getComputedStyle(el).fontSize) || 16;
@@ -1575,7 +1719,7 @@ function fitEl(el) {
     // their content, which would hide the overflow from scrollWidth/clientWidth.
     el.style.width = '100%';
     el.style.fontSize = max + 'px';
-    if (el.scrollWidth <= el.clientWidth + 1) { el.style.width = prevWidth; return; }
+    if (el.scrollWidth <= el.clientWidth + 1) { el.style.width = prevWidth; return false; }
     let lo = min, hi = max;
     for (let i = 0; i < 14; i++) {
         const mid = (lo + hi) / 2;
@@ -1584,38 +1728,72 @@ function fitEl(el) {
     }
     el.style.fontSize = lo + 'px';
     el.style.width = prevWidth;
+    return lo < max - 0.5;
 }
 
+/* Each element is isolated: one bad measurement can never kill the rest. */
 function fitAll() {
-    document.querySelectorAll('#wrapper .fit').forEach(fitEl);
+    let shrunk = 0;
+    document.querySelectorAll('#wrapper .fit').forEach(el => {
+        try { if (fitEl(el)) shrunk++; } catch (e) { /* keep going */ }
+    });
+    return shrunk;
 }
 
 /* Height-fit: if a region's content is taller than the region, scale it down
    proportionally so nothing ever bleeds past a border. When it fits, the
-   inner spreads to fill the region exactly like the old flex layout did. */
+   inner spreads to fill the region exactly like the old flex layout did.
+   Returns the scale applied (1 = fit without scaling). */
 function fitRegion(region) {
     const inner = region.firstElementChild;
-    if (!inner) return;
+    if (!inner) return 1;
     inner.classList.remove('spread');
     inner.style.transform = '';
     const avail = region.clientHeight;
     const need = inner.scrollHeight;
     if (need <= avail + 1) {
         if (region.classList.contains('fill')) inner.classList.add('spread');
-        return;
+        return 1;
     }
-    inner.style.transform = 'scale(' + (avail / need) + ')';
+    const scale = avail / need;
+    inner.style.transform = 'scale(' + scale + ')';
+    return scale;
 }
 
 function fitRegions() {
-    document.querySelectorAll('#wrapper .fit-region').forEach(fitRegion);
+    let scaled = 0, minScale = 1;
+    document.querySelectorAll('#wrapper .fit-region').forEach(region => {
+        try {
+            const s = fitRegion(region);
+            if (s < 1) { scaled++; if (s < minScale) minScale = s; }
+        } catch (e) { /* keep going */ }
+    });
+    return { scaled: scaled, minScale: minScale };
+}
+
+/* The full formatting pass: shrink lines to their slots, scale tall blocks to
+   their regions, then apply preview scaling. The Refresh Formatting button
+   calls this on demand; renderAll runs it silently after every change. */
+function refreshFormatting(silent) {
+    const lines = fitAll();
+    const regs = fitRegions();
+    executeMobileScaling();
+    if (!silent) {
+        const parts = [];
+        parts.push(lines ? lines + ' text line' + (lines === 1 ? '' : 's') + ' shrunk to fit' : 'all text lines fit their slots');
+        parts.push(regs.scaled ? regs.scaled + ' content block' + (regs.scaled === 1 ? '' : 's') + ' scaled to ' + Math.round(regs.minScale * 100) + '%' : 'all content blocks fit their boxes');
+        setStatus('✦ Formatting refreshed — ' + parts.join('; ') + '.');
+    }
 }
 
 function renderAll() {
     renderFlyers();
-    const doFit = () => { fitAll(); fitRegions(); executeMobileScaling(); };
+    const doFit = () => refreshFormatting(true);
     doFit();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(doFit);
+    if (window.requestAnimationFrame) window.requestAnimationFrame(doFit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => {
+        if (window.requestAnimationFrame) window.requestAnimationFrame(doFit); else doFit();
+    });
 }
 
 /* ==========================================================================
@@ -1819,6 +1997,9 @@ async function downloadSingleTvJPG(elementId, filename, buttonId) {
 document.getElementById('sheet-key').value = DEFAULT_SHEET_KEY;
 document.getElementById('reload-sheet-btn').addEventListener('click', loadFromSheet);
 bindSimpleInputs();
+document.getElementById('refresh-format-btn').addEventListener('click', () => refreshFormatting(false));
+
+renderPageLayoutEditor();
 renderSectionsEditor();
 renderDedEditor();
 loadFromSheet();
