@@ -115,6 +115,13 @@
         /* Auto-fit marker: JS shrinks font-size so the single line fits its slot */
         .fit { white-space: nowrap; }
 
+        /* Height-fit regions: JS scales .fit-region-inner down only when content exceeds the region */
+        .fit-region { min-height: 0; min-width: 0; overflow: hidden; width: 100%; }
+        .fit-region.fill { flex: 1 1 auto; }
+        .fit-region-inner { transform-origin: top center; width: 100%; }
+        .fit-region-inner.spread { height: 100%; display: flex; flex-direction: column; }
+        .schedule-inset-panel, .tv-col-left, .table-layout { overflow: hidden; }
+
         .flyer-wrapper {
             position: relative;
             width: 816px;
@@ -1408,10 +1415,12 @@ function printSchedulePage(o) {
             '<div class="grid-center"><img class="logo-img" src="' + LOGO_URI + '" alt="Midrash Elyon Logo"></div>' +
             '<div class="grid-right">' + fitLines(o.rightLines, 13) + '<span class="entrance-note">East 3rd st entrance</span></div>' +
         '</div>' +
+        '<div class="fit-region fill"><div class="fit-region-inner">' +
         '<div class="flyer-schedule-blocks-container">' +
             o.secKeys.map(k => printSectionHTML(S.sections[k])).join('') +
         '</div>' +
         dedBoxHTML(o.dedTitle, o.cats) +
+        '</div></div>' +
     '</div></div></div>';
 }
 
@@ -1450,12 +1459,14 @@ function tablePageHTML(cat) {
         '</div>').join('<div class="table-text-divider fit" data-fit-max="' + maxDiv + '">~ AND ~</div>');
     return '<div class="flyer-wrapper"><div class="print-page"><div class="table-layout ' + cc + '">' +
         '<div class="bsd">בס"ד</div>' +
+        '<div class="fit-region"><div class="fit-region-inner">' +
         '<img class="logo-img" src="' + LOGO_URI + '" alt="Midrash Elyon Logo">' +
         (cat.tv === 'shabbat' ? '<div class="table-parsha fit" data-fit-max="58">' + esc(S.parshaHebrew) + '</div>' : '') +
         '<div class="table-purpose fit" data-fit-max="38">' + esc(cat.name) + '</div>' +
         '<div class="table-is-dedicated fit" data-fit-max="22">is dedicated</div>' +
         '<div class="diamond-separator">◆ <span>◆</span> ◆</div>' +
         '<div class="table-dedications-container">' + blocks + '</div>' +
+        '</div></div>' +
     '</div></div></div>';
 }
 
@@ -1498,14 +1509,18 @@ function tvPageHTML(o) {
                 '<div class="grid-center"><img class="logo-img" src="' + LOGO_URI + '" alt="Midrash Elyon Logo"></div>' +
                 '<div class="grid-right">' + fitLines(o.rightLines, 17) + '<span class="entrance-note">East 3rd st entrance</span></div>' +
             '</div>' +
+            '<div class="fit-region fill"><div class="fit-region-inner">' +
             '<div class="tv-schedule-boxes-container">' +
                 o.secKeys.map(k => tvSectionHTML(S.sections[k])).join('') +
             '</div>' +
+            '</div></div>' +
         '</div>' +
         '<div class="tv-inset-panel tv-col-right' + (dense ? ' tv-dense-stack' : '') + '">' +
             '<div class="bsd">בס"ד</div>' +
             (o.showParsha ? '<div class="table-parsha fit" data-fit-max="64">' + esc(S.parshaHebrew) + '</div>' : '') +
+            '<div class="fit-region fill"><div class="fit-region-inner">' +
             rightInner +
+            '</div></div>' +
         '</div>' +
     '</div></div>';
 }
@@ -1554,9 +1569,13 @@ function fitEl(el) {
     let max = parseFloat(el.getAttribute('data-fit-max'));
     if (!max || isNaN(max)) max = parseFloat(getComputedStyle(el).fontSize) || 16;
     const min = 8;
+    const prevWidth = el.style.width;
     el.style.whiteSpace = 'nowrap';
+    // Measure against the full slot width: centered flex children shrink-wrap to
+    // their content, which would hide the overflow from scrollWidth/clientWidth.
+    el.style.width = '100%';
     el.style.fontSize = max + 'px';
-    if (el.scrollWidth <= el.clientWidth + 1) return;
+    if (el.scrollWidth <= el.clientWidth + 1) { el.style.width = prevWidth; return; }
     let lo = min, hi = max;
     for (let i = 0; i < 14; i++) {
         const mid = (lo + hi) / 2;
@@ -1564,15 +1583,37 @@ function fitEl(el) {
         if (el.scrollWidth <= el.clientWidth + 1) lo = mid; else hi = mid;
     }
     el.style.fontSize = lo + 'px';
+    el.style.width = prevWidth;
 }
 
 function fitAll() {
     document.querySelectorAll('#wrapper .fit').forEach(fitEl);
 }
 
+/* Height-fit: if a region's content is taller than the region, scale it down
+   proportionally so nothing ever bleeds past a border. When it fits, the
+   inner spreads to fill the region exactly like the old flex layout did. */
+function fitRegion(region) {
+    const inner = region.firstElementChild;
+    if (!inner) return;
+    inner.classList.remove('spread');
+    inner.style.transform = '';
+    const avail = region.clientHeight;
+    const need = inner.scrollHeight;
+    if (need <= avail + 1) {
+        if (region.classList.contains('fill')) inner.classList.add('spread');
+        return;
+    }
+    inner.style.transform = 'scale(' + (avail / need) + ')';
+}
+
+function fitRegions() {
+    document.querySelectorAll('#wrapper .fit-region').forEach(fitRegion);
+}
+
 function renderAll() {
     renderFlyers();
-    const doFit = () => { fitAll(); executeMobileScaling(); };
+    const doFit = () => { fitAll(); fitRegions(); executeMobileScaling(); };
     doFit();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(doFit);
 }
