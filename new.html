@@ -357,7 +357,7 @@
         }
 
         .dedication-entry:not(:last-child) {
-            border-right: 1px dashed #eadeca;
+            border-right: 2px dashed #eadeca;
             padding-right: 12px;
         }
 
@@ -750,43 +750,51 @@
             margin: 10px 0;
         }
 
-        .tv-col-right .table-purpose {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 40px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            margin-bottom: 2px;
-            line-height: 1.15;
-            color: #631000;
-        }
-        .tv-col-right .table-is-dedicated {
+        .tv-dedication-type {
             font-family: 'Cinzel', serif;
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            letter-spacing: 5px;
-            color: #631000;
+            font-weight: 700;
+            font-size: 30px;
+            color: #c5a059;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            width: 100%;
+            margin-bottom: 10px;
         }
+        .tv-dedication-type .dtype-label { text-decoration: underline; text-underline-offset: 4px; }
+        .tv-dedication-type .dtype-deco { font-weight: 400; }
         .diamond-separator {
             font-size: 16px;
             margin: 4px 0 10px 0;
             letter-spacing: 12px;
             color: #c5a059;
         }
-        .tv-col-right .table-dedications-container {
-            gap: 10px;
+        .tv-dedication-items-row {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-evenly;
+            align-items: stretch;
+            gap: 16px;
             width: 100%;
+            box-sizing: border-box;
         }
-        .tv-col-right .table-dedication-block {
+        .tv-dedication-entry {
+            flex: 1;
+            min-width: 0;
             font-family: 'Cinzel', serif;
             font-size: 19px;
             line-height: 1.35;
             color: #631000;
         }
-        .tv-col-right .table-dedication-block .bold-core-dedication {
+        .tv-dedication-entry:not(:last-child) {
+            border-right: 2px dashed #eadeca;
+            padding-right: 16px;
+        }
+        .tv-dedication-items-row + .tv-dedication-type { margin-top: 16px; }
+        .tv-dedication-entry span { display: block; }
+        .tv-dedication-entry .bold-core-dedication {
             font-family: 'Cinzel', serif;
             font-size: 28px;
             font-weight: 700;
@@ -794,8 +802,9 @@
             margin: 5px 0;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            color: #631000;
         }
-        .tv-col-right .table-dedication-block .by-line {
+        .tv-dedication-entry .by-line {
             font-family: 'Cinzel Decorative', serif;
             font-size: 22px;
             font-weight: 700;
@@ -804,24 +813,15 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .tv-col-right .table-text-divider {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 18px;
-            font-weight: 700;
-            margin: 5px 0;
-            color: #631000;
-            letter-spacing: 2px;
-        }
 
         .tv-col-right.tv-dense-stack .table-parsha { font-size: 68px; margin: 0 0 4px 0; }
-        .tv-col-right.tv-dense-stack .table-purpose { font-size: 30px; letter-spacing: 3px; }
-        .tv-col-right.tv-dense-stack .table-is-dedicated { font-size: 17px; margin-bottom: 2px; letter-spacing: 4px; }
+        .tv-col-right.tv-dense-stack .tv-dedication-type { font-size: 24px; margin-bottom: 6px; }
         .tv-col-right.tv-dense-stack .diamond-separator { font-size: 13px; margin: 3px 0 6px 0; letter-spacing: 9px; }
-        .tv-col-right.tv-dense-stack .table-dedications-container { gap: 6px; }
-        .tv-col-right.tv-dense-stack .table-dedication-block { font-size: 15.5px; line-height: 1.25; }
-        .tv-col-right.tv-dense-stack .table-dedication-block .bold-core-dedication { font-size: 21px; line-height: 1.2; margin: 3px 0; }
-        .tv-col-right.tv-dense-stack .table-dedication-block .by-line { font-size: 17px; margin-top: 3px; }
-        .tv-col-right.tv-dense-stack .table-text-divider { font-size: 15px; margin: 2px 0; }
+        .tv-col-right.tv-dense-stack .tv-dedication-items-row { gap: 10px; }
+        .tv-col-right.tv-dense-stack .tv-dedication-items-row + .tv-dedication-type { margin-top: 10px; }
+        .tv-col-right.tv-dense-stack .tv-dedication-entry { font-size: 15.5px; line-height: 1.25; }
+        .tv-col-right.tv-dense-stack .tv-dedication-entry .bold-core-dedication { font-size: 21px; line-height: 1.2; margin: 3px 0; }
+        .tv-col-right.tv-dense-stack .tv-dedication-entry .by-line { font-size: 17px; margin-top: 3px; }
         .tv-col-right.tv-dense-stack .tv-category-divider { margin: 8px 0; font-size: 14px; }
 
         .tv-empty-fallback {
@@ -1636,18 +1636,21 @@ function tablePageHTML(cat) {
 
 /* ---------------- render: TV page ---------------- */
 function tvCatGroupHTML(cat, dense) {
-    const maxP = dense ? 30 : 40, maxB = dense ? 21 : 28, maxBy = dense ? 17 : 22, maxD = dense ? 15 : 18;
+    const maxB = dense ? 21 : 28, maxBy = dense ? 17 : 22, maxT = dense ? 24 : 30;
+    // One "Dedication Type" header, then that type's dedications side-by-side
+    // in a row of equal-width columns (mirrors the portrait dedication box).
     const blocks = cat.items.map(it =>
-        '<div class="table-dedication-block">' +
+        '<div class="tv-dedication-entry">' +
             (it.prefix ? '<span class="fit" data-fit-max="' + (dense ? 15 : 19) + '">' + esc(it.prefix.toUpperCase()) + '</span>' : '') +
             honorLinesHTML(it.honor, maxB, 'bold-core-dedication') +
             (it.by ? '<span class="by-line fit" data-fit-max="' + maxBy + '">BY: ' + esc(it.by.toUpperCase()) + '</span>' : '') +
-        '</div>').join('<div class="table-text-divider fit" data-fit-max="' + maxD + '">~ AND ~</div>');
+        '</div>').join('');
     return '<div class="tv-category-group">' +
-        '<div class="table-purpose fit" data-fit-max="' + maxP + '">' + esc(cat.name) + '</div>' +
-        '<div class="table-is-dedicated fit" data-fit-max="' + (dense ? 17 : 22) + '">is dedicated</div>' +
-        '<div class="diamond-separator">◆ <span>◆</span> ◆</div>' +
-        '<div class="table-dedications-container">' + blocks + '</div></div>';
+        '<div class="tv-dedication-type fit" data-fit-max="' + maxT + '">' +
+            '<span class="dtype-deco">~</span>' +
+            '<span class="dtype-label">' + nl2br(cat.name.toUpperCase()) + '</span>' +
+            '<span class="dtype-deco">~</span></div>' +
+        '<div class="tv-dedication-items-row">' + blocks + '</div></div>';
 }
 
 function tvPageHTML(o) {
