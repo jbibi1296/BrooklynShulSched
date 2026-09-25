@@ -80,10 +80,6 @@
         .page-addrow select { padding: 6px; border: 1px solid #c5a059; border-radius: 4px; font-size: 12.5px; max-width: 260px; }
         .sec-usage { font-size: 11.5px; color: #8a7a5c; margin-left: 8px; }
 
-        /* "~ AND ~" divider between dedications of one category (portrait box) */
-        .dedication-and { font-family: 'Cinzel Decorative', serif; font-weight: 700; color: #c5a059;
-            letter-spacing: 2px; margin: 5px 0 3px 0; }
-
         #flyer-form fieldset {
             border: 2px solid #c5a059; border-radius: 8px;
             margin: 14px 0; padding: 12px 16px 16px 16px; background: #fffdf8;
@@ -345,28 +341,27 @@
             text-align: center;
         }
 
-        .dedications-columns {
+        .dedication-items-row {
             display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            gap: 14px;
+            justify-content: space-evenly;
+            align-items: stretch;
+            gap: 12px;
             width: 100%;
             box-sizing: border-box;
         }
 
-        .dedications-column {
+        .dedication-entry {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            min-width: 0;
+            padding-bottom: 2px;
         }
 
-        .dedications-column:not(:last-child) {
+        .dedication-entry:not(:last-child) {
             border-right: 1px dashed #eadeca;
-            padding-right: 10px;
+            padding-right: 12px;
         }
 
-        .dedication-entry { padding-bottom: 2px; }
+        .dedication-items-row + .dedication-type { margin-top: 8px; }
 
         .dedication-title {
             font-family: 'Cinzel Decorative', serif;
@@ -399,23 +394,24 @@
             font-size: inherit;
         }
 
-        .dedications-box.count-1 { padding: 20px 20px; }
-        .dedications-box.count-1 .dedication-title { font-size: 19px; letter-spacing: 4px; margin-bottom: 10px; }
-        .dedications-box.count-1 .dedication-type { font-size: 15.5px; letter-spacing: 2px; margin-bottom: 5px; }
-        .dedications-box.count-1 .dedication-text { font-size: 15.5px; line-height: 1.4; }
+        .dedications-box.cols-1 { padding: 20px 20px; }
+        .dedications-box.cols-1 .dedication-title { font-size: 19px; letter-spacing: 4px; margin-bottom: 10px; }
+        .dedications-box.cols-1 .dedication-type { font-size: 15.5px; letter-spacing: 2px; margin-bottom: 5px; }
+        .dedications-box.cols-1 .dedication-text { font-size: 15.5px; line-height: 1.4; }
 
-        .dedications-box.count-2 { padding: 16px 18px; }
-        .dedications-box.count-2 .dedication-title { font-size: 17px; letter-spacing: 3px; margin-bottom: 8px; }
-        .dedications-box.count-2 .dedication-type { font-size: 14.5px; letter-spacing: 1.5px; margin-bottom: 4px; }
-        .dedications-box.count-2 .dedication-text { font-size: 15px; line-height: 1.35; }
+        .dedications-box.cols-2 { padding: 16px 18px; }
+        .dedications-box.cols-2 .dedication-title { font-size: 17px; letter-spacing: 3px; margin-bottom: 8px; }
+        .dedications-box.cols-2 .dedication-type { font-size: 14.5px; letter-spacing: 1.5px; margin-bottom: 4px; }
+        .dedications-box.cols-2 .dedication-text { font-size: 15px; line-height: 1.35; }
 
-        .dedications-box.count-3-plus { padding: 12px 14px; }
-        .dedications-box.count-3-plus .dedication-title { font-size: 15px; letter-spacing: 2px; margin-bottom: 4px; }
-        .dedications-box.count-3-plus .dedication-type { font-size: 13.5px; letter-spacing: 1.2px; margin-bottom: 3px; }
-        .dedications-box.count-3-plus .dedication-text { font-size: 14px; line-height: 1.3; }
+        .dedications-box.cols-3-plus { padding: 12px 14px; }
+        .dedications-box.cols-3-plus .dedication-title { font-size: 15px; letter-spacing: 2px; margin-bottom: 4px; }
+        .dedications-box.cols-3-plus .dedication-type { font-size: 13.5px; letter-spacing: 1.2px; margin-bottom: 3px; }
+        .dedications-box.cols-3-plus .dedication-text { font-size: 14px; line-height: 1.3; }
 
         .dedications-box.has-dense-stack { padding: 10px 12px; }
-        .dedications-box.has-dense-stack .dedications-column { gap: 6px; }
+        .dedications-box.has-dense-stack .dedication-items-row { gap: 8px; }
+        .dedications-box.has-dense-stack .dedication-items-row + .dedication-type { margin-top: 5px; }
         .dedications-box.has-dense-stack .dedication-title { font-size: 14px; letter-spacing: 2px; margin-bottom: 3px; }
         .dedications-box.has-dense-stack .dedication-type { font-size: 12px; letter-spacing: 1px; margin-bottom: 2px; }
         .dedications-box.has-dense-stack .dedication-text { font-size: 12.5px; line-height: 1.25; }
@@ -1582,17 +1578,17 @@ function printSchedulePage(o) {
 
 /* ---------------- render: portrait dedication box ---------------- */
 function dedBoxHTML(title, cats) {
-    let count = 0, maxInCol = 0;
-    cats.forEach(c => { count += c.items.length; maxInCol = Math.max(maxInCol, c.items.length); });
+    let count = 0, maxCols = 0;
+    cats.forEach(c => { count += c.items.length; maxCols = Math.max(maxCols, c.items.length); });
     if (!count) return '';
-    let cls = count === 1 ? 'count-1' : count === 2 ? 'count-2' : 'count-3-plus';
-    if (maxInCol >= 3) cls += ' has-dense-stack';
-    // One header per category; "~ AND ~" between that category's dedications.
-    const cols = cats.map(c =>
-        '<div class="dedications-column">' +
+    // One "Dedication Type" header per category, then that category's
+    // dedications side-by-side in a row of equal-width columns.
+    let cls = maxCols === 1 ? 'cols-1' : maxCols === 2 ? 'cols-2' : 'cols-3-plus';
+    if (count >= 4 || cats.length >= 3) cls += ' has-dense-stack';
+    const groups = cats.map(c =>
         '<div class="dedication-type fit" data-fit-max="15">' + nl2br(c.name.toUpperCase()) + '</div>' +
-        c.items.map((it, ii) =>
-            (ii > 0 ? '<div class="dedication-and fit" data-fit-max="12">~ AND ~</div>' : '') +
+        '<div class="dedication-items-row">' +
+        c.items.map(it =>
             '<div class="dedication-entry">' +
                 '<div class="dedication-text">' +
                     (it.prefix ? '<div class="fit" data-fit-max="15">' + nl2br(it.prefix.toUpperCase()) + '</div>' : '') +
@@ -1602,7 +1598,7 @@ function dedBoxHTML(title, cats) {
             '</div>').join('') + '</div>').join('');
     return '<div class="dedications-box ' + cls + '">' +
         '<div class="dedication-title fit" data-fit-max="19">' + nl2br(title) + '</div>' +
-        '<div class="dedications-columns">' + cols + '</div></div>';
+        groups + '</div>';
 }
 
 /* ---------------- render: table dedication page ---------------- */
@@ -1762,7 +1758,7 @@ function fitAll() {
    width — text and ribbons stay edge-to-edge of the panel, only the height
    compresses. Origin is top-left: with a widened inner, top-center would
    shift the content right and clip it. When content fits with room to spare,
-   the inner is scaled UP (up to 35%) so the type fills the region instead
+   the inner is scaled UP (up to 30%) so the type fills the region instead
    of floating in whitespace; when it just barely fits, the inner spreads
    to fill the region exactly like the old flex layout did.
    Returns the scale applied (1 = fit without scaling). */
@@ -1779,8 +1775,8 @@ function fitRegion(region) {
     if (need <= avail + 1) {
         const sUp = need > 1 ? avail / need : 1;
         if (region.classList.contains('vcenter')) {
-            // Empty-state panel: grow (cap +35%) and center vertically.
-            const s = Math.min(Math.max(sUp, 1), 1.35);
+            // Empty-state panel: grow (cap +30%) and center vertically.
+            const s = Math.min(Math.max(sUp, 1), 1.3);
             inner.style.width = (100 / s) + '%';
             inner.style.transformOrigin = 'top left';
             inner.style.transform = 'scale(' + s + ')';
@@ -1788,9 +1784,9 @@ function fitRegion(region) {
             return s;
         }
         if (sUp > 1.05) {
-            // Lots of whitespace: grow the content (cap +35%) instead of
+            // Lots of whitespace: grow the content (cap +30%) instead of
             // spreading it thin. Narrow first so the upscale stays full-width.
-            const s = Math.min(sUp, 1.30);
+            const s = Math.min(sUp, 1.3);
             inner.style.width = (100 / s) + '%';
             inner.style.transformOrigin = 'top left';
             inner.style.transform = 'scale(' + s + ')';
