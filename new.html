@@ -985,6 +985,9 @@
             <button class="studio-btn" id="reload-sheet-btn">↻ Load from Sheet</button>
             <button class="studio-btn gold" id="save-state-btn" title="Save all your edits in this browser — a refresh won't lose anything">💾 Save</button>
             <button class="studio-btn" id="load-saved-btn" title="Discard current edits and restore your last save">↺ Load Saved</button>
+            <button class="studio-btn" id="export-save-btn" title="Download your save as a file — move it to another browser or computer">⤓ Export</button>
+            <button class="studio-btn" id="import-save-btn" title="Restore from a previously exported save file">⤒ Import</button>
+            <input type="file" id="import-save-file" accept=".json,application/json" style="display:none">
             <button class="studio-btn gold" id="refresh-format-btn" title="Re-run auto-fit: shrink text and scale blocks so everything fits on every page">✦ Refresh Formatting</button>
         </div>
         <div id="sheet-status">Loading data from the Google Sheet…</div>
@@ -2138,6 +2141,38 @@ function loadSavedState() {
     applyLoadedState(payload);
     setStatus('Loaded your saved work from ' + new Date(payload.savedAt).toLocaleString() + ' ✓ — ↻ Load from Sheet pulls fresh data from the sheet instead.');
 }
+function exportSave() {
+    const payload = readSave();
+    if (!payload) { setStatus('Nothing saved yet — hit 💾 Save first, then export.'); return; }
+    const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+    const d = new Date(payload.savedAt || Date.now());
+    const stamp = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    const a = document.createElement('a');
+    a.download = 'Midrash_Elyon_Flyer_Save_' + stamp + '.json';
+    a.href = URL.createObjectURL(blob);
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    setStatus('Exported your save ✓ — keep the file to restore this work in any browser or on another computer.');
+}
+function importSaveFile(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+        try {
+            const payload = JSON.parse(reader.result);
+            if (!payload || typeof payload !== 'object' || !payload.state) throw new Error('not a flyer save file');
+            payload.savedAt = payload.savedAt || Date.now();
+            localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+            document.getElementById('load-saved-btn').disabled = false;
+            applyLoadedState(payload);
+            setStatus('Imported save from ' + new Date(payload.savedAt).toLocaleString() + ' ✓ — it is now your current save in this browser too.');
+        } catch (e) {
+            console.error(e);
+            setStatus('Could not import that file (' + esc(e.message) + ').');
+        }
+    };
+    reader.readAsText(file);
+}
 
 /* ==========================================================================
    INIT
@@ -2146,6 +2181,12 @@ document.getElementById('sheet-key').value = DEFAULT_SHEET_KEY;
 document.getElementById('reload-sheet-btn').addEventListener('click', loadFromSheet);
 document.getElementById('save-state-btn').addEventListener('click', saveState);
 document.getElementById('load-saved-btn').addEventListener('click', loadSavedState);
+document.getElementById('export-save-btn').addEventListener('click', exportSave);
+document.getElementById('import-save-btn').addEventListener('click', () => document.getElementById('import-save-file').click());
+document.getElementById('import-save-file').addEventListener('change', (e) => {
+    if (e.target.files && e.target.files[0]) importSaveFile(e.target.files[0]);
+    e.target.value = '';
+});
 bindSimpleInputs();
 document.getElementById('refresh-format-btn').addEventListener('click', () => refreshFormatting(false));
 
