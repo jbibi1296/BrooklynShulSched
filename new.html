@@ -307,6 +307,9 @@
             width: 100%;
             font-weight: 400;
             padding-bottom: 0;
+            padding-left: 5px;
+            padding-right: 5px;
+            box-sizing: border-box;
         }
 
         .flyer-time-box .row-full {
@@ -318,6 +321,9 @@
             letter-spacing: .5px;
             text-align: center;
             width: 100%;
+            padding-left: 5px;
+            padding-right: 5px;
+            box-sizing: border-box;
         }
 
         /* Bottom Dedications Container inside Inset Panel */
@@ -676,6 +682,9 @@
             letter-spacing: 0.8px;
             text-align: center;
             width: 100%;
+            padding-left: 5px;
+            padding-right: 5px;
+            box-sizing: border-box;
         }
         .tv-time-centered-subtext {
             font-family: 'Cinzel', serif;
@@ -686,6 +695,9 @@
             letter-spacing: 0.5px;
             text-align: center;
             width: 100%;
+            padding-left: 5px;
+            padding-right: 5px;
+            box-sizing: border-box;
         }
 
         .tv-col-right {
@@ -715,6 +727,9 @@
             flex: 1;
             width: 100%;
             gap: 12px;
+            padding-left: 5px;
+            padding-right: 5px;
+            box-sizing: border-box;
         }
 
         .tv-category-group {
@@ -1747,7 +1762,7 @@ function fitAll() {
    width — text and ribbons stay edge-to-edge of the panel, only the height
    compresses. Origin is top-left: with a widened inner, top-center would
    shift the content right and clip it. When content fits with room to spare,
-   the inner is scaled UP (up to 50%) so the type fills the region instead
+   the inner is scaled UP (up to 35%) so the type fills the region instead
    of floating in whitespace; when it just barely fits, the inner spreads
    to fill the region exactly like the old flex layout did.
    Returns the scale applied (1 = fit without scaling). */
@@ -1763,9 +1778,9 @@ function fitRegion(region) {
     if (need <= avail + 1) {
         const sUp = need > 1 ? avail / need : 1;
         if (sUp > 1.05) {
-            // Lots of whitespace: grow the content (cap +50%) instead of
+            // Lots of whitespace: grow the content (cap +35%) instead of
             // spreading it thin. Narrow first so the upscale stays full-width.
-            const s = Math.min(sUp, 1.5);
+            const s = Math.min(sUp, 1.35);
             inner.style.width = (100 / s) + '%';
             inner.style.transformOrigin = 'top left';
             inner.style.transform = 'scale(' + s + ')';
@@ -2030,3 +2045,4 @@ loadFromSheet();
 </script>
 </body>
 </html>
+
