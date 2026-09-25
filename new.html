@@ -1740,15 +1740,17 @@ function fitAll() {
     return shrunk;
 }
 
-/* Height-fit: if a region's content is taller than the region, scale it down
-   proportionally so nothing ever bleeds past a border. When it fits, the
-   inner spreads to fill the region exactly like the old flex layout did.
-   Returns the scale applied (1 = fit without scaling). */
+/* Height-fit: if a region's content is taller than the region, compress it
+   vertically so nothing ever bleeds past a border. Width is NEVER scaled —
+   text and ribbons always stay full-bleed, edge-to-edge of the panel.
+   When content fits, the inner spreads to fill the region exactly like the
+   old flex layout did. Returns the scale applied (1 = fit without scaling). */
 function fitRegion(region) {
     const inner = region.firstElementChild;
     if (!inner) return 1;
     inner.classList.remove('spread');
     inner.style.transform = '';
+    inner.style.transformOrigin = '';
     const avail = region.clientHeight;
     const need = inner.scrollHeight;
     if (need <= avail + 1) {
@@ -1756,7 +1758,8 @@ function fitRegion(region) {
         return 1;
     }
     const scale = avail / need;
-    inner.style.transform = 'scale(' + scale + ')';
+    inner.style.transformOrigin = 'top center';
+    inner.style.transform = 'scaleY(' + scale + ')';
     return scale;
 }
 
