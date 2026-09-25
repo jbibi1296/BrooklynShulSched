@@ -1677,7 +1677,7 @@ function tvPageHTML(o) {
         '<div class="tv-inset-panel tv-col-right' + (dense ? ' tv-dense-stack' : '') + '">' +
             '<div class="bsd">בס"ד</div>' +
             (o.showParsha ? '<div class="table-parsha fit" data-fit-max="64">' + esc(S.parshaHebrew) + '</div>' : '') +
-            '<div class="fit-region fill"><div class="fit-region-inner">' +
+            '<div class="fit-region fill' + (o.cats.length ? '' : ' vcenter') + '"><div class="fit-region-inner">' +
             rightInner +
             '</div></div>' +
         '</div>' +
@@ -1773,14 +1773,24 @@ function fitRegion(region) {
     inner.style.transform = '';
     inner.style.transformOrigin = '';
     inner.style.width = '';
+    inner.style.marginTop = '';
     const avail = region.clientHeight;
     const need = inner.scrollHeight;
     if (need <= avail + 1) {
         const sUp = need > 1 ? avail / need : 1;
+        if (region.classList.contains('vcenter')) {
+            // Empty-state panel: grow (cap +35%) and center vertically.
+            const s = Math.min(Math.max(sUp, 1), 1.35);
+            inner.style.width = (100 / s) + '%';
+            inner.style.transformOrigin = 'top left';
+            inner.style.transform = 'scale(' + s + ')';
+            inner.style.marginTop = ((avail - need * s) / 2) + 'px';
+            return s;
+        }
         if (sUp > 1.05) {
             // Lots of whitespace: grow the content (cap +35%) instead of
             // spreading it thin. Narrow first so the upscale stays full-width.
-            const s = Math.min(sUp, 1.35);
+            const s = Math.min(sUp, 1.30);
             inner.style.width = (100 / s) + '%';
             inner.style.transformOrigin = 'top left';
             inner.style.transform = 'scale(' + s + ')';
@@ -2045,4 +2055,3 @@ loadFromSheet();
 </script>
 </body>
 </html>
-
