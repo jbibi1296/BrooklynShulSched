@@ -935,10 +935,6 @@
             color: #d1d5db;
         }
 
-        /* Forces a clean white background during PDF export */
-        .pdf-export-mode {
-            background-color: #ffffff !important;
-        }
 
         #wrapper {
             display: flex;
@@ -987,6 +983,8 @@
         <div class="sheet-row">
             <input type="text" id="sheet-key" placeholder="Google Sheet publish key">
             <button class="studio-btn" id="reload-sheet-btn">↻ Load from Sheet</button>
+            <button class="studio-btn gold" id="save-state-btn" title="Save all your edits in this browser — a refresh won't lose anything">💾 Save</button>
+            <button class="studio-btn" id="load-saved-btn" title="Discard current edits and restore your last save">↺ Load Saved</button>
             <button class="studio-btn gold" id="refresh-format-btn" title="Re-run auto-fit: shrink text and scale blocks so everything fits on every page">✦ Refresh Formatting</button>
         </div>
         <div id="sheet-status">Loading data from the Google Sheet…</div>
@@ -2043,13 +2041,7 @@ async function downloadCustomPDF() {
                 const purposeEl = page.querySelector('.table-purpose');
                 if (purposeEl && purposeEl.innerText.toUpperCase().includes('KIDDUSH')) copies = copiesKiddush;
             }
-            page.classList.add('pdf-export-mode');
-            let canvas;
-            try {
-                canvas = await capturePage(page, 816, 1056, PRINT_PPI_SCALE);
-            } finally {
-                page.classList.remove('pdf-export-mode');
-            }
+            const canvas = await capturePage(page, 816, 1056, PRINT_PPI_SCALE);
             const imgData = canvas.toDataURL('image/jpeg', 0.95);
             for (let c = 0; c < copies; c++) {
                 if (isFirstPageAdded) pdf.addPage();
@@ -2100,18 +2092,68 @@ async function downloadSingleTvJPG(elementId, filename, buttonId) {
     }
 }
 
+/* ---------------- save / restore work in this browser ---------------- */
+const SAVE_KEY = 'midrashElyonFlyerStudio.v1';
+function readSave() {
+    try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+}
+function saveState() {
+    try {
+        const payload = {
+            savedAt: Date.now(),
+            state: S,
+            copies: {
+                portrait: document.getElementById('copies-portrait').value,
+                kiddush: document.getElementById('copies-kiddush').value,
+                tables: document.getElementById('copies-tables').value
+            }
+        };
+        localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+        document.getElementById('load-saved-btn').disabled = false;
+        setStatus('Saved ✓ ' + new Date(payload.savedAt).toLocaleString() + ' — refresh-safe. The studio now opens from this save instead of the sheet.');
+    } catch (e) {
+        console.error(e);
+        setStatus('Could not save in this browser (' + esc(e.message) + ').');
+    }
+}
+function applyLoadedState(payload) {
+    S = Object.assign(defaultState(), payload.state || {});
+    if (payload.copies) {
+        if (payload.copies.portrait != null) document.getElementById('copies-portrait').value = payload.copies.portrait;
+        if (payload.copies.kiddush != null) document.getElementById('copies-kiddush').value = payload.copies.kiddush;
+        if (payload.copies.tables != null) document.getElementById('copies-tables').value = payload.copies.tables;
+    }
+    syncSimpleInputs();
+    renderPageLayoutEditor();
+    renderSectionsEditor();
+    renderDedEditor();
+    renderAll();
+}
+function loadSavedState() {
+    const payload = readSave();
+    if (!payload) { setStatus('No saved work found yet — hit 💾 Save first.'); return; }
+    applyLoadedState(payload);
+    setStatus('Loaded your saved work from ' + new Date(payload.savedAt).toLocaleString() + ' ✓ — ↻ Load from Sheet pulls fresh data from the sheet instead.');
+}
+
 /* ==========================================================================
    INIT
    ========================================================================== */
 document.getElementById('sheet-key').value = DEFAULT_SHEET_KEY;
 document.getElementById('reload-sheet-btn').addEventListener('click', loadFromSheet);
+document.getElementById('save-state-btn').addEventListener('click', saveState);
+document.getElementById('load-saved-btn').addEventListener('click', loadSavedState);
 bindSimpleInputs();
 document.getElementById('refresh-format-btn').addEventListener('click', () => refreshFormatting(false));
 
 renderPageLayoutEditor();
 renderSectionsEditor();
 renderDedEditor();
-loadFromSheet();
+document.getElementById('load-saved-btn').disabled = !readSave();
+if (readSave()) { loadSavedState(); } else { loadFromSheet(); }
 </script>
 </body>
 </html>
