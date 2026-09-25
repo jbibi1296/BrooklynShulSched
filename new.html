@@ -161,6 +161,8 @@
            ========================================================================== */
         .schedule-page-bg {
             background-color: #e7e3d7;
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
             background-image: url("https://i.postimg.cc/j2VNFTKh/Midrash-Elyon-Shabbat-TV.png");
             background-repeat: repeat;
             background-size: auto;
@@ -177,6 +179,12 @@
             display: flex;
             flex-direction: column;
             font-family: 'Cinzel', serif;
+        }
+
+        /* Table dedication pages reuse the schedule frame, but on clean white */
+        .print-page.schedule-page-bg.table-page-bg {
+            background-color: #ffffff;
+            background-image: none;
         }
 
         .schedule-inset-panel {
@@ -644,7 +652,7 @@
             flex-direction: column;
             justify-content: space-between;
             flex: 1;
-            margin-top: 0px;
+            margin-top: 10px;
             gap: 12px;
         }
 
@@ -848,6 +856,42 @@
         }
 
         /* UI Controls */
+        .pdf-copies-row {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 0 0 14px 0;
+            width: 100%;
+            padding: 0 16px;
+            box-sizing: border-box;
+            font-family: 'Cinzel', serif;
+        }
+        .pdf-copies-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #631000;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .pdf-copies-row label {
+            font-size: 12.5px;
+            color: #631000;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pdf-copies-row input[type="number"] {
+            width: 52px;
+            padding: 5px 6px;
+            border: 1px solid #d8cba8;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: 'Cinzel', serif;
+            color: #631000;
+            background: #fffdf8;
+        }
         .button-container {
             display: flex;
             gap: 20px;
@@ -909,7 +953,7 @@
         @media print {
             @page { size: 8.5in 11in; margin: 0; }
             html, body { background-color: #ffffff; padding: 0; margin: 0; width: 100%; display: block; }
-            #studio, #preview-label, .button-container { display: none !important; }
+            #studio, #preview-label, .button-container, .pdf-copies-row { display: none !important; }
             #wrapper { display: block !important; gap: 0 !important; }
             .flyer-wrapper {
                 display: block !important;
@@ -921,7 +965,7 @@
                 overflow: hidden;
             }
             .flyer-wrapper:last-child { page-break-after: auto; }
-            .print-page {
+            .print-page:not(.schedule-page-bg) {
                 border: none;
                 box-shadow: none;
                 margin: 0;
@@ -1004,6 +1048,12 @@
 <div id="preview-label">◆ &nbsp;LIVE PREVIEW&nbsp; ◆</div>
 <div id="wrapper"></div>
 
+<div class="pdf-copies-row">
+    <span class="pdf-copies-label">PDF copies per page type:</span>
+    <label>Portrait schedules <input type="number" id="copies-portrait" min="0" max="99" value="1"></label>
+    <label>Kiddush tables <input type="number" id="copies-kiddush" min="0" max="99" value="20"></label>
+    <label>Other dedication tables <input type="number" id="copies-tables" min="0" max="99" value="10"></label>
+</div>
 <div class="button-container">
     <button id="downloadJpgBtn" class="action-btn jpg-btn" onclick="downloadAllJPGs()">Download All Pages as JPGs</button>
     <button id="downloadPdfBtn" class="action-btn pdf-btn" onclick="downloadCustomPDF()">Download Custom Batch PDF</button>
@@ -1621,7 +1671,7 @@ function tablePageHTML(cat) {
             honorLinesHTML(it.honor, maxB, 'bold-core-dedication') +
             (it.by ? '<span class="by-line fit" data-fit-max="' + maxBy + '">BY: ' + nl2br(it.by) + '</span>' : '') +
         '</div>').join('<div class="table-text-divider fit" data-fit-max="' + maxDiv + '">~ AND ~</div>');
-    return '<div class="flyer-wrapper"><div class="print-page"><div class="table-layout ' + cc + '">' +
+    return '<div class="flyer-wrapper"><div class="print-page schedule-page-bg table-page-bg"><div class="table-layout ' + cc + '">' +
         '<div class="bsd">בס"ד</div>' +
         '<div class="fit-region"><div class="fit-region-inner">' +
         '<img class="logo-img" src="' + LOGO_URI + '" alt="Midrash Elyon Logo">' +
@@ -1981,15 +2031,18 @@ async function downloadCustomPDF() {
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p', 'in', [8.5, 11]);
         const pages = document.querySelectorAll('.print-page');
+        const copiesPortrait = Math.max(0, parseInt(document.getElementById('copies-portrait').value, 10) || 0);
+        const copiesKiddush = Math.max(0, parseInt(document.getElementById('copies-kiddush').value, 10) || 0);
+        const copiesTables = Math.max(0, parseInt(document.getElementById('copies-tables').value, 10) || 0);
         let isFirstPageAdded = false;
         for (let i = 0; i < pages.length; i++) {
             const page = pages[i];
-            let copies = 6;
+            let copies = copiesTables;
             if (i < 2) {
-                copies = 1;
+                copies = copiesPortrait;
             } else {
                 const purposeEl = page.querySelector('.table-purpose');
-                if (purposeEl && purposeEl.innerText.toUpperCase().includes('SHABBAT KIDDUSH')) copies = 8;
+                if (purposeEl && purposeEl.innerText.toUpperCase().includes('KIDDUSH')) copies = copiesKiddush;
             }
             page.classList.add('pdf-export-mode');
             let canvas;
