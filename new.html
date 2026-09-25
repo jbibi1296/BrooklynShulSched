@@ -104,7 +104,9 @@
         .sec-block .sec-title-row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
         .sec-block .sec-title-row input { flex: 1; padding: 7px 9px; border: 1px solid #c5a059; border-radius: 4px; font-family: 'Cinzel', serif; font-weight: 700; }
         .line-row { display: flex; gap: 6px; margin: 5px 0; align-items: center; }
-        .line-row input { padding: 6px 8px; border: 1px solid #d8cba8; border-radius: 4px; font-family: 'Cinzel', serif; font-size: 12.5px; color: #631000; }
+        .line-row input, .line-row textarea { padding: 6px 8px; border: 1px solid #d8cba8; border-radius: 4px; font-family: 'Cinzel', serif; font-size: 12.5px; color: #631000; }
+        .line-row textarea { resize: none; overflow: hidden; line-height: 1.35; }
+        .sec-title-row textarea { padding: 6px 8px; border: 1px solid #d8cba8; border-radius: 4px; font-size: 13px; resize: none; overflow: hidden; line-height: 1.35; }
         .line-row .ln-label { flex: 0 0 200px; }
         .line-row .ln-text { flex: 1; }
         .line-row .ln-timebadge { flex: 1; font-size: 12px; background: #f4f1ea; border: 1px dashed #c5a059; border-radius: 4px; padding: 6px 8px; }
@@ -135,7 +137,7 @@
         /* Height-fit regions: JS scales .fit-region-inner down only when content exceeds the region */
         .fit-region { min-height: 0; min-width: 0; overflow: hidden; width: 100%; }
         .fit-region.fill { flex: 1 1 auto; }
-        .fit-region-inner { transform-origin: top center; width: 100%; }
+        .fit-region-inner { transform-origin: top left; width: 100%; }
         .fit-region-inner.spread { height: 100%; display: flex; flex-direction: column; }
         .schedule-inset-panel, .tv-col-left, .table-layout { overflow: hidden; }
 
@@ -194,7 +196,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
-            padding: 14px 24px 30px 24px;
+            padding: 14px 0 30px 0;
         }
 
         .schedule-inset-panel .bsd {
@@ -215,6 +217,9 @@
             align-items: center;
             margin-top: 10px;
             padding-bottom: 6px;
+            padding-left: 10px;
+            padding-right: 10px;
+            box-sizing: border-box;
             gap: 8px;
         }
 
@@ -275,9 +280,7 @@
             text-transform: uppercase;
             text-align: center;
             padding: 4px 0;
-            width: calc(100% + 48px);
-            margin-left: -24px;
-            margin-right: -24px;
+            width: 100%;
             box-sizing: border-box;
             border-top: 1.5px solid #c5a059;
             border-bottom: 1.5px solid #c5a059;
@@ -304,11 +307,6 @@
             width: 100%;
             font-weight: 400;
             padding-bottom: 0;
-        }
-
-        .flyer-time-box .time-row.highlight {
-            font-weight: 500;
-            color: #8c1d1d;
         }
 
         .flyer-time-box .row-full {
@@ -596,7 +594,7 @@
 
         .tv-col-left {
             flex: 1.08;
-            padding: 18px 24px 22px 24px;
+            padding: 18px 0 22px 0;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
@@ -609,6 +607,9 @@
             width: 100%;
             margin-top: 0;
             padding-bottom: 8px;
+            padding-left: 10px;
+            padding-right: 10px;
+            box-sizing: border-box;
             border-bottom: 2px solid #631000;
             gap: 10px;
             justify-content: space-between;
@@ -649,9 +650,7 @@
             text-transform: uppercase;
             text-align: center;
             padding: 7px 0;
-            width: calc(100% + 48px);
-            margin-left: -24px;
-            margin-right: -24px;
+            width: 100%;
             box-sizing: border-box;
             border-top: 2px solid #c5a059;
             border-bottom: 2px solid #c5a059;
@@ -678,11 +677,6 @@
             text-align: center;
             width: 100%;
         }
-        .tv-time-centered-row.highlight {
-            font-weight: 700;
-            color: #8c1d1d;
-        }
-
         .tv-time-centered-subtext {
             font-family: 'Cinzel', serif;
             font-size: 20px;
@@ -696,7 +690,7 @@
 
         .tv-col-right {
             flex: 0.92;
-            padding: 24px 32px;
+            padding: 24px 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -1018,23 +1012,21 @@ const TIME_LABELS = {
 function defaultSections() {
     return {
         fridayNight: { title: "Friday Night", lines: [
-            { label: "CANDLE LIGHTING -", timeKey: "candleLighting", hl: true },
+            { label: "CANDLE LIGHTING -", timeKey: "candleLighting" },
             { label: "Shir Hashirim -", timeKey: "shirHashirim" },
             { label: "Minha -", timeKey: "fridayMinha" }
         ]},
         shabbatMorning: { title: "Shabbat Morning", lines: [
             { label: "SHACHARIT -", timeKey: "shabbatShacharit" },
-            { sub: true, text: "FOLLOWED BY AN EXQUISITE KIDDUSH AND CLASS" },
-            { sub: true, text: "WITH RABBI DAVID HABER" },
+            { sub: true, text: "FOLLOWED BY KIDDUSH AND CLASS WITH RABBI DAVID HABER" },
             { label: "Danny J. Betesh Boys Program:", text: "9:15AM - 11:30AM" },
-            { label: "Girls Program:", text: "9:15AM - 11:30AM" },
-            { sub: true, text: "Mishna Berura Shiur with Rabbi Ralph Tebele Following the speech" }
+            { label: "Girls Program:", text: "9:15AM - 11:30AM" }
         ]},
         shabbatAfternoon: { title: "Shabbat Afternoon", lines: [
             { label: "PRE-MINHA LEARNING PROGRAM -", timeKey: "preMinhaClass" },
             { label: "MINHA -", timeKey: "shabbatMinha" },
             { sub: true, text: "FOLLOWED BY SEUDAT SHELISHEET & SPEECH" },
-            { label: "HAVDALAH -", timeKey: "havdalahTime", hl: true }
+            { label: "HAVDALAH -", timeKey: "havdalahTime" }
         ]},
         sundaySched: { title: "Sunday Schedule", lines: [
             { label: "PRE-SHACHARIT CLASS WITH RABBI TEBELE -", text: "7:20AM" },
@@ -1105,6 +1097,7 @@ let S = defaultState();
 
 /* ---------------- utils ---------------- */
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nl2br = s => esc(s).replace(/\n/g, '<br>');
 function fitLines(lines, max) {
     return lines.map(l => '<div class="fit" data-fit-max="' + max + '">' + esc(l) + '</div>').join('');
 }
@@ -1361,22 +1354,21 @@ function renderSectionsEditor() {
         block.className = 'sec-block';
         let html = '<div class="sec-title-row"><b style="font-size:13px;min-width:220px;">' + esc(SECTION_LABELS[secKey] || String(sec.title).replace(/\|/g, ' / ')) + '</b>' +
             '<span class="sec-usage">' + esc(sectionUsage(secKey)) + '</span>' +
-            '<input type="text" data-sec="' + secKey + '" data-prop="title" value="' + esc(sec.title) + '" title="Section title — use | for a line break"></div>' +
+            '<textarea rows="1" data-sec="' + secKey + '" data-prop="title" title="Section title — use | or a new line for a line break" style="flex:1;min-width:200px;">' + esc(sec.title) + '</textarea></div>' +
             '<div class="sec-lines">';
         sec.lines.forEach((ln, li) => {
             html += '<div class="line-row">';
-            html += '<input type="text" class="ln-label" data-sec="' + secKey + '" data-li="' + li + '" data-prop="label" value="' + esc(ln.label || '') + '" placeholder="Label (e.g. MINHA -)">';
+            html += '<textarea class="ln-label" rows="1" data-sec="' + secKey + '" data-li="' + li + '" data-prop="label" placeholder="Label (e.g. MINHA -)">' + esc(ln.label || '') + '</textarea>';
             if (ln.sub) {
-                html += '<input type="text" class="ln-text" data-sec="' + secKey + '" data-li="' + li + '" data-prop="text" value="' + esc(ln.text || '') + '" placeholder="Note text">';
+                html += '<textarea class="ln-text" rows="1" data-sec="' + secKey + '" data-li="' + li + '" data-prop="text" placeholder="Note text">' + esc(ln.text || '') + '</textarea>';
                 html += '<select data-sec="' + secKey + '" data-li="' + li + '" data-prop="style">' +
                     ['normal','underline','small'].map(o => '<option value="' + o + '"' + ((ln.style || 'normal') === o ? ' selected' : '') + '>' + o + '</option>').join('') + '</select>';
             } else if (ln.timeKey) {
                 const timeOpts = Object.keys(TIME_LABELS).map(k => '<option value="' + k + '"' + (ln.timeKey === k ? ' selected' : '') + '>' + esc(TIME_LABELS[k]) + '</option>').join('') +
                     (TIME_LABELS[ln.timeKey] ? '' : '<option value="' + esc(ln.timeKey) + '" selected>' + esc(ln.timeKey) + '</option>');
                 html += '<select data-sec="' + secKey + '" data-li="' + li + '" data-prop="timeKey" title="Calculated field from the sheet — edit the time once in Times, every page updates">' + timeOpts + '</select>';
-                html += '<label style="font-size:11.5px;display:flex;gap:4px;align-items:center;"><input type="checkbox" data-sec="' + secKey + '" data-li="' + li + '" data-prop="hl"' + (ln.hl ? ' checked' : '') + '> highlight</label>';
             } else {
-                html += '<input type="text" class="ln-text" data-sec="' + secKey + '" data-li="' + li + '" data-prop="text" value="' + esc(ln.text || '') + '" placeholder="Text">';
+                html += '<textarea class="ln-text" rows="1" data-sec="' + secKey + '" data-li="' + li + '" data-prop="text" placeholder="Text">' + esc(ln.text || '') + '</textarea>';
             }
             html += '<button type="button" class="mini-btn" data-delline="' + secKey + ':' + li + '">✕</button>';
             html += '</div>';
@@ -1397,13 +1389,16 @@ function renderSectionsEditor() {
             return;
         }
         const li = parseInt(el.getAttribute('data-li'), 10);
-        if (prop === 'hl') {
-            el.addEventListener('change', () => { S.sections[secKey].lines[li].hl = el.checked; scheduleRender(); });
-        } else if (el.tagName === 'SELECT') {
+        if (el.tagName === 'SELECT') {
             el.addEventListener('change', () => { S.sections[secKey].lines[li][prop] = el.value; scheduleRender(); });
         } else {
             el.addEventListener('input', () => { S.sections[secKey].lines[li][prop] = el.value; scheduleRender(); });
         }
+    });
+    host.querySelectorAll('textarea[data-sec]').forEach(ta => {
+        const grow = () => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; };
+        ta.addEventListener('input', grow);
+        grow();
     });
     host.querySelectorAll('[data-delline]').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1476,6 +1471,11 @@ function renderDedEditor() {
             S.dedications[ci].items[ii][el.getAttribute('data-iprop')] = el.value; scheduleRender();
         });
     });
+    host.querySelectorAll('textarea[data-iprop]').forEach(ta => {
+        const grow = () => { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; };
+        ta.addEventListener('input', grow);
+        grow();
+    });
     host.querySelectorAll('[data-delcat]').forEach(btn => {
         btn.addEventListener('click', () => {
             S.dedications.splice(parseInt(btn.getAttribute('data-delcat'), 10), 1);
@@ -1513,15 +1513,15 @@ function printLineHTML(ln) {
         let style = '';
         if (ln.style === 'underline') style = 'text-decoration:underline;';
         if (ln.style === 'small') style = 'font-size:12px;';
-        return '<div class="row-full fit" data-fit-max="15"' + (style ? ' style="' + style + '"' : '') + '>' + esc(ln.text) + '</div>';
+        return '<div class="row-full fit" data-fit-max="15"' + (style ? ' style="' + style + '"' : '') + '>' + nl2br(ln.text) + '</div>';
     }
     const val = ln.timeKey ? (S[ln.timeKey] || '') : (ln.text || '');
-    return '<div class="time-row fit' + (ln.hl ? ' highlight' : '') + '" data-fit-max="24"><span>' + esc(ln.label) + ' </span><span>' + esc(val) + '</span></div>';
+    return '<div class="time-row fit" data-fit-max="24"><span>' + nl2br(ln.label) + ' </span><span>' + nl2br(val) + '</span></div>';
 }
 
 function printSectionHTML(sec) {
     return '<div class="flyer-time-box"><div class="flyer-maroon-ribbon">' +
-        fitLines(String(sec.title).split('|'), 30) + '</div>' +
+        fitLines(String(sec.title).split('|').flatMap(p => p.split('\n')), 30) + '</div>' +
         sec.lines.map(printLineHTML).join('') + '</div>';
 }
 
@@ -1530,15 +1530,15 @@ function tvLineHTML(ln) {
         let style = '';
         if (ln.style === 'underline') style = 'text-decoration:underline;';
         const max = ln.style === 'small' ? 15 : 20;
-        return '<div class="tv-time-centered-subtext fit" data-fit-max="' + max + '"' + (style ? ' style="' + style + '"' : '') + '>' + esc(ln.text) + '</div>';
+        return '<div class="tv-time-centered-subtext fit" data-fit-max="' + max + '"' + (style ? ' style="' + style + '"' : '') + '>' + nl2br(ln.text) + '</div>';
     }
     const val = ln.timeKey ? (S[ln.timeKey] || '') : (ln.text || '');
-    return '<div class="tv-time-centered-row fit' + (ln.hl ? ' highlight' : '') + '" data-fit-max="36"><span>' + esc(ln.label) + ' </span><span>' + esc(val) + '</span></div>';
+    return '<div class="tv-time-centered-row fit" data-fit-max="36"><span>' + nl2br(ln.label) + ' </span><span>' + nl2br(val) + '</span></div>';
 }
 
 function tvSectionHTML(sec) {
     return '<div class="tv-schedule-section-block"><div class="tv-maroon-ribbon">' +
-        fitLines(String(sec.title).split('|'), 36) + '</div>' +
+        fitLines(String(sec.title).split('|').flatMap(p => p.split('\n')), 36) + '</div>' +
         sec.lines.map(tvLineHTML).join('') + '</div>';
 }
 
@@ -1575,18 +1575,18 @@ function dedBoxHTML(title, cats) {
     // One header per category; "~ AND ~" between that category's dedications.
     const cols = cats.map(c =>
         '<div class="dedications-column">' +
-        '<div class="dedication-type fit" data-fit-max="15">' + esc(c.name.toUpperCase()) + '</div>' +
+        '<div class="dedication-type fit" data-fit-max="15">' + nl2br(c.name.toUpperCase()) + '</div>' +
         c.items.map((it, ii) =>
             (ii > 0 ? '<div class="dedication-and fit" data-fit-max="12">~ AND ~</div>' : '') +
             '<div class="dedication-entry">' +
                 '<div class="dedication-text">' +
-                    (it.prefix ? '<div class="fit" data-fit-max="15">' + esc(it.prefix.toUpperCase()) + '</div>' : '') +
+                    (it.prefix ? '<div class="fit" data-fit-max="15">' + nl2br(it.prefix.toUpperCase()) + '</div>' : '') +
                     honorLinesHTML(it.honor, 15, '', 'font-weight:700;') +
-                    (it.by ? '<div class="fit" data-fit-max="15" style="font-weight:700;color:#c5a059;">BY: ' + esc(it.by) + '</div>' : '') +
+                    (it.by ? '<div class="fit" data-fit-max="15" style="font-weight:700;color:#c5a059;">BY: ' + nl2br(it.by) + '</div>' : '') +
                 '</div>' +
             '</div>').join('') + '</div>').join('');
     return '<div class="dedications-box ' + cls + '">' +
-        '<div class="dedication-title fit" data-fit-max="19">' + esc(title) + '</div>' +
+        '<div class="dedication-title fit" data-fit-max="19">' + nl2br(title) + '</div>' +
         '<div class="dedications-columns">' + cols + '</div></div>';
 }
 
@@ -1597,16 +1597,16 @@ function tablePageHTML(cat) {
     const maxB = n <= 2 ? 32 : 28, maxBy = n <= 2 ? 26 : 20, maxPre = n <= 2 ? 23 : 20, maxDiv = n <= 2 ? 20 : 15;
     const blocks = cat.items.map(it =>
         '<div class="table-dedication-block">' +
-            (it.prefix ? '<span class="fit" data-fit-max="' + maxPre + '">' + esc(it.prefix.toUpperCase()) + '</span>' : '') +
+            (it.prefix ? '<span class="fit" data-fit-max="' + maxPre + '">' + nl2br(it.prefix.toUpperCase()) + '</span>' : '') +
             honorLinesHTML(it.honor, maxB, 'bold-core-dedication') +
-            (it.by ? '<span class="by-line fit" data-fit-max="' + maxBy + '">BY: ' + esc(it.by) + '</span>' : '') +
+            (it.by ? '<span class="by-line fit" data-fit-max="' + maxBy + '">BY: ' + nl2br(it.by) + '</span>' : '') +
         '</div>').join('<div class="table-text-divider fit" data-fit-max="' + maxDiv + '">~ AND ~</div>');
     return '<div class="flyer-wrapper"><div class="print-page"><div class="table-layout ' + cc + '">' +
         '<div class="bsd">בס"ד</div>' +
         '<div class="fit-region"><div class="fit-region-inner">' +
         '<img class="logo-img" src="' + LOGO_URI + '" alt="Midrash Elyon Logo">' +
         (cat.tv === 'shabbat' ? '<div class="table-parsha fit" data-fit-max="58">' + esc(S.parshaHebrew) + '</div>' : '') +
-        '<div class="table-purpose fit" data-fit-max="38">' + esc(cat.name) + '</div>' +
+        '<div class="table-purpose fit" data-fit-max="38">' + nl2br(cat.name) + '</div>' +
         '<div class="table-is-dedicated fit" data-fit-max="22">is dedicated</div>' +
         '<div class="diamond-separator">◆ <span>◆</span> ◆</div>' +
         '<div class="table-dedications-container">' + blocks + '</div>' +
@@ -1740,27 +1740,48 @@ function fitAll() {
     return shrunk;
 }
 
-/* Height-fit: if a region's content is taller than the region, compress it
-   vertically so nothing ever bleeds past a border. Width is NEVER scaled —
-   text and ribbons always stay full-bleed, edge-to-edge of the panel.
-   When content fits, the inner spreads to fill the region exactly like the
-   old flex layout did. Returns the scale applied (1 = fit without scaling). */
+/* Height-fit: if a region's content is taller than the region, shrink it
+   uniformly so nothing ever bleeds past a border. Uniform scaling keeps
+   glyph proportions perfect (no stretched/squished letterforms); the inner
+   is widened first so the shrunken result still spans the region's FULL
+   width — text and ribbons stay edge-to-edge of the panel, only the height
+   compresses. Origin is top-left: with a widened inner, top-center would
+   shift the content right and clip it. When content fits with room to spare,
+   the inner is scaled UP (up to 50%) so the type fills the region instead
+   of floating in whitespace; when it just barely fits, the inner spreads
+   to fill the region exactly like the old flex layout did.
+   Returns the scale applied (1 = fit without scaling). */
 function fitRegion(region) {
     const inner = region.firstElementChild;
     if (!inner) return 1;
     inner.classList.remove('spread');
     inner.style.transform = '';
     inner.style.transformOrigin = '';
+    inner.style.width = '';
     const avail = region.clientHeight;
     const need = inner.scrollHeight;
     if (need <= avail + 1) {
+        const sUp = need > 1 ? avail / need : 1;
+        if (sUp > 1.05) {
+            // Lots of whitespace: grow the content (cap +50%) instead of
+            // spreading it thin. Narrow first so the upscale stays full-width.
+            const s = Math.min(sUp, 1.5);
+            inner.style.width = (100 / s) + '%';
+            inner.style.transformOrigin = 'top left';
+            inner.style.transform = 'scale(' + s + ')';
+            return s;
+        }
         if (region.classList.contains('fill')) inner.classList.add('spread');
         return 1;
     }
-    const scale = avail / need;
-    inner.style.transformOrigin = 'top center';
-    inner.style.transform = 'scaleY(' + scale + ')';
-    return scale;
+    // Widen first so uniform scaling lands back at exactly full width.
+    const s0 = avail / need;
+    inner.style.width = (100 / s0) + '%';
+    const need2 = inner.scrollHeight; // reflow may change height slightly
+    const s = avail / need2;
+    inner.style.transformOrigin = 'top left';
+    inner.style.transform = 'scale(' + s + ')';
+    return s;
 }
 
 function fitRegions() {
